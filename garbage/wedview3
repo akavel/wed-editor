@@ -1,0 +1,2835 @@
+// wedView.cpp : implementation of the CWedView class
+//
+//                       
+
+#include "stdafx.h"
+#include "wed.h"
+
+#include "MainFrm.h"                  
+#include "StrList.h"
+
+#include "wedDoc.h"             
+#include "wedView.h"
+
+#include "notepad.h"
+#include "holdhead.h"
+#include "undo.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+#include "search.h"
+#include "srcsel.h"
+
+extern CWedApp theApp;
+int shift = 0;
+int control = 0;
+int alt  = 0;
+int tabs[20];
+
+CStringList holding[10];
+CStringList macros[10];
+
+int holdflag[10] = {0};
+
+int currhold = 0;
+int currmac = 0;
+
+// Record keystrokes keypress flag
+
+#define R_DOWN      1
+#define R_CHAR      2
+#define R_UP        3
+
+#define R_SYSDOWN   4
+#define R_SYSCHAR   5
+#define R_SYSUP     6
+
+#define DIFF_NONE   0
+#define DIFF_DEL    1
+#define DIFF_ADD    2
+#define DIFF_CHG    3
+
+CString delim = ",/:;{}[]() +-\"\'=";
+
+/////////////////////////////////////////////////////////////////////////////
+// CWedView
+
+IMPLEMENT_DYNCREATE(CWedView, CView)
+
+BEGIN_MESSAGE_MAP(CWedView, CView)
+    //{{AFX_MSG_MAP(CWedView)
+    ON_WM_CHAR()
+    ON_WM_KEYDOWN()
+    ON_WM_KEYUP()
+    ON_WM_SYSKEYDOWN()
+    ON_WM_SYSCHAR()
+    ON_WM_SYSKEYUP()
+    ON_WM_SETFOCUS()
+    ON_WM_SIZE()
+    ON_WM_TIMER()
+    ON_WM_CREATE()
+    ON_COMMAND(ID_MENUITEM32771, OnMenuitem32771)
+    ON_WM_LBUTTONDOWN()
+    ON_WM_LBUTTONDBLCLK()
+    ON_WM_LBUTTONUP()
+    ON_WM_MOUSEMOVE()
+    ON_WM_VSCROLL()
+    ON_WM_SHOWWINDOW()
+    ON_COMMAND(ID_VIEW_VIEWHEX, OnViewViewhex)
+    ON_WM_HSCROLL()
+    ON_COMMAND(ID_VIEW_FONTS, OnViewFonts)
+    ON_COMMAND(ID_WINDOW_DIFF, OnWindowDiff)
+    ON_WM_KILLFOCUS()
+    ON_COMMAND(ID_VIEW_FOREGROUNDCOLOR, OnViewForegroundcolor)
+    ON_COMMAND(ID_VIEW_BACKGROUNDCOLOR, OnViewBackgroundcolor)
+    ON_COMMAND(ID_VIEW_HIGHLITEBACKGROUND, OnViewHighlitebackground)
+    ON_COMMAND(ID_VIEW_COLOMNHIGHLITEBACKGROUND, OnViewColomnhighlitebackground)
+    ON_COMMAND(ID_VIEW_SELECTPRINTERFONT, OnViewSelectprinterfont)
+    ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
+    ON_COMMAND(ID_EDIT_PASTE, OnEditPaste)
+    ON_COMMAND(ID_VIEW_VIEWHOLDINGHEADS, OnViewViewholdingheads)
+    ON_COMMAND(ID_WINDOW_MAXIMIZEMAIN, OnWindowMaximizemain)
+    ON_COMMAND(ID_EDIT_UNDO, OnEditUndo)
+    ON_COMMAND(ID_EDIT_REDO, OnEditRedo)
+    ON_WM_RBUTTONDOWN()
+    ON_COMMAND(ID_OPERATIONS_SELECTLINE, OnOperationsSelectline)
+    ON_UPDATE_COMMAND_UI(ID_VIEW_DIFFTO_NONE, OnUpdateViewDifftoNone)
+    ON_COMMAND(ID_VIEW_DIFFTO_NONE, OnViewDifftoNone)
+    ON_COMMAND(ID_DIFF_DIFFONE, OnDiffDiffone)
+    //}}AFX_MSG_MAP
+    // Standard printing commands
+    ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
+    ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
+    ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CWedView construction/destruction
+
+
+
+CWedView::CWedView()
+{
+    row  = col  = 0;
+    srow = scol = 0;
+    diff = 0;
+
+    highlite = 0;
+    record   = 0;
+    drag     = 0;
+    mouse    = 0;
+    scrollock = 0;
+
+    soh = eoh = -1;
+    soch = eoch = -1;
+    diffchange = FALSE;
+    PrintToNotepad("Constructed CWedView srow = %d\r\n", srow);
+}
+
+CWedView::~CWedView()
+{
+}
+
+BOOL CWedView::PreCreateWindow(CREATESTRUCT& cs)
+{
+    // TODO: Modify the Window class or styles here by modifying
+    //  the CREATESTRUCT cs
+
+    return CView::PreCreateWindow(cs);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CWedView drawing
+
+void CWedView::OnDraw(CDC* pDC)
+{
+    int xx, yy, loop, lim;
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    CString str;
+    CFont *oldfont;
+    TEXTMETRIC tm;
+    COLORREF oldcr = pDC->GetTextColor();
+    COLORREF oldbk = pDC->GetBkColor();
+
+    //COLORREF cr       = 0x808080;
+    //COLORREF ch       = 0xff0000;
+    //COLORREF cb       = 0x8000;
+
+    COLORREF cadd   = 0x8080;
+    COLORREF cdel   = 0xff;
+    COLORREF cchg   = 0x8000;
+
+    oldfont = pDC->SelectObject( &ff );
+    //pDC->SelectStockObject(OEM_FIXED_FONT);
+    pDC->GetTextMetrics(&tm);
+
+    // Global for the cursor functions:
+    fflf.lfWidth  =  tm.tmAveCharWidth;
+    fflf.lfHeight =  tm.tmHeight;
+
+    RECT rec, rec2;
+    GetClientRect(&rec2);
+    pDC->GetClipBox(&rec);
+
+    pDC->SetTextColor(fgcol);
+    pDC->SetBkColor(bgcol);
+
+
+    //PrintToNotepad("Redraw: %d %d %d %d\r\n",
+    //                      rec.top, rec.left,
+    //                          rec.bottom, rec.right);
+
+    int height = rec.bottom - rec.top;
+    // remainder is just incremented
+    int fullheight = rec2.bottom - rec2.top;
+    int fullwidth  = (rec2.right - rec2.left)/tm.tmAveCharWidth + 1;
+
+    //PrintToNotepad("Text metrics h: %d w: %d\r\n",
+    //              tm.tmHeight, tm.tmAveCharWidth);
+    //
+
+    // Figure out where to update
+    xx   = 0;
+    loop = rec.top / tm.tmHeight;
+    yy   = loop  * tm.tmHeight;         // Start at line boundary
+
+    lim  = rec.bottom / tm.tmHeight;
+    if(rec.bottom  % tm.tmHeight)       // Carry over
+        lim++;
+
+    loop += srow;                       // Adjust for relative pos
+    lim  += srow;
+
+    PrintToNotepad("Start draw: lim = %d loop = %d srow = %d\r\n",
+                        lim, loop, srow);
+
+
+    lim = min(lim, pDoc->strlist.GetCount()+1);
+
+    for( ; loop < lim; loop++)
+        {
+        int split = FALSE;
+
+        str = pDoc->strlist.GetLine(loop);
+
+        if(diff)
+            {
+            switch(
+                diffa.GetAt(
+                min(loop, pDoc->strlist.GetCount()-1) )
+                )
+                {
+                case DIFF_ADD:
+                    pDC->SetTextColor(cadd);
+                break;
+
+                case DIFF_DEL:
+                    pDC->SetTextColor(cdel);
+                break;
+
+                case DIFF_CHG:
+                    pDC->SetTextColor(cchg);
+                break;
+
+                default:
+                    pDC->SetTextColor(oldcr);
+                break;
+                }
+            // Color to diff specs
+            if(diff == 2)
+                {
+                pDoc->SetTitle( pDoc->GetPathName() + " Diff Source ");
+                }
+            else if(diff == 1)
+                {
+                pDoc->SetTitle( pDoc->GetPathName() + " Diff Target ");
+                }
+            }
+          else 
+           {         {      {       
+           CString str2 =    pDoc->GetTitle();                 CString str2 =  pDoc->GetTitle();                CString str2 =     pDoc->GetTitle();             String str2 =    pDoc->GetTitle);            
+           CString str3 =    pDoc->GetPathName();                  CString str3 =   pDoc->GetPathName();                CString str3 =   pDoc->GetPathName();             String str3 =   pDoc->GetPathNameme();            
+           if(str3 != str2)      if(str3 != str2)    if(str3 != str2)if(str3 != str2)
+             pDoc->SetTitle(str3);                   pDoc->SetTitle(str3);             pDoc->SetTitle(str3);            pDoc->SetTitle(str3);        pDoc->SetTitle(str3);        
+           }     }    }}
+        // Adjust for relative pos
+        if(scol)
+            str = str.Right(str.GetLength() - scol);
+        // Padd string till eol
+        if(!pDoc->hex)
+            {
+            CString padd(' ', fullwidth - str.GetLength());
+            str +=padd;
+            }
+        // Searching colors
+        if(pDoc->search.GetLength())
+            {
+            // Ignore lines not in criteria
+             if(str.Find(pDoc->search) == -1)
+                pDC->SetTextColor(fgcol);
+            else
+                pDC->SetTextColor(0x7000);
+            }
+
+        if(loop >= soh &&  soh != -1)
+            {
+            pDC->SetBkColor(selcol);
+
+            if(soch != -1)
+                {
+                split = TRUE;
+                }
+            }
+        if(loop > eoh &&  eoh != -1)
+            {
+            pDC->SetBkColor(bgcol);
+            split = FALSE;
+            }
+        // ---------------------------------------------
+        if(split)
+        {
+            // Display a split colored string:
+
+            CString ll, mm, rr;
+            ll = str.Left(soch);
+            mm = str.Mid(soch, eoch - soch);
+            rr = str.Right(str.GetLength() - eoch);
+
+            pDC->SetBkColor(oldbk);
+            pDC->TextOut(xx, yy, ll);
+
+            pDC->SetBkColor(cselcol);
+            pDC->TextOut(xx + ll.GetLength()* tm.tmAveCharWidth, yy, mm);
+
+            pDC->SetBkColor(oldbk);
+            pDC->TextOut(xx +
+                    ll.GetLength()* tm.tmAveCharWidth +
+                        mm.GetLength()* tm.tmAveCharWidth, yy, rr);
+            }
+        else
+            {
+            if(pDoc->hex)
+                {
+                char num[16];
+                int loop;
+                CString padd(' ', fullwidth);
+                pDC->TextOut(xx, yy, padd);
+
+                for(loop = 0; loop < str.GetLength(); loop++)
+                    {
+                    sprintf(num, "%02x ",
+                            (unsigned char) str.GetAt(loop));
+                    pDC->TabbedTextOut(
+                      xx + tm.tmAveCharWidth * loop * 3, yy, num,
+                                strlen(num), 10, tabs, 0);
+                    }
+                }
+            else
+                {
+                //pDC->TabbedTextOut(xx, yy, str, 10, tabs, 0);
+                pDC->TextOut(xx, yy, str);
+                }
+            }
+
+        yy+=tm.tmHeight;
+
+        // Reached limit of client area, stop
+        if(yy > fullheight && ! pDC->IsPrinting())
+            break;
+        }
+    sync_caret();sync_caret();
+    // Restore stolen settings:
+    pDC->SetTextColor(oldcr);
+    pDC->SetBkColor(oldbk);
+    pDC->SelectObject(oldfont);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CWedView printing
+
+BOOL CWedView::OnPreparePrinting(CPrintInfo* pInfo)
+{
+    // default preparation
+    return DoPreparePrinting(pInfo);
+}
+
+void CWedView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+{
+      progress = 0;
+      pages.SetSize(2);
+}
+
+void CWedView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+{
+    // TODO: add cleanup after printing
+    pages.SetSize(2);
+
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CWedView diagnostics
+
+#ifdef _DEBUG
+void CWedView::AssertValid() const
+{
+    CView::AssertValid();
+}
+
+void CWedView::Dump(CDumpContext& dc) const
+{
+    CView::Dump(dc);
+}
+
+CWedDoc* CWedView::GetDocument() // non-debug version is inline
+{
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CWedDoc)));
+    return (CWedDoc*)m_pDocument;
+}
+#endif //_DEBUG
+
+/////////////////////////////////////////////////////////////////////////////
+// CWedView message handlers
+
+void CWedView::OnShowWindow(BOOL bShow, UINT nStatus)
+
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    PrintToNotepad("Show window %d\r\n", this);PrintToNotepad("Show window %d\r\n", this);
+}
+
+void CWedView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    int wants = 0;
+    CString str, lstr, rstr;
+
+    //PrintToNotepad("OnChar: %d (%c) Flags: %d\r\n", nChar, nChar, nFlags);
+
+   if(record)
+    {
+        char num[16];
+        if(nChar != VK_F7 && nChar != VK_F8)
+        {
+        sprintf(num, "%d %d %d %d",
+                R_CHAR, nChar, nRepCnt, nFlags);
+        macros[currmac].AddTail(num);
+        }
+    }
+
+    switch(nChar)
+    {
+    case VK_RETURN:
+        // CR pressed:
+
+        // Cancel search selection:
+        if(pDoc->search.GetLength())
+        {
+            pDoc->search =  "";
+            pDoc->UpdateAllViews(NULL);
+            break;
+        }
+
+        if(row < pDoc->strlist.GetCount()-1)
+        {
+            // Split line, create new:
+            str = pDoc->strlist.GetLine(row);
+
+            lstr = str.Left(col);
+            rstr = str.Right(str.GetLength() - col);
+
+            SaveUndo(this, UNDO_MOD, row, col, str);
+            pDoc->strlist.SetLine(row, lstr);
+
+            SaveUndo(this, UNDO_ADD|UNDO_BLOCK, row+1, col, rstr);
+            pDoc->strlist.InsertLine(row + 1, rstr);
+
+            wants = 1;
+        }
+        // Move to next line:
+        col = 0;
+        row++;
+
+        // Move to next line:
+        if(row >= pDoc->strlist.GetCount())
+        {
+            pDoc->strlist.AddTail("");
+        }
+
+        if (wants)
+            pDoc->UpdateAllViews(NULL);
+
+
+        sync_caret();
+        break;
+
+    case VK_BACK:
+        // Backspace:
+        // Split line, reassemble:
+        if(col)
+        {
+            str = pDoc->strlist.GetLine(row);
+
+            lstr = str.Left(col-1);
+            rstr = str.Right(str.GetLength() - col);
+
+            pDoc->strlist.SetLine(row, lstr+rstr);
+            pDoc->UpdateAllViews(NULL, 1);
+            col--;
+            sync_caret();
+            }
+        else
+            message ("Already at the beginning of line");
+        break;
+
+    case VK_ESCAPE:
+        if(soh != -1)
+        {
+            soh = -1;
+            eoh = -1;
+            soch = -1;
+            eoch = -1;
+
+            message ("Cancelled selection");
+            pDoc->UpdateAllViews(NULL);
+        }
+        break;
+
+    case VK_TAB:
+        int loop, tab;
+        tab = 4 - (col % 4);
+        for(loop=0;loop<tab;loop++)
+            addchar(' ');
+        //message ("Tab");
+          break;
+
+    default:
+
+        // filter gray+- with numlock off
+        if((nChar == '+' || nChar == '-') && nFlags > 32 &&
+                !GetKeyState(VK_NUMLOCK))
+                PrintToNotepad("GRAY+- NO NUM\r\n");
+        else
+            addchar(nChar);
+        break;
+    }
+    CView::OnChar(nChar, nRepCnt, nFlags);
+}
+
+
+void CWedView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    //PrintToNotepad("Keyup: %d (%c) Flags: %d\r\n", nChar, nChar, nFlags);
+
+   if(record)
+        {
+        char num[16];
+        if(nChar != VK_F7 && nChar != VK_F8)
+        {
+        sprintf(num, "%d %d %d %d",
+                R_UP, nChar, nRepCnt, nFlags);
+        macros[currmac].AddTail(num);
+        }
+    }
+
+    switch(nChar)
+    {
+
+    case VK_SHIFT:
+        //PrintToNotepad("SHIFT UP ");
+
+        shift = FALSE;
+        break;
+
+        case VK_CONTROL:
+        //PrintToNotepad("CONTRL UP");
+        control = FALSE;
+        break;
+    }
+    //PrintToNotepad("Keyup: %d (%c) Flags: %d\r\n", nChar, nChar, nFlags);
+    CView::OnKeyUp(nChar, nRepCnt, nFlags);
+}
+
+void CWedView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    CString str, lstr, rstr, replay;
+    POSITION pos;
+    int  chh, cnt, flag, type, lim;
+
+    //PrintToNotepad("Keydown: %d (%c) Flags: %d\r\n", nChar, nChar, nFlags);
+
+    if(record)
+    {
+        char num[16];
+        if( nChar != VK_F7 && nChar != VK_F8
+            && !(nChar >= '0' && nChar <= '9' && control)
+          )
+        {
+        if(macros[currmac].GetCount() > 80)
+        {
+            message("Recording longer then usual ...");
+        }
+        sprintf(num, "%d %d %d %d",
+                R_DOWN, nChar, nRepCnt, nFlags);
+        PrintToNotepad("Recording: %s\r\n", num);
+        macros[currmac].AddTail(num);
+        }
+    }
+
+    if(nChar >= '0' && nChar <= '9' && control)
+    {
+        PrintToNotepad("Macro switching\r\n");
+
+        if(record)
+        {
+            message("Cannot switch buffers while recording");
+        }
+        else
+
+        {
+        char num[12];
+        currmac = nChar - '0';
+        sprintf(num, " M %02d ", currmac);
+        message ("Switched macro buffer");
+        mac(num);
+        }
+
+    }
+    else
+    switch(nChar)
+    {
+    case VK_SCROLL:
+        scrollock = !scrollock;
+        PrintToNotepad("Scroll lock\r\n");
+        break;
+
+    //  Find next
+    case VK_F6:
+        PrintToNotepad("Searching\r\n");
+        cnt = row+1;
+        lim = pDoc->strlist.GetCount() - 1;
+        while(TRUE)
+        {
+            int ccol;
+            if(cnt >= lim)
+            {
+                message("Reached end of file");
+                break;
+            }
+            str = pDoc->strlist.GetLine(cnt);
+            if((ccol = str.Find(pDoc->search)) != -1)
+            {
+                row = cnt;
+                col = ccol;
+                PrintToNotepad("Found at %d -- %d\r\n", cnt, ccol);
+                sync_caret();
+                pDoc->UpdateAllViews(NULL);
+                message("Found next");
+                break;
+            }
+            cnt++;
+        }
+        break;
+
+        //  Find prev
+    case VK_F5:
+
+        PrintToNotepad("Searching\r\n");
+        cnt = max(0, row-1);
+        while(TRUE)
+        {
+            int ccol;
+            if(!cnt)
+            {
+                message("Reached beginning of file");
+                break;
+            }
+            str = pDoc->strlist.GetLine(cnt);
+            if((ccol = str.Find(pDoc->search)) != -1)
+            {
+                row = cnt;
+                col = ccol;
+                PrintToNotepad("Found at %d -- %d\r\n", cnt, ccol);
+                sync_caret();
+                pDoc->UpdateAllViews(NULL);
+                message("Found previous");
+                break;
+            }
+            cnt--;
+        }
+        break;
+
+    // Recording key:
+    case VK_F7:
+        //PrintToNotepad("F7 ");
+        if(record)
+        {
+            mode("");
+            record = FALSE;
+            message("End recording");
+        }
+        else
+        {
+            // Start
+            mode("REC");
+
+            macros[currmac].RemoveAll();
+            record = TRUE;
+            message("Start recording");
+        }
+        break;
+
+    case VK_F8:
+
+        PrintToNotepad("F8 ");
+        if(record)
+        {
+            message("Cannot play back while recording");
+            break;
+        }
+        if(macros[currmac].IsEmpty())
+        {
+            message("Nothing to play back");
+            break;
+        }
+        mode("PLAY");
+
+        pos = macros[currmac].GetHeadPosition();
+        while(TRUE)
+        {
+        if (!pos)
+            break;
+        CString replay =  macros[currmac].GetNext(pos);
+        sscanf(replay, "%d %d %d %d", &type, &chh, &cnt, &flag);
+
+        PrintToNotepad("Playing: %d %d %d %d\r\n",
+                            type, chh, cnt, flag);
+
+        // Mimic keystrokes in order they got here:
+        switch(type)
+            {
+            case R_DOWN:  OnKeyDown(chh, cnt, flag); break;
+            case R_CHAR:  OnChar(chh, cnt, flag);    break;
+            case R_UP:    OnKeyUp(chh, cnt, flag);   break;
+
+            case R_SYSDOWN:  OnSysKeyDown(chh, cnt, flag); break;
+            case R_SYSCHAR:  OnSysChar(chh, cnt, flag);    break;
+            case R_SYSUP:    OnSysKeyUp(chh, cnt, flag);   break;
+
+            default:
+                PrintToNotepad("Error on playing: %d %d %d\r\n", chh, cnt, flag);
+                break;
+            }
+        }
+        mode("");
+
+        // Update the screen
+        pDoc->UpdateAllViews(NULL);
+
+        break;
+
+    case VK_SHIFT:
+        shift = TRUE;
+        break;
+
+    case VK_CONTROL:
+        control = TRUE;
+        break;
+
+    case VK_LEFT:
+        if(control)
+            {
+            // Jump to begin of prev word
+            int pos = 0;
+            str =  pDoc->strlist.GetLine(row);
+
+            if(!str.GetLength() )
+                goto endd2;
+
+            pos = min(col, str.GetLength()-1);
+            while(1)
+            {
+                // Step to begin of current word:
+                while(str.GetAt(pos) != ' ')
+                {
+                    if(!pos) goto endd2;
+                    pos--;
+                }
+                // Step to begin of current space:
+                while(str.GetAt(pos) == ' ')
+                {
+                    if(!pos) goto endd2;
+                    pos--;
+                }
+                if(pos < col)
+                    // found it
+                    break;
+            }
+        endd2:
+            col = pos;
+        }
+        else
+        {
+            if(col)col--;
+        }
+        sync_caret();
+        break;
+
+    case VK_RIGHT:
+        if(control)
+        {
+            // Jump to begin of next word
+            int pos = 0;
+            str =  pDoc->strlist.GetLine(row);
+
+            if(!str.GetLength() )
+                goto endd;
+
+            while(1)
+            {
+                // Step to end of current word:
+                while(str.GetAt(pos) != ' ')
+                {
+                    pos++;
+                    if(pos >= str.GetLength())
+                        goto endd;
+                }
+                // Step to end of current space:
+                while(str.GetAt(pos) == ' ')
+                {
+                    pos++;
+                    if(pos >= str.GetLength())
+                        goto endd;
+                }
+                if(pos > col)
+                    // found it
+                    break;
+            }
+        endd:
+            col = pos;
+        }
+        else
+        {
+        col++;
+        }
+        sync_caret();
+        break;
+
+    case VK_UP:
+        if(shift) PrintToNotepad("SHIFT-");
+        if(control) PrintToNotepad("CONTROL-");
+        PrintToNotepad("UP ");
+        if(row)
+                row--;
+        else
+            message("At beginning of file");
+        sync_caret();
+        break;
+
+    case VK_DOWN:
+        PrintToNotepad("DOWN ");
+        if(row < pDoc->strlist.GetCount()-1)
+                row++;
+        else
+            message("At end of file");
+
+        sync_caret();
+        break;
+
+    case VK_ADD:
+        // Grey +
+        if(GetKeyState(VK_NUMLOCK))
+                break;
+        CopyToHold();
+        break;
+
+    case VK_SUBTRACT:
+        // Grey -
+        if(GetKeyState(VK_NUMLOCK))
+            break;
+        CopyToHold(TRUE);
+        break;
+
+    case VK_PRIOR:
+        row-=20;
+        row = max(row, 0);
+        sync_caret();
+        break;
+
+    case VK_NEXT:
+        row+=20;
+        row = min(row, pDoc->strlist.GetCount()-1);
+        sync_caret();
+        break;
+
+    case VK_HOME:
+        if(control)
+        {
+            col = 0;  row = 0;
+            message("Moved to beginning of File");
+        }
+        else if(shift)
+        {
+            int col, lrow = row;
+
+            col = 0;
+            while(lrow)
+            {
+                lrow--;
+                str = pDoc->strlist.GetLine(row);
+
+                // Break on paragraph boundary:
+                if(str == "" )
+                {
+                    message("Moved to beginning of Paragraph");
+                    break;
+                }
+                // Break on block boundary:
+                col = str.Find('{');
+                if(col!=-1)
+                {
+                    // Here we move after the '{' to let the work begin
+                    col = col+1;
+                    message("Moved to beginning of Block");
+                    break;
+                }
+            }
+            row = lrow;
+        }
+        else
+        {
+            col = 0;
+            message("Moved to beginning of Line");
+        }
+        sync_caret();
+        break;
+
+    case VK_END:
+        if(control)
+        {
+            row = pDoc->strlist.GetCount()-1;
+            str = pDoc->strlist.GetLine(row);
+            col = str.GetLength();
+            message("Moved to end of File");
+        }
+        else if(shift)
+        {
+            int col, lrow = row;
+
+            col = 0;
+            while(lrow < pDoc->strlist.GetCount())
+            {
+                lrow++;
+                str = pDoc->strlist.GetLine(lrow);
+
+                // Break on paragraph boundary:
+                if(str == "" )
+                {
+                    message("Moved to end of Paragraph");
+                    break;
+                }
+                // Break on block boundary:
+                col = str.Find('}');
+                if(col!=-1)
+                {
+                    col = col;
+                    message("Moved to end of Block");
+                    break;
+                }
+            }
+            row = lrow;
+        }
+        else
+        {
+        // Jump to the end of line:
+        str = pDoc->strlist.GetLine(row);
+        col = str.GetLength();
+        message("Moved to the end of Line");
+        }
+        sync_caret();
+        break;
+
+    case VK_DELETE:
+        str = pDoc->strlist.GetLine(row);
+        // If end of line, pull in previous line:
+        if(col >= str.GetLength())
+            {
+            int old = row;
+            // Extend line if we point after it
+            int diff = col - str.GetLength();
+            if(diff > 0)
+                {
+                CString spaces(' ', diff); str+=spaces;
+                }
+            PrintToNotepad("Pulled in prev line\r\n");
+            rstr = pDoc->strlist.GetLine(row+1);
+
+            SaveUndo(this, UNDO_MOD, row, col, str);
+            pDoc->strlist.SetLine(row, str+rstr);
+
+            SaveUndo(this, UNDO_DEL, row+1, col, str);
+            // Remove next line:
+            DeleteLine(this, row+1);
+
+            row = old;
+            pDoc->UpdateAllViews(NULL);
+
+            }
+        else
+            {
+            // Split line, reassemble:
+            SaveUndo(this, UNDO_MOD, row, col, str);
+            lstr = str.Left(col);
+            rstr = str.Right(str.GetLength() - (col+1) );
+            pDoc->strlist.SetLine(row, lstr+rstr);
+            pDoc->UpdateAllViews(NULL, 1);
+
+            }
+        break;
+
+    case VK_INSERT:
+        {
+        POSITION pos;
+        if(holding[currhold].IsEmpty())
+        {
+            message("Empty Holding");
+            break;
+        }
+        // Put holding into file buffer
+
+        SaveUndo(this, UNDO_NOP, row, col, "");
+
+        pDoc->SetModifiedFlag(1);
+        pos = holding[currhold].GetHeadPosition();
+        while(TRUE)
+            {
+            if (!pos)
+                break;
+            str = holding[currhold].GetNext(pos);
+
+
+            // extend if not big enough to insert it
+            if(pDoc->strlist.GetCount() <= row)
+                pDoc->strlist.AddTail("");
+
+            if(holdflag[currhold])
+                {
+                CString str2 = pDoc->strlist.GetLine(row);
+
+                SaveUndo(this, UNDO_MOD|UNDO_BLOCK,
+                    row, col, str2);
+
+                int diff = col - str2.GetLength();
+                // Expand to col length
+                if(diff > 0)
+                {
+                    CString str4(' ', diff);
+                    str2 += str4;
+                }
+                CString str3 = str2.Left(col) + str +
+                    str2.Right(str2.GetLength() - col);
+
+                pDoc->strlist.SetLine(row, str3);
+                }
+            else
+                {
+                SaveUndo(this, UNDO_ADD|UNDO_BLOCK,
+                    row, col, "");
+                pDoc->strlist.InsertLine(row, str);
+                }
+            row++;
+            }
+        pDoc->UpdateAllViews(NULL);
+        message("Inserted lines from holding");
+        sync_caret();
+        }
+    }
+    CView::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+void CWedView::OnSysKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    //PrintToNotepad("SysKeyDown: %d (%c) Flags: %d\r\n", nChar, nChar, nFlags);
+
+    if(record)
+    {
+        char num[16];
+        if(nChar != VK_F7 && nChar != VK_F8)
+        {
+        sprintf(num, "%d %d %d %d",
+                R_SYSDOWN, nChar, nRepCnt, nFlags);
+        PrintToNotepad("Recording: %s\r\n", num);
+        macros[currmac].AddTail(num);
+        }
+    }
+
+    switch(nChar)
+    {
+    case VK_MENU:
+        //PrintToNotepad("ALT");
+        alt = TRUE;
+        break;
+
+    case VK_UP:
+        if(shift) PrintToNotepad("SHIFT-");
+        if(control) PrintToNotepad("CONTROL-");
+        PrintToNotepad("ALT-UP ");
+        break;
+    }
+    CView::OnSysKeyDown(nChar, nRepCnt, nFlags);
+}
+
+void CWedView::OnSysChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    Search src;
+    CWnd   *list;
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    //PrintToNotepad("SysChar: %d (%c) Flags: %d\r\n", nChar, nChar, nFlags);
+
+    if(record)
+    {
+        char num[16];
+        if(nChar != VK_F7 && nChar != VK_F8)
+        {
+        sprintf(num, "%d %d %d %d",
+                R_SYSCHAR, nChar, nRepCnt, nFlags);
+        PrintToNotepad("Recording: %s\r\n", num);
+        macros[currmac].AddTail(num);
+        }
+    }
+
+    CString str, lstr;
+    int loop, lim, high = 0, items = 0;
+    char num[24];
+
+    if(nChar >= '0' && nChar <= '9')
+    {
+        char num[12];
+        currhold = nChar - '0';
+        sprintf(num, " H %02d ", currhold);
+        message ("Switched holding buffer");
+        hold(num);
+    }
+    else
+    switch(nChar)
+    {
+    case 's':
+        {
+
+        CString str = pDoc->strlist.GetLine(row);
+        CString str2 = "";
+
+        int pos1 = min(col, str.GetLength()-1);
+        int pos2 = min(col, str.GetLength()-1);
+
+        if(str.GetLength())
+        {
+            // Step to end of current word:
+            while(delim.Find(str.GetAt(pos1)) == -1)
+            {
+               if(++pos1 >= str.GetLength())
+                    break;
+            }
+            // Step to beginning of current word:
+            while(delim.Find(str.GetAt(pos2)) == -1)
+                {
+                if(--pos2 <= 0)
+                    break;
+                }
+            while(delim.Find(str.GetAt(pos2)) != -1)
+                pos2++;
+           }
+        // pos1 and pos1 have the word
+        if(pos1 != pos2)
+        {
+         str2 = str.Mid(pos2, pos1-pos2);
+        }
+        src.m_src = str2;
+        src.DoModal();
+        if(src.m_esc)
+            {
+            // Cancelled
+            break;
+            }
+        pDoc->search = src.m_src;
+        pDoc->ssel.ShowWindow(TRUE);
+        pDoc->ssel.SetWindowText(pDoc->GetTitle()
+                + " searching for '" + src.m_src + "'");
+        pDoc->ssel.m_src = src.m_src;
+        pDoc->ssel.connect = (int)this;
+        list =  pDoc->ssel.GetDlgItem(IDC_LIST1);
+        lim  =  pDoc->strlist.GetCount() ;
+        list->SendMessage(LB_RESETCONTENT, 0, 0);
+
+        for(loop = 0 ; loop < lim; loop++)
+        {
+        str = pDoc->strlist.GetLine(loop);
+        // Add lines matching criteria:
+        if(str.Find(pDoc->search) != -1)
+            {
+            CString str3 = str, str4 = "";
+            int pos1 = 0, pos2, count = 100;
+
+            // Expand tabs:
+            while(count--)
+                {
+                pos2 = str3.Find('\t');
+                if(pos2 == -1)
+                    {
+                    // No more, copy the rest
+                    str4 += str3.Right(str3.GetLength() - pos1);
+                    break;
+                    }
+                //PrintToNotepad("str3=%s\r\n", (const char *) str3);
+                // Substitute with spaces, carry over
+                str4 += "    " + str3.Mid(pos1+1 , str3.GetLength() - (pos2 +1));
+                str3  = str3.Right(str3.GetLength() - (pos2 +1));
+                pos1 = pos2;
+                }
+            sprintf(num, "%-5d", loop);
+            str = num +  str4;
+            list->SendMessage(LB_ADDSTRING, 0,
+                        (long)((const char *)str));
+
+            if(loop >= row && !high)
+                {
+                 high = items;
+                }
+            items++;
+            }
+        }
+        if(!items)
+        {
+            list->SendMessage(LB_ADDSTRING, 0, (int)"Not found");
+        }
+        else
+        {
+            list->SendMessage(LB_SETCURSEL, high-1, 0);
+            list->SendMessage(LB_SETCURSEL, high, 0);
+        }
+        message ("Search view");
+        }
+        break;
+
+    case 'd':
+        // Delete line
+        str = pDoc->strlist.GetLine(row);
+        SaveUndo(this, UNDO_DEL, row, col, str);
+        DeleteLine(this, row);
+
+        pDoc->UpdateAllViews(NULL);
+        sync_caret();
+        message ("Deleted line");
+        break;
+
+    case 'u':
+        // Undo
+        UnDo(this);
+        break;
+
+    case 'r':
+        // Redo
+        ReDo(this);
+        break;
+
+    case 'k':
+        // Kill to EOL
+        str = pDoc->strlist.GetAt(
+            pDoc->strlist.FindIndex(row));
+        SaveUndo(this, UNDO_MOD, row, col, str);
+        lstr = str.Left(col);
+        pDoc->strlist.SetLine(row, lstr);
+        pDoc->UpdateAllViews(NULL);
+        message("Cleared till end of line");
+        break;
+
+    case 'b':
+        message ("Show buffers");
+        break;
+
+    case 'l':
+          if(soh == -1)
+            {
+            // Set markers
+            soh = row;
+            eoh = row;
+            message ("Mark set");
+            }
+        else
+            {
+            // Reset markers
+            soh = -1;
+            eoh = -1;
+            message ("Mark unset");
+            }
+        pDoc->UpdateAllViews(NULL);
+        break;
+
+    case 'c':
+        // Coloumn markers
+        if(soh == -1)
+            soh = row;
+        else
+            soh =-1;
+        if(soch == -1)
+            {
+            // Set
+            soch = col;
+            eoch = col;
+            message ("Column mark set");
+            }
+        else
+            {
+            // Reset
+            soch = -1;
+            eoch = -1;
+            message ("Column mark unset");
+            }
+        pDoc->UpdateAllViews(NULL);
+        break;
+
+    case 'o':
+        ((CWedApp*)AfxGetApp())->OpenFile();
+        message ("Opening file");
+        break;
+
+    case 'n':
+        ((CWedApp*)AfxGetApp())->NewFile();
+        message ("New file");
+        break;
+
+    default:
+        CView::OnSysChar(nChar, nRepCnt, nFlags);
+        break;
+    }
+}
+
+
+void CWedView::OnSysKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    if(record)
+    {
+        char num[16];
+        if(nChar != VK_F7 && nChar != VK_F8)
+        {
+        sprintf(num, "%d %d %d %d",
+                R_SYSUP, nChar, nRepCnt, nFlags);
+        //PrintToNotepad("Recording: %s\r\n", num);
+        macros[currmac].AddTail(num);
+        }
+    }
+    switch(nChar)
+        {
+        case VK_MENU:
+            alt = FALSE;
+            break;
+        }
+    CView::OnSysKeyUp(nChar, nRepCnt, nFlags);
+}
+
+int  CWedView::addchar(char chh)
+{
+    CString str, str2;
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    //PrintToNotepad("Addchar: %c row: %d col: %d\r\n",
+    //          chh, row, col);
+
+    // Construct undo
+    str = pDoc->strlist.GetLine(row);
+
+    if(delim.Find(chh) == -1)
+        SaveUndo(this, UNDO_CHAR, row, col, str);
+    else
+        SaveUndo(this, UNDO_SEP, row, col, str);
+
+    // Extend string if we are after the end:
+    int diff = col - str.GetLength();
+    if(diff > 0)
+    {
+        CString spaces(' ', diff); str+=spaces;
+    }
+
+    str2 = str.Left(col) + chh
+            + str.Right(str.GetLength() - col);
+
+    // Communicate changes to document:
+    pDoc->strlist.SetLine(row, str2);
+    col++;
+
+    // Tell the doc to redraw
+    pDoc->UpdateAllViews(NULL);
+    sync_caret();
+    pDoc->SetModifiedFlag();
+
+    return(0);
+}
+
+void CWedView::OnSetFocus(CWnd* pOldWnd)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    SetScrollRange(SB_VERT,  0, pDoc->strlist.GetCount());SetScrollRange(SB_VERT,  0, pDoc->strlist.GetCount());
+    SetScrollRange(SB_HORZ, 0, 80);
+
+    mode(modestr);
+    PrintToNotepad("Got focus: %d old: %d\r\n", this, pOldWnd);PrintToNotepad("Got focus: %d old: %d\r\n", this, pOldWnd);
+
+    // Take care of our cursor
+    CreateCaret(&caret);  ShowCaret(); 
+    CView::OnSetFocus(pOldWnd);
+
+    pDoc->UpdateAllViews(NULL);
+    sync_caret();sync_caret();
+}
+
+// Make POS and caret agree
+// If bound == 1 move 3 lines away from borders
+// If bonud == 2 imitate scroll lock
+
+int  CWedView::sync_caret(int bound)
+
+{
+    char num[16];
+    int wants = 0;
+    POINT pos;
+    RECT rec;
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    PrintToNotepad("Sync_caret %d %d\r\n", row, col);
+
+    // Make sure we are in file -----
+    if(row >= pDoc->strlist.GetCount())
+        {
+        PrintToNotepad("Move attempted to after EOF row: %d col: %d\r\n",
+                row, col);
+
+        row = pDoc->strlist.GetCount()-1;
+        }
+
+
+    // Make sure we are in view -----
+    GetClientRect(&rec) ;
+
+    // Display caret in new position:
+    if(srow > row)
+    {
+        srow = row;
+
+        if(bound)
+            srow -= 3;
+        PrintToNotepad("Up scroll srow = %d\r\n", srow);
+        wants =  TRUE;
+    }
+
+    if(scol > col)
+    {
+        scol = col;
+        PrintToNotepad("Left scroll scol = %d\r\n", scol);
+        wants =  TRUE;
+    }
+    pos.x = fflf.lfWidth * (col - scol);
+    pos.y = fflf.lfHeight * ((row - srow) + 1);
+
+    // Limit it
+    if((rec.bottom - rec.top) < pos.y )
+    {
+        srow = (fflf.lfHeight * (row + 1)  -
+                        (rec.bottom - rec.top))/fflf.lfHeight + 1;
+
+        if(bound)
+            srow += 3;
+
+        pos.y = fflf.lfHeight * ((row - srow) + 1);
+        wants =  TRUE;
+        PrintToNotepad("Scroll srow = %d\r\n", srow);
+    }
+
+    if(rec.right - rec.left < pos.x)
+    {
+        scol = (fflf.lfWidth * (col + 1)  -
+                        (rec.right - rec.left))/fflf.lfWidth + 1;
+        pos.x = fflf.lfWidth * ((col - scol) + 1);
+        wants =  TRUE;
+        PrintToNotepad("Scroll scol = %d\r\n", scol);
+
+    }
+
+     // Adjust for scroll lock
+#if 0
+    if(scrollock)
+        {
+        int mid = ((rec.bottom - rec.top)/fflf.lfHeight)/2;
+
+        if(row >  mid)
+            {
+            srow = row - mid;
+            row = mid;
+            }
+        wants = TRUE;
+        }
+#endif
+
+    // Check for out of bounds
+    srow = min(srow, pDoc->strlist.GetCount()-1);
+    srow = max(srow, 0);
+
+    row = min(row, pDoc->strlist.GetCount()-1);
+    row = max(row,  0);
+
+    if(wants)
+        pDoc->UpdateAllViews(NULL);
+    SetCaretPos(pos);
+
+    // Set highlight
+    if(soh != -1)
+        {
+        static oldrow;
+        eoh = row;
+
+        if(soch != -1)
+            {
+            eoch = col;
+            }
+        // Swap col if overscanned (convenience)
+        if(eoch < soch)
+            {
+            int tmp = eoch;
+            eoch = soch;
+            soch = tmp;
+            message ("Swapped colomn Begin Mark -- End Mark");
+            }
+
+        // Swap row if overscanned (convenience)
+        if(eoh < soh)
+        {
+            int tmp = eoh;
+            eoh = soh;
+            soh = tmp;
+            message ("Swapped row Begin Mark -- End Mark");
+        }
+
+        // Redisplay if highlight changed
+        pDoc->UpdateAllViews(NULL);
+        //oldrow = eoh;
+    }
+    SetScrollPos(SB_HORZ, col);
+    SetScrollPos(SB_VERT, row);
+    sprintf(num, " Ln %d Col %d ", row, col);
+    rowcol(num);
+
+    return(0);
+}
+
+void CWedView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    PrintToNotepad("OnUpdate %d %d\r\n", row, col);
+    
+
+    if(diff & diffchange)
+        {
+           linediff(other, this);
+        }
+
+    if(lHint)
+    {
+        // Only from current postion to end of line
+        RECT rec;
+        CString str;
+        str = pDoc->strlist.GetLine(row);
+        rec.left = fflf.lfWidth  * (col-1);
+        rec.top  = fflf.lfHeight * (row - srow);
+        // in case of deleted char, add one
+        rec.right = fflf.lfWidth * (str.GetLength() + 4);
+        rec.bottom = rec.top + fflf.lfHeight;
+
+        InvalidateRect(&rec, FALSE);
+    }
+    else
+    {
+        // Refresh the whole lot:
+        InvalidateRect(NULL, FALSE);
+    }
+}
+
+void CWedView::OnSize(UINT nType, int cx, int cy)
+{
+    CView::OnSize(nType, cx, cy);
+}
+
+
+void CWedView::OnTimer(UINT nIDEvent)
+{
+    static int count;
+    static char str[24];
+
+    //CTime time = GetCurrentTime();
+
+    time_t osBinaryTime;    // C run-time time (defined in <time.h>)
+    time( &osBinaryTime ) ;  // Get the current time from the
+    CTime time3( osBinaryTime );
+                            // operating system.
+    sprintf(str, "%02d:%02d:%02d",
+            (int)time3.GetHour(),
+                (int)time3.GetMinute(),
+                    (int)time3.GetSecond());
+
+    ((CMainFrame*)theApp.m_pMainWnd)->m_wndStatusBar
+                        .SetPaneText(2, str);
+
+    sprintf(str, "%02d/%02d/%02d",
+            (int)time3.GetMonth(),
+                (int)time3.GetDay(),
+                    (int)time3.GetYear());
+
+    ((CMainFrame*)theApp.m_pMainWnd)->m_wndStatusBar
+                        .SetPaneText(3, str);
+
+    if(timer_in) timer_in--;
+    if(timer_in == 1) message("Idle");
+
+
+//m_wndStatusBar.SetPaneText(2,"0:1");
+    CView::OnTimer(nIDEvent);
+}
+
+int  CWedView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+    int loop;
+
+    if(!SetTimer(1,330, NULL))
+        PrintToNotepad("Cannot set timer\r\n");
+
+    ShowScrollBar(SB_BOTH );
+    EnableScrollBar(0);
+    SetFont(&ff);
+
+    for(loop = 0; loop < sizeof(tabs)/sizeof(int); loop++)
+    {
+        tabs[loop] = loop * fflf.lfWidth * 4;
+    }
+
+    if (CView::OnCreate(lpCreateStruct) == -1)
+        return -1;
+
+    return 0;
+}
+
+#include "bufferlist.h"
+
+void CWedView::OnMenuitem32771()
+{
+    BufferList bl;
+    bl.DoModal();
+}
+
+static CPoint oldpoint;
+
+void CWedView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    // Translate coord
+    row = point.y /fflf.lfHeight + srow;
+    col = point.x /fflf.lfWidth;
+    row = min(row, pDoc->strlist.GetCount()-1);
+
+    // Tell the system the mouse is down ...
+    mouse = TRUE;
+
+    //If we clecked on non highlite, stop
+    if(row < soh || row > eoh)
+        {
+        soh = eoh = soch = eoch = -1;
+        pDoc->UpdateAllViews(NULL);
+        }
+    //PrintToNotepad("Mouse: x=%d y=%d\r\n", point.x, point.y);
+
+    sync_caret();
+    oldpoint = point;
+    CView::OnLButtonDown(nFlags, point);
+}
+
+void CWedView::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    row = point.y /fflf.lfHeight + srow;
+    col = point.x /fflf.lfWidth;
+
+    row = min(row, pDoc->strlist.GetCount()-1);
+
+    if(soh == -1)
+        soh = row;
+    else
+        soh = -1;
+
+    pDoc->UpdateAllViews(NULL);
+    sync_caret();
+    CView::OnLButtonDblClk(nFlags, point);
+}
+
+
+static CString undostr;
+static int oldrow, oldcol, startrow, endrow;
+
+void CWedView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    // Save undo info for this one:
+    if(drag)
+    {
+        if(startrow != endrow)
+        {
+        // We have moved a string ...
+        PrintToNotepad("Saveundo: start %d end %d with %s\r\n"
+                , startrow, endrow, undostr);
+
+        SaveUndo(this, 'd', startrow, 0, undostr);
+        SaveUndo(this, 't', endrow, 0, undostr);
+        }
+    }
+    mouse = FALSE;
+    drag = FALSE;
+    highlite = FALSE;
+
+    ReleaseCapture();
+
+    CView::OnLButtonUp(nFlags, point);
+}
+
+
+void CWedView::OnMouseMove(UINT nFlags, CPoint point)
+{
+    int lrow, lcol;
+    CWedDoc*    pDoc;
+
+    // If mouse is not down, no drag or highlite
+    if(!mouse)
+        {
+        goto end_mou;
+        }
+    pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    // Translate to cursor coordinates:
+    lrow = point.y /fflf.lfHeight + srow;
+    lcol = point.x /fflf.lfWidth;
+
+    // Check for out of bounds, SetCapture can do minuses
+    lrow = max(lrow, 0);
+    lrow = min(lrow, pDoc->strlist.GetCount()-1);
+    lcol = max(lcol, 0);
+
+    // Move to coordinates
+    row = lrow;
+    col = lcol;
+
+    // Test if in action
+    if(drag)
+        {
+        // Row changed, action
+        if(oldrow != lrow)
+            {
+            int loop, xrow, offset;
+
+            offset = lrow - oldrow;
+            xrow = oldrow = lrow;
+
+            PrintToNotepad("Drag: x=%d y=%d\r\n", point.x, point.y);
+
+            // Remove old
+            lrow = soh;
+
+            SaveUndo(this, UNDO_NOP, row, col, "");
+
+            for(loop = 0; loop < draglist.GetCount(); loop++)
+            {
+                CString str = pDoc->strlist.GetLine(lrow);
+
+                PrintToNotepad("Delete line: %s\r\n", str);
+                SaveUndo(this, UNDO_DEL, lrow, col, str);
+                DeleteLine(this, lrow);
+            }
+
+            if(offset >  0)
+            {
+                if (soh < pDoc->strlist.GetCount()-1)
+                {
+
+                    lrow = ++soh;
+                    ++eoh;
+                }
+            }
+            else
+            {
+                if (soh)
+                {
+                    lrow = --soh;
+                    --eoh;
+                }
+            }
+
+            // Add new, careful of last line (spent a day tracking):
+            POSITION pos = draglist.FindIndex(0);
+            loop = lrow;
+
+            while(TRUE)
+                {
+                CString str2;
+
+                if(!pos)
+                    break;
+
+                str2 = draglist.GetNext(pos);
+                pDoc->strlist.InsertLine(loop++, str2);
+                PrintToNotepad("Adding: row=%d %s\r\n", lrow, str2);
+                }
+
+            //soh = xrow + 1 ;
+            //eoh = xrow + draglist.GetCount();
+
+            endrow = lrow;
+            pDoc->UpdateAllViews(NULL);
+            sync_caret();
+            }
+        }
+    else if (highlite)
+        {
+        if(oldrow != lrow || oldcol != lcol)
+            {
+            col = lcol;
+            row = lrow;
+
+            //PrintToNotepad("Highlite: %d\r\n", row);
+
+            oldrow = lrow;
+            oldcol = lcol;
+
+            sync_caret();
+            //pDoc->UpdateAllViews(NULL);
+            }
+        }
+    else
+        {
+        // Not in action, see if we want some
+        if(soh != -1)
+            {
+            // start drag:
+            undostr = pDoc->strlist.GetAt(
+            pDoc->strlist.FindIndex(lrow));
+
+            if(lrow >= soh &&
+                lrow < eoh )
+                {
+                int loop;
+
+                draglist.RemoveAll();
+                for(loop = soh; loop <= eoh; loop++)
+                    {
+                    CString hl;
+                    hl = pDoc->strlist.GetAt(
+                            pDoc->strlist.FindIndex(loop));
+                    draglist.AddTail(hl);
+
+                    PrintToNotepad("Drag pick: %s\r\n", hl);
+                    }
+                }
+            else
+            {
+                soh  = -1;
+                eoh  = -1;
+                soch = -1;
+                eoch = -1;
+                highlite = FALSE;
+
+            }
+            oldrow = lrow;
+            startrow = lrow;
+            drag = TRUE;
+            }
+        else
+            {
+            // start higlite, only if we dragged a 1/2 char
+
+            if(abs(oldpoint.y - point.y) > 4)
+                {
+                if(shift)
+                    {
+                    soch = lcol;
+                    eoch = lcol;
+                    }
+                soh = lrow;
+                eoh = lrow;
+                highlite = TRUE;
+                PrintToNotepad("Start highlite: %d\r\n", soh);
+                }
+            }
+        SetCapture();
+        }
+   end_mou:
+   CView::OnMouseMove(nFlags, point);
+}
+
+void CWedView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    switch(nSBCode)
+    {
+    // Emulate keystrokes:
+    case SB_LINEDOWN   :
+            OnKeyDown(40, 1, 336);
+            break;
+
+    case SB_LINEUP   :
+            OnKeyDown(38, 1, 328);
+            break;
+
+    case SB_PAGEDOWN   :
+        OnKeyDown(34, 1, 337);
+        break;
+
+    case SB_PAGEUP   :
+        OnKeyDown(33, 1, 329);
+        break;
+
+    case SB_LEFT   :
+        OnKeyDown(33, 1, 329);
+        break;
+
+
+    case    SB_THUMBTRACK  :
+        row = (nPos);
+        sync_caret();
+
+        PrintToNotepad("Scroll track %d\r\n", nPos);
+        break;
+    }
+
+    SetScrollPos(SB_VERT,row);
+    CView::OnVScroll(nSBCode, nPos, pScrollBar);
+}
+
+void CWedView::OnViewViewhex()
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    if( pDoc->hex)
+    {
+        modestr = "";
+        mode(modestr);
+        pDoc->hex = FALSE;
+    }
+    else
+    {
+        pDoc->hex = TRUE;
+        modestr = "HEX";
+        mode(modestr);
+
+    }
+
+    pDoc->UpdateAllViews(NULL);
+
+}
+
+void CWedView::OnPrint(CDC* pDC, CPrintInfo* pInfo)
+
+{
+
+    char foot[128];
+    char head[128];
+    int xx = 0, yy = 0, lim;
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    CString str;
+    CFont *oldfont;
+    TEXTMETRIC tm;
+
+    PrintToNotepad("Rendering page: %d\r\n", pInfo->m_nCurPage);
+
+    // Just started
+    if(pInfo->m_nCurPage == 1)
+    {
+        progress = 0;
+
+        // Kill previous array
+        pages.SetSize(2);
+        pages.SetAt(pInfo->m_nCurPage, progress);
+    }
+    else
+    // Remeber page boundaries for backwards scan
+    {
+        if(pages.GetSize() < (int)pInfo->m_nCurPage + 1)
+            {
+            // Add
+            pages.SetSize( pages.GetSize() + 1);
+            pages.SetAt(pInfo->m_nCurPage, progress);
+            }
+        else
+            {
+            // Recall
+            pInfo->m_bContinuePrinting = TRUE ;
+            progress = pages.GetAt(pInfo->m_nCurPage);
+            }
+    }
+    oldfont = pDC->SelectObject( &pp );
+    pDC->GetTextMetrics(&tm);
+
+    // Put header and footer
+    sprintf(head, "%s", pDoc->GetPathName());
+    pDC->TextOut(pInfo->m_rectDraw.BottomRight().x /2 -
+            strlen(head) * tm.tmAveCharWidth/2, 00,
+            head);
+
+    sprintf(foot, "- page %d -", pInfo->m_nCurPage);
+    pDC->TextOut(pInfo->m_rectDraw.BottomRight().x /2 -
+            strlen(foot) * tm.tmAveCharWidth/2,
+            pInfo->m_rectDraw.BottomRight().y - tm.tmHeight,
+                foot);
+
+    // Adjust limits to alow header/footer
+    pInfo->m_rectDraw.BottomRight().y  -= 3*tm.tmHeight;
+    pInfo->m_rectDraw.TopLeft().y += 3*tm.tmHeight;
+
+    // Leave space for hole punch and right margin
+    pInfo->m_rectDraw.TopLeft().x += 6 * tm.tmHeight;
+    pInfo->m_rectDraw.BottomRight().x  -= 3 * tm.tmHeight;
+
+    // Do it
+    int height = pInfo->m_rectDraw.BottomRight().y -
+                        pInfo->m_rectDraw.TopLeft().y ;
+
+    int width = pInfo->m_rectDraw.BottomRight().x -
+                        pInfo->m_rectDraw.TopLeft().x ;
+
+    int cwidth = width / tm.tmAveCharWidth;
+
+    xx = pInfo->m_rectDraw.TopLeft().x ;
+    yy = pInfo->m_rectDraw.TopLeft().y ;
+    lim  = pDoc->strlist.GetCount() ;
+
+    for( progress; progress < lim; progress++)
+        {
+        str = pDoc->strlist.GetLine(progress);
+
+        CString str2;
+
+        while(TRUE)
+            {
+            str2= str.Left(cwidth);
+
+            // Wrap lines, no word boundary is consdered
+            pDC->TabbedTextOut(xx, yy, str2, 10, tabs, 0);
+            yy+=tm.tmHeight;
+
+            // Reached limit of string, stop
+            if(str.GetLength() < cwidth)
+                break;
+
+            str = str.Right(str.GetLength() - cwidth);
+
+            // Reached limit of client area, stop
+            if(yy > height)
+                break;
+            }
+
+        // Reached limit of client area, stop
+        if(yy > height)
+            break;
+        }
+
+    // Examine end of pages
+    if(progress >= lim)
+        {
+        pInfo->SetMaxPage(pInfo->m_nCurPage);
+        }
+
+    // Restore stolen settings:
+    pDC->SelectObject(oldfont);
+    //
+    //CView::OnPrint(pDC, pInfo);
+   }
+
+void CWedView::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
+{
+    CView::OnPrepareDC(pDC, pInfo);
+
+    // The class will pass a null pointer, ignore it
+    if(!pInfo)
+        return;
+
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    int lim  = pDoc->strlist.GetCount() ;
+
+    pInfo->m_bContinuePrinting = TRUE ;
+
+    // Only limit on real printing:
+    if(!pInfo->m_bPreview)
+    {
+    if(progress >= lim)
+        {
+         pInfo->m_bContinuePrinting = FALSE ;
+        }
+    }
+}
+
+void CWedView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+
+    switch(   nSBCode)
+    {
+    case    SB_LINELEFT:
+            OnKeyDown(37, 1, 331);
+            break;
+
+    case    SB_LINERIGHT :
+            OnKeyDown(39, 1, 333);
+            break;
+
+    case    SB_PAGELEFT:
+            OnKeyDown(17, 1, 29);
+            OnKeyDown(37, 1, 331);
+            OnKeyUp(17, 1, 49181);
+            break;
+
+    case    SB_PAGERIGHT:
+            OnKeyDown(17, 1, 29);
+            OnKeyDown(39, 1, 333);
+            OnKeyUp(17, 1, 49181);
+            break;
+
+    case    SB_THUMBTRACK   :
+            col = nPos;
+            sync_caret();
+            break;
+    }
+
+    CView::OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+void CWedView::OnViewFonts()
+{
+    LOGFONT lf;
+
+    //memset(&lf, 0, sizeof(lf));
+    ff.GetObject(sizeof(LOGFONT), &lf);
+
+    CFontDialog dlg(&lf, CF_FIXEDPITCHONLY  |
+                            CF_SCREENFONTS  |
+                                CF_INITTOLOGFONTSTRUCT);
+    if (dlg.DoModal() == IDOK)
+    {
+        // switch to new font.
+        ff.DeleteObject();
+        if (!ff.CreateFontIndirect(&lf))
+        {
+            PrintToNotepad("Cannot set font\r\n");
+            MessageBox("Cannot set font");
+        }
+
+
+    // Tell all documents about the change
+    POSITION Pos =
+        ((CWedApp*)AfxGetApp())->pDocTemplate->
+                GetFirstDocPosition();
+    for(;;)
+        {
+        if(!Pos)
+            break;
+        CWedDoc* doc = (CWedDoc*)
+            ((CWedApp*)AfxGetApp())->pDocTemplate->
+                    GetNextDoc(Pos);
+        doc->UpdateAllViews(NULL);
+        }
+    }
+}
+
+extern CWedApp theApp;
+static diffing = FALSE;
+
+void CWedView::OnWindowDiff()
+
+{
+    CWedView    *cv1, *cv2;
+    CWedDoc     *doc1, *doc2;
+    int         count = 0;
+    POSITION    Pos;
+
+    // Toggle, and display on mod line:
+    if(diffing)
+        {
+        diffing = FALSE;
+        modestr = "";
+        mode(modestr);
+        }
+    else
+        {
+        diffing = FALSE;
+        modestr = "DIFF";
+        mode(modestr);
+        }
+
+    Pos = theApp.pDocTemplate->GetFirstDocPosition();
+    for(;;)
+    {
+        CWedDoc* xdoc = (CWedDoc*)
+        theApp.pDocTemplate->GetNextDoc(Pos);
+        ASSERT_VALID(xdoc);
+
+        POSITION vpos = xdoc->GetFirstViewPosition();
+        CView *cv = xdoc->GetNextView(vpos);
+        ASSERT_VALID(cv);
+
+        PrintToNotepad("Doc %d view: %d\r\n",
+                (int)xdoc, (int)cv);
+        count++;
+        if(count == 1)
+        {
+            doc1 = (CWedDoc*)xdoc;
+            cv1 = (CWedView*)cv;
+
+            if(diffing)
+            {
+                cv1->diff = count;
+            }
+            else
+                cv1->diff = 0;
+        }
+        if(count == 2)
+        {
+            doc2 = (CWedDoc*)xdoc;
+            cv2 = (CWedView*)cv;
+            if(diffing)
+            {
+                cv2->diff = count;
+                cv2->other = cv1;
+                cv1->other = cv2;
+                linediff(cv1, cv2);
+            }
+            else
+                cv2->diff = 0;
+            }
+        if(!Pos)
+            break;
+    }
+    if(count != 2)
+        message("Must be two buffers open to diff ");
+
+    doc1->UpdateAllViews(NULL);
+    doc2->UpdateAllViews(NULL);
+}
+
+// Allocate one time stuff:
+
+void CWedView::OnInitialUpdate()
+{
+    CView::OnInitialUpdate();
+    CWedDoc* pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    pDoc->SetTitle(pDoc->GetPathName());
+    pDoc->ssel.Create(IDD_DIALOG4);
+    PrintToNotepad("Done initial update\r\n");
+}
+
+// Return estimated number of patches needed between strings
+
+int CWedView::strdiff(CString &str1, CString &str2)
+{
+    char chh1, chh2;
+    char chh11, chh22;
+    char chh33, chh44;
+    int idx1 = 0, idx2 = 0;
+    int idx11 = 0, idx22 = 0;
+    int idx33 = 0, idx44 = 0;
+    int len1 = str1.GetLength();
+    int len2 = str2.GetLength();
+    int diff = 0;
+
+    PrintToNotepad("strdiff - 1 : %s\r\n", (const char *)str1);
+    PrintToNotepad("strdiff - 2 : %s\r\n", (const char *)str2);
+
+    while(TRUE)
+    {
+        if(idx1 >= len1)
+            break;
+
+        if(idx2 >= len2)
+            break;
+
+        chh1 = str1.GetAt(idx1);
+        chh2 = str2.GetAt(idx2);
+
+        if(chh1 != chh2)
+        {
+        int diff2 = 0;
+        int diff3 = 0;
+        int diff4 = 0;
+
+        idx11 = idx1;
+        idx22 = idx2;
+        idx33 = idx1;
+        idx44 = idx2;
+
+        // try str1, walk str2
+        while(TRUE)
+            {
+            if(idx22 >= len2)
+                break;
+
+            chh22 = str2.GetAt(idx22);
+            if(chh1 == chh22)
+                break;
+
+            diff2++;
+            idx22++;
+            }
+        // try str2, walk str1
+        while(TRUE)
+            {
+            if(idx11 >= len1)
+                break;
+
+            chh11 = str1.GetAt(idx11);
+            if(chh11 == chh2)
+                break;
+
+            diff3++;
+            idx11++;
+            }
+
+        // Walk both
+        while(TRUE)
+            {
+            if(idx33 >= len1)
+                break;
+
+            if(idx44 >= len2)
+                break;
+
+            chh33 = str1.GetAt(idx33);
+            chh44 = str2.GetAt(idx44);
+            if(chh33 == chh44)
+                break;
+
+            diff4++;
+            idx33++;
+            idx44++;
+            }
+
+        PrintToNotepad(
+                "diff2 =  %d diff3 = %d diff4 = %d\r\n",
+                            diff2, diff3, diff4);
+
+        // Assume closest match
+        if(diff2 < diff3)
+            {
+            if(diff4 < diff2)
+                {
+                idx1 = idx33;
+                idx2 = idx44;
+                diff += diff4;
+                }
+            else
+                {
+                idx2 = idx22;
+                diff += diff2;
+                }
+            }
+        else
+            {
+            if(diff4 < diff3)
+                {
+                idx1 = idx33;
+                idx2 = idx44;
+                diff += diff4;
+                }
+            else
+                {
+                idx1 = idx11;
+                diff += diff3;
+                }
+            }
+        }
+        idx1++;
+        idx2++;
+    }
+    PrintToNotepad("strdiff - ret : %d\r\n", diff);
+
+    return(diff);
+}
+
+// Return line relation in file
+
+int CWedView::linediff(CWedView *v1, CWedView *v2)
+{
+    ASSERT_VALID(v1); ASSERT_VALID(v2);
+
+    CWedDoc *doc1 = v1->GetDocument();
+    CWedDoc *doc2 = v2->GetDocument();
+    ASSERT_VALID(doc1); ASSERT_VALID(doc2);
+
+    message("Diffing files ...");
+    diffchange = FALSE;
+
+    CString str1, str2;
+    CString str11, str22;
+    CString str111, str222;
+
+    int idx1   = 0, idx2 = 0;
+    int idx11  = 0, idx22 = 0;
+    int idx111 = 0, idx222 = 0;
+
+    int len1 = doc1->strlist.GetCount();
+    int len2 = doc2->strlist.GetCount();
+    int diff = 0;
+
+    PrintToNotepad("linediff: %d  %d\r\n",  (int)doc1, (int)doc2);
+
+    // Prepare diff arrays:
+    v1->diffa.RemoveAll();
+    v1->diffa.SetSize(len1);
+
+    v2->diffa.RemoveAll();
+    v2->diffa.SetSize(len2);
+
+    while(TRUE)
+        {
+        //v1->diffa.SetAt(idx1, DIFF_DEL);
+        //v2->diffa.SetAt(idx2, DIFF_DEL);
+
+        if(idx1 >= len1)
+            break;
+
+        if(idx2 >= len2)
+            break;
+
+        str1 = doc1->strlist.GetLine(idx1);
+        str2 = doc2->strlist.GetLine(idx2);
+
+        //PrintToNotepad("str1: %s\r\n",    (const char *)str1);
+        //PrintToNotepad("str2: %s\r\n",    (const char *)str2);
+
+        int clen = 0;
+        int diff2 = 0;
+        int diff3 = 0;
+
+        // Equal, no need to do anything
+        if(str1 == str2)
+            goto next1;
+
+        // Not interested in empty lines
+        while(str1 == "" && idx1 < len1 )
+            str1 = doc1->strlist.GetLine(++idx1);
+
+        while(str2 == "" && idx2 < len2 )
+            str2 = doc2->strlist.GetLine(++idx2);
+
+        clen = min(str1.GetLength(), str2.GetLength());
+        // Are they similar?
+        if(strdiff(str1, str2) < clen/5)
+            {
+            v1->diffa.SetAt(idx1, DIFF_CHG);
+            v2->diffa.SetAt(idx2, DIFF_CHG);
+            goto next1;
+            }
+        idx11 = idx1;
+        idx22 = idx2;
+
+        // Start walking
+        while(TRUE)
+            {
+            if(idx11 >= len1)
+                break;
+            if(idx22 >= len2)
+                break;
+
+            str11 = doc1->strlist.GetLine(idx11);
+            str22 = doc2->strlist.GetLine(idx22);
+
+            while(str11 == "" && idx11 < len1)
+                str11 = doc1->strlist.GetLine(++idx11);
+
+            while(str22 == "" && idx22 < len2)
+                str22 = doc2->strlist.GetLine(++idx22);
+
+            if(str11 == str22)
+            {
+                idx1 = idx11;
+                idx2 = idx22;
+                break;
+            }
+
+            PrintToNotepad("seek str11: %s\r\n",
+                        (const char *)str11);
+
+            PrintToNotepad("seek str22: %s\r\n",
+                        (const char *)str2);
+
+            idx111 = idx11;
+            idx222 = idx22;
+
+            while(TRUE)
+                {
+                if(idx222 >= len2)
+                    break;
+                if(idx111 >= len1)
+                    break;
+
+                // Try doc2, walk doc2
+                str111 = doc1->strlist.GetLine(idx111);
+                while(str111 == "" && idx111 < len1)
+                    str111 = doc1->strlist.GetLine(++idx111);
+
+                PrintToNotepad("seek str111: %s\r\n",
+                        (const char *)str111);
+
+                if(str111 == str22)
+                {
+                for(int xxx = idx11; xxx < idx111; xxx++)
+                    v1->diffa.SetAt(xxx, DIFF_DEL);
+                    idx11= idx111;
+                    break;
+                }
+
+                // Try doc1, walk doc1
+                str222 = doc2->strlist.GetLine(idx222);
+                while(str222 == "" && idx222 < len2)
+                    str222 = doc2->strlist.GetLine(++idx222);
+
+                PrintToNotepad("seek str222: %s\r\n",
+                        (const char *)str222);
+
+                if(str222 == str11)
+                {
+                for(int xxx = idx22; xxx < idx222; xxx++)
+                    v2->diffa.SetAt(xxx, DIFF_DEL);
+                    idx22= idx222;
+                    break;
+                }
+                idx111++;
+                idx222++;
+                }
+            idx11++;
+            idx22++;
+            }
+next1:  idx1++;
+        idx2++;
+        }
+    return(diff);
+}
+
+// EOF
+
+void CWedView::OnKillFocus(CWnd* pNewWnd)
+{
+    CView::OnKillFocus(pNewWnd);
+    DestroyCaret();
+    PrintToNotepad("Kill focus\r\n");
+    mouse = FALSE;
+}
+
+void CWedView::OnViewForegroundcolor()
+{
+    SetColor(&fgcol);
+}
+
+void CWedView::OnViewBackgroundcolor()
+{
+    SetColor(&bgcol);
+}
+
+
+void CWedView::SetColor(int * col)
+{
+    CColorDialog ccol(*col);
+
+    if(ccol.DoModal() == IDOK)
+        {
+        *col = ccol.m_cc.rgbResult;
+
+        // Tell all documents about the change
+        POSITION Pos =
+            ((CWedApp*)AfxGetApp())->pDocTemplate->
+                    GetFirstDocPosition();
+        for(;;)
+            {
+            if(!Pos)
+                break;
+            CWedDoc* doc = (CWedDoc*)
+                ((CWedApp*)AfxGetApp())->pDocTemplate->
+                    GetNextDoc(Pos);
+            doc->UpdateAllViews(NULL);
+            }
+        }
+}
+
+void CWedView::OnViewHighlitebackground()
+{
+    SetColor(&selcol);
+}
+
+void CWedView::OnViewColomnhighlitebackground()
+{
+    SetColor(&cselcol);
+}
+
+void CWedView::OnViewSelectprinterfont()
+{
+    LOGFONT lf;
+
+    //memset(&lf, 0, sizeof(lf));
+    pp.GetObject(sizeof(LOGFONT), &lf);
+
+    CFontDialog dlg(&lf, CF_FIXEDPITCHONLY   |
+                            CF_SCREENFONTS  |
+
+                            //CF_PRINTERFONTS  |
+                                CF_INITTOLOGFONTSTRUCT);
+    if (dlg.DoModal() == IDOK)
+    {
+        // switch to new font.
+        pp.DeleteObject();
+        if (!pp.CreateFontIndirect(&lf))
+        {
+            PrintToNotepad("Cannot set font\r\n");
+            MessageBox("Cannot set font");
+        }
+    }
+}
+
+void CWedView::OnEditCopy()
+{
+    CopyToHold();
+}
+
+void CWedView::OnEditPaste()
+{
+    // send key as insert
+    // TODO: Add your command handler code here
+
+}
+
+// Copy to holding buffer
+
+void CWedView::CopyToHold(int cut)
+{
+    CWedDoc*    pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    HANDLE      hMem;
+    char        *ptr;
+    CString     str, str2, str3;
+    int         loop2, loop;
+
+    // Clear old buffer
+    holding[currhold].RemoveAll();
+
+    // Nothing selected, get one line
+    if(soh == -1)
+        {
+        // one line in row mode
+        holdflag[currhold] = FALSE;
+
+        str = pDoc->strlist.GetLine(row);
+        holding[currhold].AddTail(str);
+        if(cut)
+            {
+            SaveUndo(this, UNDO_DEL, row, col, str);
+            DeleteLine(this, row);
+            }
+        goto done_copy;
+        }
+
+    if(cut)
+        SaveUndo(this, UNDO_NOP, row, col, "");
+
+    // Column
+    if(soch != -1)
+        {
+        // Col copy
+        holdflag[currhold] = TRUE;
+        for (loop = soh; loop <= eoh; loop++)
+            {
+            str = pDoc->strlist.GetLine(loop);
+            str2 = str.Mid(soch, eoch - soch);
+            //PrintToNotepad("Col copy: %s\r\n", str2);
+            holding[currhold].AddTail(str2);
+
+            if(cut)
+                {
+                SaveUndo(this, UNDO_MOD | UNDO_BLOCK,
+                        loop, col, str);
+                str3 = str.Left(soch) + str.Right(str.GetLength() - eoch);
+                pDoc->strlist.SetLine(loop, str3);
+                }
+            // Position back to the origianl
+            // place. Makes a great editor
+            col = soch;
+            row = soh;
+            }
+        }
+    else
+        {
+        // Row copy:
+        holdflag[currhold] = FALSE;
+        for (loop2 = soh; loop2 <= eoh; loop2++)
+            {
+            str = pDoc->strlist.GetLine(loop2);
+            holding[currhold].AddTail(str);
+            }
+        if(cut)
+            {
+            for (loop2 = soh; loop2 <= eoh; loop2++)
+                {
+                str = pDoc->strlist.GetLine(soh);
+                SaveUndo(this, UNDO_DEL | UNDO_BLOCK,
+                        soh, col, str);
+                DeleteLine(this, soh);
+                }
+            }
+        }
+done_copy:
+
+    // Do clipboard too
+    POSITION pos = holding[currhold].GetHeadPosition();
+    while(TRUE)
+        {
+        if (!pos)
+            break;
+        str = holding[currhold].GetNext(pos);
+        str2 += str + "\r\n";
+        }
+
+    //PrintToNotepad("Clipboard copy: %s\r\n",str2);
+
+    // Render what goes there ...
+    hMem = GlobalAlloc( GMEM_MOVEABLE | GMEM_DDESHARE,
+                str2.GetLength());
+    ptr = (char*)GlobalLock( hMem);
+    strcpy(ptr, (const char *)str2);
+    GlobalUnlock( hMem);
+
+    // Traditional ...
+    OpenClipboard();
+    SetClipboardData(CF_TEXT, hMem);
+    CloseClipboard();
+
+    if(cut)
+        message("Lines cut to holding buffer");
+    else
+        message("Lines copied to holding buffer");
+
+    eoch = -1;
+    soch = -1;
+    soh = -1;
+    eoh = -1;
+
+    sync_caret();
+    pDoc->UpdateAllViews(NULL);
+
+    if(cut)
+        pDoc->SetModifiedFlag();
+}
+
+void CWedView::OnViewViewholdingheads()
+{
+    HoldHead hh;
+    hh.m_edit1  =  holding[0].IsEmpty() ? "empty": holding[0].GetHead() ;
+    hh.m_edit2  =  holding[1].IsEmpty() ? "empty": holding[1].GetHead() ;
+    hh.m_edit3  =  holding[2].IsEmpty() ? "empty": holding[2].GetHead() ;
+    hh.m_edit4  =  holding[3].IsEmpty() ? "empty": holding[3].GetHead() ;
+    hh.m_edit5  =  holding[4].IsEmpty() ? "empty": holding[4].GetHead() ;
+    hh.m_edit6  =  holding[5].IsEmpty() ? "empty": holding[5].GetHead() ;
+    hh.m_edit7  =  holding[6].IsEmpty() ? "empty": holding[6].GetHead() ;
+    hh.m_edit8  =  holding[7].IsEmpty() ? "empty": holding[7].GetHead() ;
+    hh.m_edit9  =  holding[8].IsEmpty() ? "empty": holding[8].GetHead() ;
+    hh.m_edit10 =  holding[9].IsEmpty() ? "empty": holding[9].GetHead() ;
+    hh.DoModal();
+}
+
+//void CWedView::OnWindowApplicationfullscreen()
+//{
+//    AfxGetApp()->m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
+//}
+void CWedView::OnWindowMaximizemain()
+{
+    AfxGetApp()->m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
+}
+
+void CWedView::OnEditUndo()
+{
+    UnDo(this);
+}
+
+void CWedView::OnEditRedo()
+{
+    ReDo(this);
+}
+
+void CWedView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+    POINT scr = point;
+    ClientToScreen(&scr);
+
+    CMenu mm;
+    mm.LoadMenu(IDR_MENU1);
+    CMenu *pp = mm.GetSubMenu( 0 );
+    pp->TrackPopupMenu( TPM_LEFTALIGN, scr.x, scr.y, this);
+
+    //PrintToNotepad("RbuttonDown\r\n");
+
+    CView::OnRButtonDown(nFlags, point);
+}
+
+void CWedView::OnOperationsSelectline()
+{
+    CWedDoc*    pDoc = GetDocument(); ASSERT_VALID(pDoc);
+    soh = row;
+    eoh = row;
+
+    sync_caret();
+    pDoc->UpdateAllViews(NULL);
+
+    message("Line selected");
+}
+
+
+static CMenu * mmm;
+
+void CWedView::OnUpdateViewDifftoNone(CCmdUI* pCmdUI)
+{
+    PrintToNotepad("ui update %d\r\n", pCmdUI->m_nID);
+
+    pCmdUI->m_pSubMenu->RemoveMenu(0, MF_BYPOSITION);
+    pCmdUI->m_pSubMenu->AppendMenu( MF_STRING, ID_DIFF_DIFFONE , "Hello1");
+    pCmdUI->m_pSubMenu->AppendMenu( MF_STRING, ID_DIFF_DIFFONE , "Hello2");
+    pCmdUI->m_pSubMenu->AppendMenu( MF_STRING, ID_DIFF_DIFFONE , "Hello3");
+}
+
+void CWedView::OnViewDifftoNone()
+{
+    // TODO: Add your command handler code here
+    PrintToNotepad("diff to none\r\n");
+}
+
+void CWedView::OnDiffDiffone()
+{
+
+//  CMenu * mmm = GetMenu();
+
+    // TODO: Add your command handler code here
+    PrintToNotepad("diff to one\r\n");
+//  mmm->AppendMenu( MF_STRING,
+//          ID_VIEW_DIFFTO_NONE, "None");
+
+}
+

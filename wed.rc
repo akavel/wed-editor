@@ -1,0 +1,1506 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+// Generated Help ID header file
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "resource.hm"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\wed.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#include ""afxdb.rc""          // Database resources\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\wed.ico"
+IDR_WEDTYPE             ICON    DISCARDABLE     "res\\wedDoc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
+IDR_TOOLBAR1            BITMAP  DISCARDABLE     "res\\toolbar1.bmp"
+IDB_BITMAP4             BITMAP  DISCARDABLE     "res\\bitmap4.bmp"
+IDB_BITMAP5             BITMAP  DISCARDABLE     "res\\bitmap3.bmp"
+IDB_BITMAP6             BITMAP  DISCARDABLE     "res\\bitmap6.bmp"
+IDB_BITMAP8             BITMAP  DISCARDABLE     "whmarb.BMP"
+IDB_BITMAP9             BITMAP  DISCARDABLE     "whtmarb1.BMP"
+IDB_BITMAP7             BITMAP  DISCARDABLE     "res\\bitmap7.bmp"
+IDB_BITMAP10            BITMAP  DISCARDABLE     "res\\bitmap10.bmp"
+IDB_BITMAP11            BITMAP  DISCARDABLE     "res\\brushed.bmp"
+IDB_BITMAP12            BITMAP  DISCARDABLE     "res\\brush3.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    BUTTON      ID_APP_ABOUT
+    BUTTON      ID_CONTEXT_HELP
+END
+
+IDR_TOOLBAR1 TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    SEPARATOR
+    BUTTON      ID_BUTTON32803
+    BUTTON      ID_BUTTON32806
+    BUTTON      ID_BUTTON32804
+    BUTTON      ID_BUTTON32944
+    BUTTON      ID_BUTTON32933
+    BUTTON      ID_BUTTON32995
+    BUTTON      ID_BUTTON32935
+    SEPARATOR
+    BUTTON      ID_BUTTON32810
+    BUTTON      ID_BUTTON32809
+    BUTTON      ID_BUTTON32945
+    BUTTON      ID_BUTTON32807
+    BUTTON      ID_BUTTON32942
+    BUTTON      ID_BUTTON32934
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            Opensource
+        MENUITEM "&Multi Open\tAlt+E",          ID_FILE_MULTIOPEN
+        MENUITEM SEPARATOR
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt-X",                ID_APP_EXIT
+    END
+    POPUP "View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help Topics",                ID_HELP_FINDER
+        MENUITEM "&About Wed...",               ID_APP_ABOUT
+    END
+END
+
+IDR_WEDTYPE MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open ...\tCtrl+O  F9",       ID_FILE_OPEN
+        MENUITEM "Multi Open Src\tAlt-E",       ID_FILE_MULTIOPEN
+        MENUITEM "Multi Open Dest\tAlt-O",      ID_FILE_MULTIOPENDEST
+        MENUITEM "&Close\tCtrl+G",              ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S Alt+W",         ID_FILE_SAVE
+        MENUITEM "Save As\tCtrl-E",             ID_FILE_SAVEAS2
+        MENUITEM "Save All\tAlt+A",             ID_FILE_SAVEALL
+        MENUITEM SEPARATOR
+        MENUITEM "P&rint Setup ...",            ID_FILE_PRINT_SETUP
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "&Print ...\tCtrl+P",          ID_FILE_PRINT
+        MENUITEM SEPARATOR
+        MENUITEM "Sen&d ...",                   ID_FILE_SEND_MAIL
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+X",                ID_APP_EXIT
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z Alt+U",         ID_EDIT_UNDO
+        MENUITEM "Redo\tCtrl-+Y Alt+R",         ID_EDIT_REDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "Cut to Holding\tGray-",       ID_EDIT_CUTTOHOLDING
+        MENUITEM "Copy To Holding\tGray+",      ID_EDIT_COPYTOHOLDING
+        MENUITEM "Append To Holding\tShift-Gray+", ID_EDIT_APPENDTOHOLDING
+        MENUITEM "Paste From Holding\tIns",     ID_EDIT_PASTEHOLDING
+        MENUITEM SEPARATOR
+        MENUITEM "Uppercase Word\tCtrl+U",      ID_EDIT_UPPERCASEWORD
+        MENUITEM "Lowercase Word\tCtrl+L",      ID_EDIT_LOWERCASEWORD
+        MENUITEM "Capitalize Word\tCtrl+W",     ID_EDIT_CAPITALIZEWORD
+        MENUITEM SEPARATOR
+        MENUITEM "Uppercase Selection\tCtrl-F9", ID_EDIT_UPPERCASESELECTION
+        MENUITEM "Lowercase Selection\tShift+F9", ID_EDIT_LOWERCASESELECTION
+        MENUITEM SEPARATOR
+        MENUITEM "Weed empty lines",            ID_EDIT_WEEDEMPTYLINES
+        MENUITEM "Wrap long lines",             ID_EDIT_WRAPTOWINDOW
+        MENUITEM "Clear Non ASCII\t(No undo)",  ID_EDIT_CLEANNONASCII
+    END
+    POPUP "Select"
+    BEGIN
+        MENUITEM "Start Select\tAlt+L Hold-Shift", ID_EDIT_STARTSELECTALTL
+        MENUITEM "Start Column Select\tAlt+C Hold-Shift", 
+                                                ID_EDIT_STARTCOLUMNSELECTALTC
+
+        MENUITEM "Cancel Select\tEsc",          ID_SELECT_CANCELSELECT
+        MENUITEM SEPARATOR
+        MENUITEM "Select Viewed Word\tAlt+V DoubleClick", 
+                                                ID_SELECT_SELECTWORD
+        MENUITEM "Select Paragraph\tAlt+P",     ID_SELECT_SELECTPARAGRAPH
+        MENUITEM "Mark Block  { ... }\tAlt-M",  ID_SELECT_MARKBLOCK
+        MENUITEM SEPARATOR
+        MENUITEM "Select All\tCtrl+A",          ID_SELECT_SELECTALL
+        MENUITEM SEPARATOR
+        POPUP "Holding"
+        BEGIN
+            MENUITEM "Buffer 0\t(Alt+0)",           ID_SEARCH_SELEXTHOLDING_BUFFER10
+
+            MENUITEM "Buffer 1\t(Alt+1)",           ID_SEARCH_SELEXTHOLDING_BUFFER1
+
+            MENUITEM "Buffer 2\t(Alt+2)",           ID_SEARCH_SELEXTHOLDING_BUFFER2
+
+            MENUITEM "Buffer 3\t(Alt+3)",           ID_SEARCH_SELEXTHOLDING_BUFFER3
+
+            MENUITEM "Buffer 4\t(Alt+4)",           ID_SEARCH_SELEXTHOLDING_BUFFER4
+
+            MENUITEM "Buffer 5\t(Alt+5)",           ID_SEARCH_SELEXTHOLDING_BUFFER5
+
+            MENUITEM "Buffer 6\t(Alt+6)",           ID_SEARCH_SELEXTHOLDING_BUFFER6
+
+            MENUITEM "Buffer 7\t(Alt+7)",           ID_SEARCH_SELEXTHOLDING_BUFFER7
+
+            MENUITEM "Buffer 8\t(Alt+8)",           ID_SEARCH_SELEXTHOLDING_BUFFER8
+
+            MENUITEM "Buffer 9\t(Alt+9)",           ID_SEARCH_SELEXTHOLDING_BUFFER9
+
+        END
+        MENUITEM "View Holding Heads",          ID_VIEW_VIEWHOLDINGHEADS
+    END
+    POPUP "Move"
+    BEGIN
+        MENUITEM "Goto Line\tAlt+G",            ID_MOVE_GOTOLINE
+        MENUITEM "Goto Column",                 ID_MOVE_GOTOCOLUMN
+        MENUITEM SEPARATOR
+        POPUP "Cursor Movement"
+        BEGIN
+            MENUITEM "Next Character\tRight Arrow", ID_MOVE_NEXTCHARACTER
+            MENUITEM "Previous Character\tLeft Arrow", ID_MOVE_PREVIOUSCHAR
+            MENUITEM "Next Line\tDown Arrow",       ID_MOVE_NEXTLINE
+            MENUITEM "Previous Line\tUp Arrow",     ID_MOVE_PREVIOUSLINE
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Next Word\tControl+Right",    ID_MOVE_NEXTWORD
+        MENUITEM "Previous Word\tControl+Left", ID_MOVE_PREVIOUSEWORD
+        MENUITEM "Beginning of Word\tAlt+Left", ID_MOVE_BEGINNINGOFWORD
+        MENUITEM "End of Word\tAlt+Right",      ID_MOVE_ENDOFWORD
+        MENUITEM SEPARATOR
+        MENUITEM "Page Down\tPgDn",             ID_MOVE_PAGEDOWN
+        MENUITEM "Page Up\tPgUp",               ID_MOVE_PAGEUP
+        MENUITEM "Next Paragraph\tCtrl+PgDn",   ID_MOVE_NEXTPARAGRAPH
+        MENUITEM "Previous Paragraph\tCtrl+PgUp", ID_MOVE_PREVIOUSEPARAGRAPH
+        MENUITEM SEPARATOR
+        MENUITEM "End of Line\tEnd",            ID_MOVE_ENDOFLINE
+        MENUITEM "Beginning of Line\tHome",     ID_MOVE_BEGINNINGOFLINE
+        MENUITEM SEPARATOR
+        MENUITEM "End of page\t2*End",          ID_MOVE_ENDOFPAGE
+        MENUITEM "Beginning of Page\t2*Home",   ID_MOVE_BEGINNINGOFPAGE
+        MENUITEM SEPARATOR
+        MENUITEM "End of File\tCtrl+End 3*End", ID_MOVE_ENDOFFILE
+        MENUITEM "Beginning of File\tCtrl+Home 3*Home", 
+                                                ID_MOVE_BEGINNINGOFFILE
+        MENUITEM SEPARATOR
+        MENUITEM "Next Long line\tShift-F11",   ID_MOVE_NEXTLONGLINE
+        MENUITEM "Previous long line\tShift-F12", 
+                                                ID_MOVE_MOVEPREVIOUSLONGLINE
+        MENUITEM "Next Function\tF11",          ID_MOVE_NEXTFUNCTION
+        MENUITEM "Previous Function\tF12",      ID_MOVE_PREVIOUSFUNCTION
+    END
+    POPUP "Insert"
+    BEGIN
+        MENUITEM "Page Feed Mark",              ID_INSERT_PAGEFEEDMARK
+        MENUITEM "Byte",                        ID_INSERT_BYTE
+        MENUITEM SEPARATOR
+        POPUP "Date Time"
+        BEGIN
+            MENUITEM "RFC Standard Date",           ID_INSERT_DATETIME_RFCSTANDARDDATE
+
+            MENUITEM "Date As Locale",              ID_INSERT_DATETIME_DATEFORMATTEDASLOCALE
+
+            MENUITEM "Date as mm/dd/yy hh:mm:ss",   ID_INSERT_DATETIME_MMDDYYHHMMSS
+
+            MENUITEM "Date as dd-mm-yy hh:mm:ss",   ID_INSERT_DATETIME_DDMMYYHHMMSS
+
+            MENUITEM "WeekDay Name",                ID_INSERT_DATETIME_WEEKDAY
+
+            MENUITEM "Month Name",                  ID_INSERT_DATETIME_MONTHNAME
+
+            MENUITEM "Safe Date as dd-MMM-yyyy",    ID_INSERT_DATETIME_BORDERSAFEDATE
+
+        END
+        MENUITEM SEPARATOR
+        POPUP "C++"
+        BEGIN
+            MENUITEM "C++ Template\tCtrl-B",        ID_INSERT_C_TEMPLATE
+            MENUITEM SEPARATOR
+            MENUITEM "Function",                    ID_INSERT_FUNCTION
+            MENUITEM "For Loop",                    ID_INSERT_FORLOOP
+            MENUITEM "If Condition",                ID_INSERT_IFCONDITION
+            MENUITEM "Switch Case",                 ID_INSERT_C_SWITCHCASE
+        END
+        POPUP "Java"
+        BEGIN
+            MENUITEM "Java Template\tCtrl-J",       ID_INSERT_JAVA_TEMPLATE
+            MENUITEM SEPARATOR
+            MENUITEM "Class",                       ID_INSERT_BASIC_FUNCTION
+            MENUITEM "Method",                      ID_INSERT_JAVA_PRIVATEMETHOD
+
+            MENUITEM "For Loop",                    ID_INSERT_BASIC_FORLOOP
+            MENUITEM "If Condition",                ID_INSERT_BASIC_IF
+            MENUITEM "Select Case",                 ID_INSERT_BASIC_SELECTCASE
+
+        END
+        POPUP "Templates"
+        BEGIN
+            MENUITEM "Template One\tF2",            ID_INSERT_TEMPLATEONE
+            MENUITEM "Template Two\tF3",            ID_INSERT_TEMPLATETWO
+            MENUITEM "Template Three\tF4",          ID_INSERT_TEMPLATETHREE
+            MENUITEM "Java Template\tCtrl-J",       ID_INSERT_JAVA_TEMPLATE
+            MENUITEM "C++ Template\tCtrl-B",        ID_INSERT_C_TEMPLATE
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Incremented Number\tAlt-I",   ID_INSERT_INCREMENTEDNUMBER
+        MENUITEM "Set Increment starting value", 
+                                                ID_INSERT_SETINCREMNETSTARTVALUE
+
+    END
+    POPUP "Delete"
+    BEGIN
+        MENUITEM "Delete under Cursor\tDelete", ID_INSERT_DELETEATCURSOR
+        MENUITEM "Delete before cursor\tBackSpace", 
+                                                ID_INSERT_DELETEBEFORECURSOR
+        MENUITEM SEPARATOR
+        MENUITEM "Delete Line\tAlt-D",          ID_INSERT_DELETELINE
+        MENUITEM "Delete till end of line\tAlt-K", 
+                                                ID_INSERT_DELETETILLENDOFLINE
+
+    END
+    POPUP "Macro"
+    BEGIN
+        MENUITEM "Start/Stop Record\tF7",       ID_EDIT_RECORDMACRO
+        MENUITEM "Play Macro\tF8",              ID_EDIT_PLAYMACRO
+        MENUITEM "Animate Macro\tShift-F8",     ID_MACRO_ANIMATEMACRO
+        MENUITEM SEPARATOR
+        MENUITEM "Save Macro",                  ID_EDIT_SAVEMACRO
+        MENUITEM "Load Macro",                  ID_EDIT_LOADMACRO
+        POPUP "Select Recording Buffer"
+        BEGIN
+            MENUITEM "Buffer 0\tCtrl+0",            ID_MACRO_SELECTRECORDHOLDING_BUFFER10
+
+            MENUITEM "Buffer 1\tCtrl+1",            ID_EDIT_SELECTRECORDBUFFER_BUFFER1
+
+            MENUITEM "Buffer 2\tCtrl+2",            ID_MACRO_SELECTRECORDHOLDING_BUFFER1
+
+            MENUITEM "Buffer 3\tCtrl+3",            ID_MACRO_SELECTRECORDHOLDING_BUFFER3
+
+            MENUITEM "Buffer 4\tCtrl+4",            ID_MACRO_SELECTRECORDHOLDING_BUFFER4
+
+            MENUITEM "Buffer 5\tCtrl+5",            ID_MACRO_SELECTRECORDHOLDING_BUFFER5
+
+            MENUITEM "Buffer 6\tCtrl+6",            ID_MACRO_SELECTRECORDHOLDING_BUFFER6
+
+            MENUITEM "Buffer 7\tCtrl+7",            ID_MACRO_SELECTRECORDHOLDING_BUFFER7
+
+            MENUITEM "Buffer 8\tCtrl+8",            ID_MACRO_SELECTRECORDHOLDING_BUFFER8
+
+            MENUITEM "Buffer 9\tCtrl+9",            ID_MACRO_SELECTRECORDHOLDING_BUFFER9
+
+        END
+        MENUITEM "View Macro Heads",            ID_VIEW_VIEWMACROHEADS
+    END
+    POPUP "Search"
+    BEGIN
+        MENUITEM "Find\tCtrl+F Alt+S",          ID_SEARCH_FIND
+        MENUITEM "Find Next\tF6",               ID_SEARCH_FINDNEXT
+        MENUITEM "Find Previous\tF5",           ID_SEARCH_FINDPREVIOUS
+        MENUITEM SEPARATOR
+        MENUITEM "Find/Replace\tAlt+T",         ID_SEARCH_REPLACE
+        MENUITEM "Cancel Find\tEsc",            ID_SEARCH_CANCELFIND
+        MENUITEM SEPARATOR
+        MENUITEM "Hit Mode\tAlt-H",             ID_SEARCH_HITEDITMODE
+        MENUITEM SEPARATOR
+        MENUITEM "Match Brace Count",           ID_SEARCH_BRACECOUNT
+    END
+    POPUP "Settings"
+    BEGIN
+        MENUITEM "Screen Font",                 ID_VIEW_FONTS
+        MENUITEM "Printer Font",                ID_VIEW_SELECTPRINTERFONT
+        MENUITEM SEPARATOR
+        MENUITEM "Text  Foreground Color",      ID_VIEW_FOREGROUNDCOLOR
+        MENUITEM "Text Background Color ",      ID_VIEW_BACKGROUNDCOLOR
+        MENUITEM "Long Line Color (fg)",        ID_SETTINGS_LONGLINECOLORFG
+        MENUITEM "Reverse Fg/Bg",               ID_SETTINGS_REVERSEIT
+        MENUITEM SEPARATOR
+        MENUITEM "Highlite Color  (bg)",        ID_VIEW_HIGHLITEBACKGROUND
+        MENUITEM "Colomn Highlite Color (bg)",  ID_VIEW_COLOMNHIGHLITEBACKGROUND
+
+        MENUITEM "Search Highlite Color (fg)",  ID_SETTINGS_SEARCHHIGHLITECOLORFG
+
+        MENUITEM "Comment Highlite Color (fg)", ID_SETTINGS_COMMENTHIGHLITECOLOR
+
+        MENUITEM SEPARATOR
+        MENUITEM "Diff Add color",              ID_SETTINGS_DIFFADDCOLOR
+        MENUITEM "Diff Changed color",          ID_SETTINGS_DIFFCHANGEDCOLOR
+        MENUITEM "Diff Del color",              ID_SETTINGS_DIFFDELCOLOR
+        MENUITEM SEPARATOR
+        MENUITEM "Toggle Scroll Bars",          ID_SETTINGS_TOGGLESCROLLBARS
+        MENUITEM SEPARATOR
+        MENUITEM "Allow Backspace to Wrap Lines", 
+                                                ID_SETTINGS_ALLOWBACKSPACETOWRAPLINES
+
+        MENUITEM "Save Tabs as Spaces",         ID_SETTINGS_SAVETABSASSPACES
+        MENUITEM "Set Tabstop",                 ID_SETTINGS_SETTABSTOP
+    END
+    POPUP "Advanced"
+    BEGIN
+        POPUP "Diff to Buffer"
+        BEGIN
+            MENUITEM "none",                        65535
+        END
+        MENUITEM "Goto next Difference\tCtrl-D", ID_VIEW_GOTONEXTDIFFERENCE
+        MENUITEM "Goto previous Difference\tCtrl-R", 
+                                                ID_VIEW_GOTOPREVIOUSDIFFERENCE
+
+        MENUITEM "Stop Diffing\tEsc",           ID_VIEW_STOPDIFFING
+        MENUITEM SEPARATOR
+        MENUITEM "CoCo (Code Collection)\tAlt-J", ID_VIEW_COCOCODECOLECTOR
+        MENUITEM SEPARATOR
+        MENUITEM "Spell Check\tShift-F7",       ID_ADVANCED_SPELLCHECK
+        MENUITEM "Strings Spell Check\tCtrl-F7", 
+                                                ID_ADVANCED_COMMENTADSTRINGSPELLCHECK
+
+        MENUITEM "Clear Current Ignore List",   ID_ADVANCED_CLEARCURRENTIGNORELIST
+
+        MENUITEM SEPARATOR
+        MENUITEM "Clean old Backup files",      ID_ADVANCED_CLEANOLDBACKUPS
+        MENUITEM "Clean old Undo/Redo files",   ID_ADVANCED_CLEANOLDUNDOFILES
+
+        MENUITEM SEPARATOR
+        MENUITEM "Lock/Unlock Keyboard",        ID_ADVANCED_LOCKKEYBOARD
+    END
+    POPUP "View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "File Buffers\tAlt+B",         ID_VIEW_FILEBUFERS
+        MENUITEM "File Properties",             ID_VIEW_FILEPROPERTIES
+        MENUITEM SEPARATOR
+        MENUITEM "Hex/Normal\tCtrl+K",          ID_VIEW_VIEWHEX
+        MENUITEM SEPARATOR
+        MENUITEM "Full Screen View\tAlt-Y",     ID_VIEW_FULLSCREEN
+    END
+    POPUP "Windows"
+    BEGIN
+        MENUITEM "&New Window",                 ID_WINDOW_NEW
+        MENUITEM SEPARATOR
+        MENUITEM "&Cascade\tCtrl-Q",            ID_WINDOW_CASCADE
+        MENUITEM "&Tile Up/Down",               ID_WINDOW_TILE_HORZ
+        MENUITEM "Tile Left/Right\tCtrl+T",     ID_WINDOW_TILE_VERT
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+        MENUITEM SEPARATOR
+        MENUITEM "Maximize Main\tAlt-Z",        ID_WINDOW_MAXIMIZEMAIN
+        MENUITEM "Maximize Current\tAlt-Q",     ID_WINDOWS_MAXIMIZECURRENT
+        MENUITEM "Next Window\tAlt-N",          ID_WINDOWS_NEXTBUFFER
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help Topics\tF1",            ID_HELP_FINDER
+        MENUITEM "Help On 'C' Keyword\tControl+F1", ID_HELP_HELPONKEYWORD
+        MENUITEM SEPARATOR
+        MENUITEM "&About Wed ...",              ID_APP_ABOUT
+    END
+END
+
+IDR_MENU1 MENU DISCARDABLE 
+BEGIN
+    POPUP "Operations"
+    BEGIN
+        MENUITEM "Insert Byte",                 ID_INSERT_BYTE
+        MENUITEM SEPARATOR
+        MENUITEM "Cut To Holding\tGrey -",      ID_EDIT_CUTTOHOLDING
+        MENUITEM "Copy to Holding\tGrey +",     ID_EDIT_COPYTOHOLDING
+        MENUITEM "Paste\tIns",                  ID_EDIT_PASTEHOLDING
+        MENUITEM SEPARATOR
+        MENUITEM "Mark Block\tAlt-M",           ID_SELECT_SELECTPARAGRAPH
+        MENUITEM "Select Word\tAlt-V",          ID_SELECT_SELECTWORD
+        MENUITEM "Select Paragraph\tAlt-P",     ID_SELECT_SELECTPARAGRAPH
+        MENUITEM SEPARATOR
+        MENUITEM "Capitalize Word\tCtrl+E",     ID_EDIT_CAPITALIZEWORD
+        MENUITEM SEPARATOR
+        MENUITEM "&Undo\tAlt+U Ctrl+Z",         ID_EDIT_UNDO
+        MENUITEM "Redo\tAlt+R Ctrl-+Y",         ID_EDIT_REDO
+        MENUITEM SEPARATOR
+        MENUITEM "Find Next\tF6",               ID_SEARCH_FINDNEXT
+        MENUITEM "Find Previous\tF5",           ID_SEARCH_FINDPREVIOUS
+        MENUITEM "Show CoCo\tAlt-J",            ID_VIEW_COCOCODECOLECTOR
+        MENUITEM "Open File\tAlt-O",            ID_FILE_MULTIOPENDEST
+        MENUITEM SEPARATOR
+        MENUITEM "Show File Properties",        ID_VIEW_FILEPROPERTIES
+    END
+END
+
+IDR_MENU2 MENU DISCARDABLE 
+BEGIN
+    MENUITEM "Change",                      65535
+    MENUITEM "Select All",                  65535
+    MENUITEM "Select one",                  65535
+END
+
+IDR_MENU3 MENU DISCARDABLE 
+BEGIN
+    POPUP "Diff"
+    BEGIN
+        MENUITEM "One",                         ID_DIFF_DIFFONE
+    END
+END
+
+IDR_MENU4 MENU DISCARDABLE 
+BEGIN
+    POPUP "Operations"
+    BEGIN
+        MENUITEM "&Copy",                       ID_OPERATIONS_COPY
+        MENUITEM "&Paste",                      ID_OPERATIONS_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "&Show",                       ID_OPERATIONS_SHOW
+        MENUITEM "&Edit",                       ID_OPERATIONS_EDIT
+        MENUITEM SEPARATOR
+        MENUITEM "&New Leaf",                   ID_OPERATIONS_NEW
+        MENUITEM "Ne&w Node",                   ID_OPERATIONS_NEWNODE
+        MENUITEM SEPARATOR
+        MENUITEM "&Delete",                     ID_OPERATIONS_DELETE
+    END
+END
+
+IDR_MENU5 MENU DISCARDABLE 
+BEGIN
+    MENUITEM "Registration",                ID_HELP_REGISTRATION
+    MENUITEM "Registration",                ID_HELP_REGISTRATION
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "E",            ID_FILE_MULTIOPEN,      VIRTKEY, ALT, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "T",            ID_WINDOW_TILE_VERT,    VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F1,          ID_HELP,                VIRTKEY, NOINVERT
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "X",            ID_APP_EXIT,            VIRTKEY, ALT, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 263, 78
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Wed Editor"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "&OK",IDOK,201,7,52,14,WS_GROUP
+    CONTROL         174,IDC_STATIC,"Static",SS_BITMAP,7,15,43,39
+    LTEXT           "Windows Editor  Version 3.10",IDC_STATIC,63,7,132,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright (C) Peter Glen, 1999 - 2007",IDC_STATIC,61,19,
+                    118,8
+    LTEXT           "Build Date:",IDC_STATIC,63,36,36,8
+    LTEXT           "Build:",IDC_STATIC,63,47,18,8
+    LTEXT           "Registered to:",IDC_STATIC,63,57,46,8
+    EDITTEXT        IDC_EDIT2,136,36,117,12,ES_READONLY | NOT WS_BORDER | 
+                    NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,136,47,117,12,ES_READONLY | NOT WS_BORDER | 
+                    NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT3,136,57,117,12,ES_READONLY | NOT WS_BORDER
+END
+
+IDD_DIALOG1 DIALOG DISCARDABLE  0, 0, 410, 178
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Wed Buffers"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LISTBOX         IDC_LIST1,7,7,331,162,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "&OK",IDOK,351,7,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,351,23,50,14
+    PUSHBUTTON      "Save &All",IDC_BUTTON1,351,47,50,14
+    PUSHBUTTON      "&Write One",IDC_BUTTON2,351,63,50,14
+    PUSHBUTTON      "Unloa&d",IDC_BUTTON3,351,79,50,14
+    EDITTEXT        IDC_EDIT1,352,156,51,13,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_TABSTOP
+END
+
+IDD_DIALOG2 DIALOG DISCARDABLE  0, 0, 360, 156
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Head of Holding Buffers"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "&OK",IDOK,299,13,54,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,299,29,54,14
+    EDITTEXT        IDC_EDIT1,31,13,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT2,31,26,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,31,39,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT4,31,52,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,31,65,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT6,31,78,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT7,31,91,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT8,31,104,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT9,31,117,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT10,31,129,258,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT11,299,127,46,11,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    LTEXT           "1",IDC_STATIC,15,26,11,11
+    LTEXT           "2",IDC_STATIC,15,39,11,11
+    LTEXT           "3",IDC_STATIC,15,52,11,11
+    LTEXT           "4",IDC_STATIC,15,65,11,11
+    LTEXT           "5",IDC_STATIC,15,78,11,11
+    LTEXT           "6",IDC_STATIC,15,91,11,11
+    LTEXT           "7",IDC_STATIC,15,104,11,11
+    LTEXT           "8",IDC_STATIC,15,117,11,11
+    LTEXT           "9",IDC_STATIC,15,130,11,11
+    LTEXT           "0",IDC_STATIC,15,15,11,11
+END
+
+IDD_DIALOG3 DIALOGEX 0, 0, 282, 154
+STYLE DS_MODALFRAME | DS_CENTER | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Search/Replace"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LTEXT           "&String to search for:   (up/down for history)",
+                    IDC_STATIC,13,8,158,8
+    COMBOBOX        IDC_COMBO1,22,21,179,66,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "&NoCase",IDC_RADIO4,"Button",BS_AUTORADIOBUTTON,25,38,
+                    42,10
+    CONTROL         "&Functions",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,73,
+                    38,45,10
+    CONTROL         "R&egex",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON,125,39,
+                    34,10
+    LTEXT           "&Replace with:",IDC_STATIC,13,49,44,8
+    COMBOBOX        IDC_COMBO2,23,63,179,66,CBS_DROPDOWN | CBS_SORT | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "&OK",IDOK,215,7,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,215,24,50,14
+    LTEXT           "&Buffers to Operate on: ",IDC_STATIC,13,80,72,8
+    LISTBOX         IDC_LIST1,22,93,179,53,LBS_SORT | LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "Select &All",IDCANCEL2,215,93,50,14
+    PUSHBUTTON      "Select &None",IDCANCEL4,215,109,50,14
+    PUSHBUTTON      "&Where Is",IDCANCEL3,215,125,50,14
+END
+
+IDD_DIALOG4 DIALOGEX 0, 0, 272, 178
+STYLE DS_3DLOOK | DS_NOFAILCREATE | DS_CENTER | DS_CENTERMOUSE | 
+    WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_NOPARENTNOTIFY
+CAPTION "Search"
+FONT 8, "Fixedsys"
+BEGIN
+    LISTBOX         IDC_LIST1,0,0,166,41,LBS_OWNERDRAWFIXED | LBS_HASSTRINGS | 
+                    LBS_USETABSTOPS | LBS_NOINTEGRALHEIGHT | 
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP,WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+    PUSHBUTTON      "Select &All",IDC_BUTTON1,1,46,55,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Select &None",IDC_BUTTON2,1,59,55,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Change &One",IDC_BUTTON4,56,59,55,12,NOT WS_VISIBLE
+    PUSHBUTTON      "&Change All",IDC_BUTTON3,56,46,55,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Clos&e",IDOK,111,72,55,12,NOT WS_VISIBLE
+    PUSHBUTTON      "&Undo",IDC_BUTTON10,111,59,55,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Change &Global",IDC_BUTTON9,111,46,55,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Clip&board",IDC_BUTTON5,59,70,52,14,NOT WS_VISIBLE
+END
+
+IDD_DIALOG5 DIALOGEX 0, 0, 296, 92
+STYLE DS_MODALFRAME | WS_POPUP
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LTEXT           "Wed Windows Editor -- Developer Edition",IDC_STATIC,71,
+                    12,210,8,NOT WS_GROUP
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,73,26,202,1
+    LTEXT           "This computer program is now public domain. If you would like to buy the commercial version please contact at the e-mail address found in the Wed readme file.",
+                    IDC_STATIC,71,34,209,34
+    CONTROL         174,IDC_STATIC,"Static",SS_BITMAP | SS_REALSIZEIMAGE,13,
+                    24,43,39,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_EDIT1,135,73,136,12,ES_READONLY | NOT WS_BORDER
+    LTEXT           "Registered to:",IDC_STATIC,71,73,53,9
+END
+
+IDD_DIALOG6 DIALOG DISCARDABLE  0, 0, 285, 223
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "File Properties"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "&OK",IDOK,228,7,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,228,24,50,14
+    EDITTEXT        IDC_EDIT1,15,10,198,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+    CONTROL         "Unix if checked. --- Check for 'CR' (UNIX)  ---  Uncheck for  'CRLF' (DOS)",
+                    IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,207,
+                    251,9
+    EDITTEXT        IDC_EDIT2,102,28,110,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Original Size:",IDC_STATIC,15,28,84,9
+    LTEXT           "Original number of lines:",IDC_STATIC,15,81,86,9
+    EDITTEXT        IDC_EDIT3,102,81,110,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Current number of lines:",IDC_STATIC,15,97,86,9
+    EDITTEXT        IDC_EDIT4,102,97,110,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Current Undo Size:",IDC_STATIC,17,134,76,9
+    EDITTEXT        IDC_EDIT5,102,134,110,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Current Redo Size:",IDC_STATIC,17,150,71,9
+    EDITTEXT        IDC_EDIT6,102,150,110,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Modified:",IDC_STATIC,15,113,86,9
+    EDITTEXT        IDC_EDIT7,102,113,110,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT8,249,164,29,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT9,102,44,110,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Modify Date:",IDC_STATIC,15,44,84,9
+    EDITTEXT        IDC_EDIT10,102,60,110,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Access Date:",IDC_STATIC,15,60,86,9
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,15,76,195,1
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,15,23,195,1
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,15,129,195,1
+    CONTROL         "Read Only file if checked",IDC_CHECK2,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,196,251,9
+    EDITTEXT        IDC_EDIT12,102,166,110,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Hash Used:",IDC_STATIC,17,166,71,9
+    CONTROL         "Save Tabs As spaces",IDC_CHECK3,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,186,251,9
+END
+
+IDD_DIALOG7 DIALOGEX 0, 0, 281, 47
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "GoTo"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT1,7,22,179,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "&OK",IDOK,224,7,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,224,24,50,14
+    EDITTEXT        IDC_EDIT2,7,7,180,12,ES_AUTOHSCROLL | ES_READONLY | NOT 
+                    WS_BORDER
+END
+
+IDD_PROPPAGE_LARGE1 DIALOG DISCARDABLE  0, 0, 235, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Page 1"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "TODO: layout property page",IDC_STATIC,73,74,90,8
+    PUSHBUTTON      "Button1",IDC_BUTTON1,149,119,60,15
+    CONTROL         "Radio1",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON,17,21,92,
+                    8
+    CONTROL         "Check1",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,16,37,90,8
+    COMBOBOX        IDC_COMBO1,17,56,102,14,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DIALOG8 DIALOG DISCARDABLE  0, 0, 287, 127
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "&OK",IDOK,230,7,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,230,24,50,14
+    COMBOBOX        IDC_COMBO1,31,27,166,13,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_PROPPAGE_LARGE2 DIALOG DISCARDABLE  0, 0, 235, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Property Page"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "TODO: layout property page",IDC_STATIC,73,74,90,8
+END
+
+IDD_DIALOG9 DIALOG DISCARDABLE  0, 0, 300, 175
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "CoCo --- the Code Collection"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "Cl&ose",IDOK,243,7,50,14
+    CONTROL         "Tree1",IDC_TREE1,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
+                    WS_BORDER | WS_TABSTOP,7,7,227,163
+    PUSHBUTTON      "&Copy",IDC_BUTTON5,243,89,50,14
+    PUSHBUTTON      "Create &Node",IDC_BUTTON1,243,22,50,14
+    PUSHBUTTON      "&Paste",IDC_BUTTON6,243,104,50,14
+    PUSHBUTTON      "&Delete",IDC_BUTTON3,243,63,50,14
+    PUSHBUTTON      "Create &Leaf",IDC_BUTTON4,243,37,50,14
+    PUSHBUTTON      "&Edit Code",IDC_BUTTON7,243,119,50,14
+    PUSHBUTTON      "&View Code",IDC_BUTTON8,243,134,50,14
+END
+
+IDD_DIALOG10 DIALOG DISCARDABLE  0, 0, 281, 122
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "CoCo -- Code Peek (read only)"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "OK",IDOK,35,90,53,11,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT1,1,0,279,122,ES_MULTILINE | ES_READONLY | 
+                    WS_VSCROLL | WS_HSCROLL
+END
+
+IDD_DIALOG11 DIALOGEX 0, 0, 311, 27
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CLIENTEDGE
+CAPTION "Word not found:"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_COMBO1,7,7,96,66,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "&Change",IDOK,257,7,42,14
+    PUSHBUTTON      "&Stop",IDCANCEL,208,7,42,14
+    PUSHBUTTON      "I&gnore",IDC_BUTTON1,110,7,42,14
+    PUSHBUTTON      "L&earn",IDC_BUTTON4,159,7,42,14,0,0,HIDC_BUTTON4
+END
+
+IDD_OLE_PROPPAGE_LARGE DIALOG DISCARDABLE  0, 0, 250, 111
+STYLE WS_CHILD | WS_CAPTION
+CAPTION "Page 2"
+FONT 8, "MS Sans Serif"
+BEGIN
+    SCROLLBAR       IDC_SCROLLBAR1,28,46,62,9
+    EDITTEXT        IDC_EDIT1,27,30,57,12,ES_AUTOHSCROLL
+END
+
+IDD_DIALOG13 DIALOG DISCARDABLE  0, 0, 237, 141
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Registration"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Register to:",IDC_STATIC,13,7,68,11
+    EDITTEXT        IDC_EDIT1,19,21,135,13,ES_AUTOHSCROLL
+    LTEXT           "&Company:",IDC_STATIC,13,37,68,11
+    EDITTEXT        IDC_EDIT2,19,51,135,13,ES_AUTOHSCROLL
+    LTEXT           "&Pass: (freeware)",IDC_STATIC,13,67,68,11
+    EDITTEXT        IDC_EDIT3,19,81,135,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "O&K",IDOK,171,7,50,14
+    PUSHBUTTON      "C&ancel",IDCANCEL,171,24,50,14
+    LTEXT           "Registration string (as appears on main dialog):",
+                    IDC_STATIC,11,102,168,9
+    EDITTEXT        IDC_EDIT4,19,115,199,13,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_TABSTOP
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,0,0,1
+ PRODUCTVERSION 2,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "Peter Glen Software\0"
+            VALUE "FileDescription", "wed\0"
+            VALUE "FileVersion", "2, 5, 2, 1\0"
+            VALUE "InternalName", "wed\0"
+            VALUE "LegalCopyright", "Copyright © 1999, 2000, 2001, 2002, 2005\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "wed.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "Self wed\0"
+            VALUE "ProductVersion", "2, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Windows Editor Application\0"
+            VALUE "FileVersion", "2, 0, 0, 1\0"
+            VALUE "InternalName", "wed\0"
+            VALUE "LegalCopyright", "Copyright (C) Peter Glen 1999, 2000, 2001, 2002\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "wed.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "wed Application\0"
+            VALUE "ProductVersion", "2, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1200, 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 253
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 71
+    END
+
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 404
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 171
+    END
+
+    IDD_DIALOG2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 353
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_DIALOG3, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 275
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_DIALOG4, DIALOG
+    BEGIN
+        RIGHTMARGIN, 232
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_DIALOG5, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 286
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_DIALOG6, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 216
+    END
+
+    IDD_DIALOG7, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 274
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 40
+    END
+
+    IDD_PROPPAGE_LARGE1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_DIALOG8, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 280
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 120
+    END
+
+    IDD_PROPPAGE_LARGE2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_DIALOG9, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 293
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 168
+    END
+
+    IDD_DIALOG10, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 121
+    END
+
+    IDD_DIALOG11, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 304
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 21
+    END
+
+    IDD_OLE_PROPPAGE_LARGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 104
+    END
+
+    IDD_DIALOG13, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 230
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 134
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDP_SOCKETS_INIT_FAILED "Windows sockets initialization failed."
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "Windows Editor"
+    IDR_WEDTYPE             "\nUntitled\nWed\n\n\ntext\ntext"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Wed"
+    AFX_IDS_IDLEMESSAGE     "For Help, press F1"
+    AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "         "
+    ID_INDICATOR_ROW        "  Ln:   000   Col: 000     "
+    ID_INDICATOR_CLOCK      "  Ln: 000   Col: 000   "
+    ID_INDICATOR_CLOCK2     " 00:00:00 "
+    ID_INDICATOR_CLOCK3     " 00/00/0000 "
+    ID_INDICATOR_HOLD       " H 00 "
+    ID_INDICATOR_MACRO      " M 00 "
+    ID_INDICATOR_FS         "  000000  "
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+    ID_FILE_SEND_MAIL       "Send the active document through electronic mail\nSend Mail"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit Wed; prompts to save documents\nExit Wed"
+    ID_HELP_INDEX           "Opens Help\nHelp Topics"
+    ID_HELP_FINDER          "List Help topics\nHelp Topics"
+    ID_HELP_USING           "Display instructions about how to use help\nHelp"
+    ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows\nHelp"
+    ID_HELP                 "Display help for current task or command\nHelp"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy selection to Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut selection to Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo undone action\nRedo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    AFX_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_MENUITEM32771        "View Buffer List"
+    ID_VIEW_VIEWHEX         "Hexadecimal view (read only mode)"
+    ID_VIEW_FONTS           "Select screen font (fixed pitch only)"
+    ID_WINDOW_DIFF          "Diff Two Windows"
+    ID_VIEW_SELECTPRINTERFONT "Select printer font (fixed pitch only)"
+    ID_VIEW_FOREGROUNDCOLOR "Select foreground color"
+    ID_VIEW_BACKGROUNDCOLOR "Choose background color"
+    ID_VIEW_HIGHLITEBACKGROUND "Highlite Color  (bg)"
+    ID_VIEW_COLOMNHIGHLITEBACKGROUND "Colomn Highlite Color (bg)"
+    ID_COMPILE_MAKE         "Save All + Execute Current DevStudio Project\nMake"
+    ID_EDIT_RECORDMACRO     "Start/Stop Macro recording"
+    ID_EDIT_PLAYMACRO       "Play Macro"
+    ID_VIEW_VIEWHOLDINGHEADS 
+                            "Show the head of holding buffers\nShow Holding buffer heads heads"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_MAXIMIZEMAIN  "Maximize Main Window"
+    ID_VIEW_VIEWMACROHEADS  "View Macro Heads"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR2        "Editing toolbar\nEditing ToolBar"
+    ID_SEARCH_FIND          "Search for a string in current window"
+    ID_SEARCH_REPLACE       "Search and Replace string"
+    ID_EDIT_SAVEMACRO       "Save Macro to File"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_LOADMACRO       "Load Macro from File"
+    ID_VIEW_TOGGLEBINNORMAL "Toggle Bin/Normal"
+    ID_VIEW_ENABLEREMOTESHARE "Enable Remote Share"
+    ID_VIEW_FILEPROPERTIES  "File Properties\nFile Properties"
+    ID_SETTINGS_SETUPWED    "Setup Wed"
+    ID_HELP_SEARCHHELP      "Search Help"
+    ID_COMPILE_LOADADDIN    "Load Add-in "
+    ID_VIEW_STOPDIFFING     "Cancel diff highlites, resume normal operation"
+    ID_SEARCH_SELEXTHOLDING_BUFFER1 "Switch to holding buffer 1"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER3 "Switch to holding buffer 3"
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER4 "Switch to holding buffer 4"
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER5 "Switch to holding buffer 5"
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER6 "Switch to holding buffer 6"
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER7 "Switch to holding buffer 7"
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER8 "Switch to holding buffer 8"
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER9 "Switch to holding buffer 9"
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER10 
+                            "Switch to holding buffer 0 (default)"
+    ID_EDIT_STARTSELECTALTL "Start Line Selection, Drag Mouse vertically\nStart Select"
+    ID_EDIT_STARTCOLUMNSELECTALTC 
+                            "Start Coloumn Selection, Drag mouse horizontally\nStart Column Select"
+    ID_MOVE_NEXTCHARACTER   "Goto Next character"
+    ID_MOVE_NEXTLINE        "Goto Next line"
+    ID_MOVE_PREVIOUSCHAR    "Goto Previous Character "
+    ID_MOVE_PREVIOUSLINE    "Goto Previous line"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SEARCH_SELEXTHOLDING_BUFFER9 "Switch to holding buffer 9"
+    ID_SEARCH_SELEXTHOLDING_BUFFER10 "Switch to holding buffer 1"
+    ID_EDIT_UPPERCASEWORD   "Uppercase Word/Selection\nUppercase"
+    ID_EDIT_LOWERCASEWORD   "Lowercase Word/Selection\nLowercase"
+    ID_EDIT_CAPITALIZEWORD  "Capitalize Word/Selection\nCapitalize"
+    ID_INSERT_FUNCTION      "Insert Function Template"
+    ID_INSERT_FORLOOP       "Insert For loop Template"
+    ID_INSERT_IFCONDITION   "Insert If Condition Template"
+    ID_MACRO_SELECTRECORDHOLDING_BUFFER1 "Switch to holding buffer 2"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_SELECTRECORDBUFFER_BUFFER1 "Switch to holding buffer 1"
+    ID_SEARCH_FINDNEXT      "Jump to next find (updated live)"
+    ID_SEARCH_FINDPREVIOUS  "Jump to previous find (updated live)"
+    ID_INSERT_DATE          "User information from file: user.txt"
+    ID_INSERT_DATETIME_RFCSTANDARDDATE "Insert Date/Time"
+    ID_INSERT_DATETIME_MMDDYYHHMMSS "Insert Date/Time"
+    ID_INSERT_DATETIME_DDMMYYHHMMSS "Insert Date/Time"
+    ID_INSERT_PAGEFEEDMARK  "Insert page feed (Ascii 12)"
+    ID_SEARCH_SELEXTHOLDING_BUFFER2 "Switch to holding buffer 2"
+    ID_SEARCH_SELEXTHOLDING_BUFFER3 "Switch to holding buffer 3"
+    ID_SEARCH_SELEXTHOLDING_BUFFER4 "Switch to holding buffer 4"
+    ID_SEARCH_SELEXTHOLDING_BUFFER5 "Switch to holding buffer 5"
+    ID_SEARCH_SELEXTHOLDING_BUFFER6 "Switch to holding buffer 6"
+    ID_SEARCH_SELEXTHOLDING_BUFFER7 "Switch to holding buffer 7"
+    ID_SEARCH_SELEXTHOLDING_BUFFER8 "Switch to holding buffer 8"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SELECT_SELECTPARAGRAPH "Select current paragraph\nSelect paragraph"
+    ID_SELECT_SELECTALL     "Select Whole File\nSelect All"
+    ID_SELECT_CANCELSELECT  "Cancel Highlite/Selection/Hit mode\nCancel Selection"
+    ID_EDIT_PASTEHOLDING    "Insert Current Holding contents\nPaste"
+    ID_EDIT_CUTTOHOLDING    "Cut selection to Holding\nCut"
+    ID_EDIT_COPYTOHOLDING   "Copy selection to Holding\nCopy"
+    ID_INSERT_VARIABLE      "Insert Variable"
+    ID_SEARCH_CANCELFIND    "Cancel find highlites"
+    ID_MOVE_GOTOLINE        "Goto line (prompt)"
+    ID_MOVE_GOTOCOLUMN      "Goto Coloumn (prompt)"
+    ID_INSERT_INCREMENTEDNUMBER 
+                            "Insert autoincremented decimal number at cursor"
+    ID_INSERT_SETINCREMNETSTARTVALUE "Set autoincrement starting value"
+    ID_INSERT_USER          "Insert User Info from registry"
+    ID_EDIT_UPPERCASESELECTION "Uppercase Selected Text"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_LOWERCASESELECTION "LowercaseSelected Text"
+    ID_INSERT_DATETIME_TIMEHHMMSS "Local representation"
+    ID_INSERT_DATETIME_WEEKDAY "Insert Date/Time"
+    ID_INSERT_BYTE          "Insert Byte Code (prompt)"
+    ID_INSERT_DATETIME_MONTHNAME "Insert Month name"
+    ID_INSERT_DATETIME_DATEFORMATTEDASLOCALE "Insert Date/Time"
+    ID_INSERT_BASIC_FUNCTION "Insert Class template"
+    ID_INSERT_BASIC_SELECTCASE "Insert Select/Case template"
+    ID_INSERT_BASIC_IF      "Insert If Condition template"
+    ID_INSERT_C_SWITCHCASE  "Insert Swich/Case Template"
+    ID_INSERT_BASIC_FORLOOP "Insert For Loop template"
+    ID_VIEW_COCOCODECOLECTOR "View Code Collector Window"
+    ID_OPERATIONS_INSERTFILE "Insert File "
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_SAVEALL         "Save All Buffers\nSave All"
+    ID_COMPILE_EXECUTEDEVSTUDIOPROJECT 
+                            "Save All + Build  Current DevStudio Project\nMake"
+    ID_SELECT_MARKBLOCK     "Mark current 'C' block (marks whole file if not in block)\nMark 'C' Block"
+    ID_MOVE_ENDOFPAGE       "Move to the end of page"
+    ID_MOVE_BEGINNINGOFPAGE "Move to the beginning of page"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_MOVE_NEXTWORD        "Goto the beginning to the next word"
+    ID_MOVE_PREVIOUSEWORD   "Goto the beginning to the previous word"
+    ID_MOVE_NEXTPARAGRAPH   "Goto next paragraph or block"
+    ID_MOVE_PREVIOUSEPARAGRAPH "Goto previous paragraph or block"
+    ID_MOVE_ENDOFLINE       "Goto end of current line"
+    ID_MOVE_BEGINNINGOFLINE "Goto beginning of current line"
+    ID_MOVE_ENDOFFILE       "Move to the end of file"
+    ID_MOVE_BEGINNINGOFFILE "Move to the beginning of the file"
+    ID_MOVE_PAGEDOWN        "Forward page down"
+    ID_MOVE_PAGEUP          "Backward page up"
+    ID_MOVE_ENDOFWORD       "Goto the end of current word"
+    ID_MOVE_BEGINNINGOFWORD "Goto the beginning of current word"
+    ID_SELECT_SELECTWORD    "Select word cursor is sitting on"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_OPERATIONS_COPY      "Copy from CoCo to holding"
+    ID_OPERATIONS_PASTE     "Paste from Holding to CoCo"
+    ID_OPERATIONS_SHOW      "Show selected item"
+    ID_OPERATIONS_EDIT      "Edit selected item"
+    ID_OPERATIONS_DELETE    "Delete selected item"
+    ID_OPERATIONS_NEW       "Create new item"
+    ID_WINDOWS_NEXTBUFFER   "Switch to Next Window"
+    ID_INSERT_DELETEATCURSOR "Delete character under cursor"
+    ID_INSERT_DELETEBEFORECURSOR "Delete character before cursor"
+    ID_INSERT_DELETELINE    "Delete current line or selection"
+    ID_INSERT_DELETETILLENDOFLINE "Kill till the end of line"
+    ID_VIEW_FULLSCREEN      "Show full screen view of document"
+    Opensource              "Open "
+    ID_FILE_MULTIOPEN       "Open Multiple Files, start at Source Directory"
+    ID_INSERT_INSERTOVERTYPE "Toggle insert or overtype"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SETTINGS_TOGGLESCROLLBARS "Hide/Show Scroll Bars"
+    ID_SETTINGS_REVERSEIT   "Reverse Foreground and Background Colors"
+    ID_MACRO_ANIMATEMACRO   "Play macro slowly (debug aid)"
+    ID_OPERATIONS_SHOWCOCO  "Shode Code Collector"
+    ID_OPERATIONS_SELECTPARAGRAPH "Select current paragraph"
+    ID_EDIT_WRAPTOWINDOW    "Wrap long lines to column 80"
+    ID_EDIT_CLEANNONASCII   "Clean out non displayable <> (32-127) characters"
+    ID_EDIT_WEEDEMPTYLINES  "Weed out empty lines to less then 3 consecutive"
+    ID_INSERT_C_TEMPLATE    "Insert C template at cursor"
+    ID_INSERT_JAVA_TEMPLATE "Insert Java Template at cursor"
+    ID_SETTINGS_SEARCHHIGHLITECOLORFG "Set Search highlite color"
+    ID_SETTINGS_COMMENTHIGHLITECOLOR "Set comment highlite color"
+    ID_VIEW_GOTONEXTDIFFERENCE "Locate next  difference"
+    ID_VIEW_GOTOPREVIOUSDIFFERENCE "Find previous difference"
+    ID_SETTINGS_DIFFADDCOLOR "Select Color for diff Adding"
+    ID_SETTINGS_DIFFCHANGEDCOLOR "Select Color for diff Changed"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SETTINGS_DIFFDELCOLOR "Select Color for diff Deleted"
+    ID_VIEW_FILEBUFERS      "Show current file buffers"
+    ID_EDIT_APPENDTOHOLDING "Add to the end of holding buffer"
+    ID_SEARCH_HITEDITMODE   "Display/Edit matching lines only"
+    ID_WINDOWS_MAXIMIZECURRENT "Maximize Current Window"
+    ID_INSERT_CUSTOMTEMPLATE "Insert Custom Template"
+    ID_INSERT_JAVA_PRIVATEMETHOD "Insert Method template"
+    ID_ADVANCED_LOCKKEYBOARD "Toggle Lock keyboard (Alt keys remain active)"
+    ID_OPERATIONS_SHOWFILEPROPERTIES "Show file properties"
+    ID_SETTINGS_ALLOWBACKSPACETOWRAPLINES 
+                            "Backspace wraps to previous line (compatibility)"
+    ID_SETTINGS_SAVETABSASSPACES "Save Tabs to Spaces"
+    ID_INSERT_DATETIME_BORDERSAFEDATE "Date in day-month-year format"
+    ID_INSERT_TEMPLATEONE   "Insert custom template one"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INSERT_TEMPLATETWO   "Insert custom template two"
+    ID_INSERT_TEMPLATETHREE "Insert custom template three"
+    ID_ADVANCED_SPELLCHECK  "Spell Check All"
+    ID_ADVANCED_COMMENTADSTRINGSPELLCHECK 
+                            "Spell check in comments and strings"
+    ID_MOVE_NEXTLONGLINE    "Move to next long line"
+    ID_MOVE_MOVEPREVIOUSLONGLINE "Move to previous long line"
+    ID_MOVE_NEXTFUNCTION    "(disabled)"
+    ID_MOVE_PREVIOUSFUNCTION "(disabled)"
+    ID_SETTINGS_LONGLINECOLORFG "Set Long line color"
+    ID_FILE_MULTIOPENDEST   "Open Multiple Files, start at Destination Directory"
+    ID_OPERATIONS_OPENNEWFILE "Open file"
+    ID_SEARCH_BRACECOUNT    "Search for braces backward and forward ...."
+    ID_HELP_REGISTRATION    "Display Registration Dialog"
+    ID_ADVANCED_CLEANOLDBACKUPS "Cleans backup files older the 30 days"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_ADVANCED_CLEANOLDUNDOFILES 
+                            "Cleans undo and redo files older the 30 days"
+    ID_SETTINGS_SETTABSTOP  "Set number of spaces to represent TAB"
+    ID_FILE_SAVEAS2         "Save current document under new name"
+    ID_ADVANCED_CLEARCURRENTIGNORELIST 
+                            "Clear Current Ignore List so Wed re-checks all ignored words"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\wed.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#include "afxdb.rc"          // Database resources
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

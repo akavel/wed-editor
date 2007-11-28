@@ -1,0 +1,104 @@
+
+		Wed Windows Power Editor
+
+Wed Rivalling commercial packages.
+
+	o	Unlimited undo redo
+	o	Unlimited macro size
+	o	Unlimited file size
+	o	Undo beyond last save
+	o	Windows standard keystrokes
+	o	Brief compatible keystrokes
+	o	Ten clipboards, ten macro buffers
+	o	Auto file save and file backup
+	o	Syncronized search
+	o 	Search/Replace function
+	o	Color buffer diff function
+	o	Selectable colors
+	o	Selectable fonts
+	o	Templates for 'C' and java
+	o 	Regular expressions
+	o	Interruptable operation
+	o	Full screen operation
+	o	Spell Check with learn feature
+	o	Plain text dictionary
+	o	UNIX/DOS auto recognition
+	o	TAB/SPACE handling auto recognition
+	o	Hit Edit Mode
+	o	Full interactive response
+
+ 		... and much much more.
+
+ Rock solid build, will Edit large files flawlessly.
+
+
+Wed Keystrokes, Alt Key Combinations
+------------------------------------
+
+Alt-A	 Save All			 			Wed keystroke
+Alt-B	 Show Buffers			 		Brief Compatible keystroke
+Alt-C	 Start Column Highlight			Brief Compatible keystroke
+Alt-D	 Delete line			 		Brief Compatible keystroke
+Alt-E	 Edit file (multi open)			Brief Compatible keystroke
+Alt-F	 Pull down File menu			Standard windows key
+Alt-G	 Goto Line			 			Brief Compatible keystroke
+Alt-H	 Enter Hit Mode			 		Wed keystroke
+Alt-I	 Insert incremented number		Wed keystroke
+Alt-J	 Jump to CoCo			 		Wed keystroke
+Alt-K	 Kill to end of line			Brief Compatible keystroke
+Alt-L	 Mark Line			 			Brief Compatible keystroke
+Alt-M	 Mark Block			 			Wed keystroke
+Alt-N	 Create New Buffer			 	Brief Compatible keystroke
+Alt-O	 Open file			 			Brief Compatible keystroke
+Alt-P	 Select paragraph			 	Wed keystroke
+Alt-Q	 Maximize current Buffer		Wed keystroke
+Alt-R	 Redo			 				Wed keystroke
+Alt-S	 Search			 				Brief Compatible keystroke
+Alt-T	 Change Text (taush)			Brief Compatible keystroke
+Alt-U	 Undo			 				Brief Compatible keystroke
+Alt-V	 Select viewed word			 	Wed keystroke
+Alt-W	 Write buffer			 		Brief Compatible keystroke
+Alt-X	 Exit			 				Brief Compatible keystroke
+Alt-Y	 Maximize viewing area			Wed keystroke
+Alt-Z 	 Maximize main			 		Wed keystroke
+
+Wed Keystrokes, Control Key Combinations
+-----------------------------------------
+
+Ctrl-A	 Select All			 			Standard windows key
+Ctrl-B	 Insert 'C' template			Wed keystroke
+Ctrl-C	 Copy to clipboard			 	Standard windows key
+Ctrl-D	 Goto Next Difference			Wed keystroke
+Ctrl-E	 Save As			 			Wed keystroke
+Ctrl-F	 Find			 				Standard windows key
+Ctrl-G	 Close buffer			 		Wed keystroke
+Ctrl-H	 Backspace			 			Standard windows key
+Ctrl-I	 Tab			 				Standard windows key
+Ctrl-J	 Insert Java Template			Wed keystroke
+Ctrl-K	 Switch on/off hex mode			Wed keystroke
+Ctrl-L	 Lowercase word			 		Wed keystroke
+Ctrl-M	 Enter			 				Standard windows key
+Ctrl-N	 Create new buffer			 	Standard windows key
+Ctrl-O	 Open file			 			Standard windows key
+Ctrl-P	 Print buffer			 		Standard windows key
+Ctrl-Q	 Cascade windows			 	Wed keystroke
+Ctrl-R	 Goto previous diff			 	Wed keystroke
+Ctrl-S	 Save file			 			Standard windows key
+Ctrl-T	 Tile Windows Left/Right		Wed keystroke
+Ctrl-U	 Uppercase current word			Wed keystroke
+Ctrl-V	 Paste from clipboard			Standard windows key
+Ctrl-W	 Capitalize current word		Wed keystroke
+Ctrl-X	 Cut to clipboard			 	Standard windows key
+Ctrl-Y	 Redo			 				Standard windows key
+Ctrl-Z	 Undo			 				Standard windows key
+
+Wed Keystrokes, Misc. Combinations
+-----------------------------------
+
+Shift-F7 Start Spell check				Wed keystroke
+Shift-F8 Animate Macro Playback			Wed keystroke
+Ctrl-F7  Start String Spell check		Wed keystroke
+
+
+
+

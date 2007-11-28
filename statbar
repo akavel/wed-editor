@@ -1,0 +1,399 @@
+SystemParametersInfo   
+The SystemParametersInfo function queries or sets systemwide parameters. This function can also update the user profile while setting a parameter. 
+
+BOOL SystemParametersInfo( UINT uiAction, 
+ // system parameter to query or set 
+ 
+UINT uiParam, 
+ // depends on action to be taken 
+ 
+PVOID pvParam, 
+ // depends on action to be taken 
+ 
+UINT fWinIni 
+ // user profile update flag 
+ 
+); 
+  
+
+
+Parameters
+uiAction 
+
+Specifies the systemwide parameter to query or set. This parameter can be one of the following values: Value 
+ Meaning 
+ 
+SPI_GETACCESSTIMEOUT 
+ Retrieves information about the time-out period associated with the accessibility features. The pvParam parameter must point to an ACCESSTIMEOUT structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(ACCESSTIMEOUT). 
+ 
+SPI_GETANIMATION 
+ Retrieves the animation effects associated with user actions. The pvParam parameter must point to an ANIMATIONINFO structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(ANIMATIONINFO). 
+ 
+SPI_GETBEEP 
+ Indicates whether the warning beeper is on. 
+
+The pvParam parameter is a pointer to a BOOL that receives TRUE if the beeper is on, or FALSE if it is off. 
+ 
+SPI_GETBORDER 
+ Retrieves the border multiplier factor that determines the width of a window’s sizing border. The pvParam parameter must point to an integer variable. 
+ 
+SPI_GETDEFAULTINPUTLANG 
+ Returns the keyboard layout handle for the system default input language. The pvParam parameter must point to the 32-bit variable that receives the keyboard layout handle for the default language. The uiParam parameter is not used. 
+ 
+SPI_GETDRAGFULLWINDOWS 
+ Determines whether dragging of full windows is enabled. The pvParam parameter must point to a BOOL variable that receives TRUE if enabled, or FALSE otherwise. 
+
+Windows 95: This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION. 
+ 
+SPI_GETFASTTASKSWITCH 
+ This flag is obsolete. Previous versions of Windows use this flag to determine whether ALT+TAB fast task switching is enabled. Beginning with Windows 95 and Windows NT version 4.0, fast task switching is always enabled. 
+ 
+SPI_GETFILTERKEYS 
+ Retrieves information about the FilterKeys accessibility feature. The pvParam parameter must point to a FILTERKEYS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(FILTERKEYS). 
+ 
+SPI_GETFONTSMOOTHING 
+ Indicates whether the font smoothing feature is enabled. This feature uses font anti-aliasing to make font curves appear smoother by painting pixels at different gray levels. 
+
+The pvParam parameter is a pointer to a BOOL variable that receives TRUE if the feature is enabled, or FALSE if it is not. 
+
+Windows 95: This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION. 
+ 
+SPI_GETGRIDGRANULARITY 
+ Retrieves the current granularity value of the desktop sizing grid. The pvParam parameter must point to an integer variable that receives the granularity. 
+ 
+SPI_GETHIGHCONTRAST 
+ Windows 95 only: Retrieves information about the HighContrast accessibility feature. The pvParam parameter must point to a HIGHCONTRAST structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(HIGHCONTRAST). 
+ 
+SPI_GETICONMETRICS 
+ Retrieves the metrics associated with icons. The pvParam parameter must point to an ICONMETRICS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(ICONMETRICS). 
+ 
+SPI_GETICONTITLELOGFONT 
+ Retrieves the logical font information for the current icon-title font. The uiParam parameter specifies the size of a LOGFONT structure, and the pvParam parameter must point to the LOGFONT structure to fill in. 
+ 
+SPI_GETICONTITLEWRAP 
+ Determines whether icon-title wrapping is enabled. The pvParam parameter must point to a BOOL variable that receives TRUE if enabled, or FALSE otherwise. 
+ 
+SPI_GETKEYBOARDDELAY 
+ Retrieves the keyboard repeat-delay setting. The pvParam parameter must point to an integer variable that receives the setting. 
+ 
+SPI_GETKEYBOARDPREF 
+ Determines whether the user relies on the keyboard instead of the mouse, and wants applications to display keyboard interfaces that would otherwise be hidden. The pvParam parameter must point to a BOOL variable that receives TRUE if the user relies on the keyboard; the variable receives FALSE otherwise. 
+ 
+SPI_GETKEYBOARDSPEED 
+ Retrieves the keyboard repeat-speed setting. The pvParam parameter must point to a DWORD variable that receives the setting. 
+ 
+SPI_GETLOWPOWERACTIVE 
+ This flag is not supported for 32-bit applications on Windows NT or Windows 95. 
+
+Windows 95 only: For 16-bit Windows applications, this value determines whether the low-power phase of screen saving is enabled or not. The pvParam parameter must point to a BOOL variable that receives TRUE if enabled, or FALSE if disabled. 
+ 
+SPI_GETLOWPOWERTIMEOUT 
+ This flag is not supported for 32-bit applications on Windows NT or Windows 95. 
+
+Windows 95 only: For 16-bit Windows applications, this value retrieves the time-out value for the low-power phase of screen saving. The pvParam parameter must point to an integer value that receives the value. 
+ 
+SPI_GETMENUDROPALIGNMENT 
+ Determines whether pop-up menus are left-aligned or right-aligned, relative to the corresponding menu-bar item. The pvParam parameter must point to a BOOL variable that receives TRUE if left-aligned, or FALSE otherwise. 
+ 
+SPI_GETMINIMIZEDMETRICS 
+ Retrieves the metrics associated with minimized windows. The pvParam parameter must point to a MINIMIZEDMETRICS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(MINIMIZEDMETRICS). 
+ 
+SPI_GETMOUSE 
+ Retrieves the two mouse threshold values and the mouse speed. The pvParam parameter must point to an array of three integers that receives these values. See mouse_event for further information. 
+ 
+SPI_GETMOUSEHOVERHEIGHT 
+ Windows NT only: Gets the height, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent to generate a WM_MOUSEHOVER message. The height is returned in a UINT pointed to by the pvParam parameter. 
+ 
+SPI_GETMOUSEHOVERTIME 
+ Windows NT only: Gets the time, in milliseconds, that the mouse pointer has to stay in the hover rectangle for TrackMouseEvent to generate a WM_MOUSEHOVER message. The time is returned in a UINT pointed to by the pvParam parameter. 
+ 
+SPI_GETMOUSEHOVERWIDTH 
+ Windows NT only: Gets the width, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent to generate a WM_MOUSEHOVER message. The width is returned in a UINT pointed to by the pvParam parameter. 
+ 
+SPI_GETMOUSEKEYS 
+ Retrieves information about the MouseKeys accessibility feature. The pvParam parameter must point to a MOUSEKEYS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(MOUSEKEYS). 
+ 
+SPI_GETMOUSETRAILS 
+ Windows 95 only: Indicates whether the Mouse Trails feature is enabled. This feature improves the visibility of mouse cursor movements by briefly showing a trail of cursors and quickly erasing them. 
+
+The pvParam parameter is a pointer to an INT variable that receives a value. If the value is zero or 1, the feature is disabled. If the value is greater than 1, the feature is enabled and the value indicates the number of cursors drawn in the trail. The uiParam parameter is not used. 
+ 
+SPI_GETNONCLIENTMETRICS 
+ Retrieves the metrics associated with the nonclient area of nonminimized windows. The pvParam parameter must point to a NONCLIENTMETRICS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(NONCLIENTMETRICS). 
+ 
+SPI_GETPOWEROFFACTIVE 
+ This flag is not supported for 32-bit applications on Windows NT or Windows 95. 
+
+Windows 95 only: For 16-bit Windows applications, this value determines whether the power-off phase of screen saving is enabled or not. The pvParam parameter must point to a BOOL variable that receives TRUE if enabled, or FALSE if disabled. 
+ 
+SPI_GETPOWEROFFTIMEOUT 
+ This flag is not supported for 32-bit applications on Windows NT or Windows 95. 
+
+Windows 95 only: For 16-bit Windows applications, this value retrieves the time-out value for the power-off phase of screen saving. The pvParam parameter must point to an integer value that receives the value. 
+ 
+SPI_GETSCREENREADER 
+ Windows 95 only: Determines whether a screen reviewer utility is running. A screen reviewer utility directs textual information to an output device, such as a speech synthesizer or Braille display. When this flag is set, an application should provide textual information in situations where it would otherwise present the information graphically. 
+
+The pvParam parameter is a pointer to a BOOL variable that receives TRUE if a screen reviewer utility is running, or FALSE if it is not. 
+ 
+SPI_GETSCREENSAVEACTIVE 
+ Determines whether screen saving is enabled. The pvParam parameter must point to a BOOL variable that receives TRUE if enabled, or FALSE otherwise. 
+ 
+SPI_GETSCREENSAVETIMEOUT 
+ Retrieves the screen saver time-out value, in seconds. The pvParam parameter must point to an integer variable that receives the value. 
+ 
+SPI_GETSERIALKEYS 
+ Windows 95 only: Retrieves information about the SerialKeys accessibility feature. The pvParam parameter must point to a SERIALKEYS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(SERIALKEYS). 
+ 
+SPI_GETSHOWSOUNDS 
+ Determines whether the Show Sounds accessibility flag is on or off. If it is on, the user requires an application to present information visually in situations where it would otherwise present the information only in audible form. The pvParam parameter must point to a BOOL variable that receives TRUE if the feature is on, or FALSE if it is off. 
+
+Using this value is equivalent to calling GetSystemMetrics (SM_SHOWSOUNDS). That is the recommended call. 
+ 
+SPI_GETSNAPTODEFBUTTON 
+ Windows NT only: Determines whether the snap-to-default-button feature is enabled. If enabled, the mouse cursor automatically moves to the default button, such as “OK” or “Apply”, of a dialog box. The pvParam parameter must point to a BOOL variable that receives TRUE if the feature is on, or FALSE if it is off. 
+ 
+SPI_GETSOUNDSENTRY 
+ Retrieves information about the SoundSentry accessibility feature. The pvParam parameter must point to a SOUNDSENTRY structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(SOUNDSENTRY). 
+ 
+SPI_GETSTICKYKEYS 
+ Retrieves information about the StickyKeys accessibility feature. The pvParam parameter must point to a STICKYKEYS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(STICKYKEYS). 
+ 
+SPI_GETTOGGLEKEYS 
+ Retrieves information about the ToggleKeys accessibility feature. The pvParam parameter must point to a TOGGLEKEYS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(TOGGLEKEYS). 
+ 
+SPI_GETWHEELSCROLLLINES 
+ Windows NT only: Gets the number of lines to scroll when the mouse wheel is rotated. The number of lines is returned in a UINT pointed to by pvParam. The default value is 3. 
+ 
+SPI_GETWINDOWSEXTENSION 
+ Windows 95 only: Indicates whether the Windows extension, Windows Plus!, is installed. Set the uiParam parameter to 1. The pvParam parameter is not used. The function returns TRUE if the extension is installed, or FALSE if it is not. 
+ 
+SPI_GETWORKAREA 
+ Retrieves the size of the working area. The working area is the portion of the screen not obscured by the tray. The pvParam parameter must point to the RECT structure that receives the coordinates of the working area. 
+ 
+SPI_ICONHORIZONTALSPACING 
+ Sets the width of an icon cell. The uiParam parameter specifies the width, in pixels. 
+ 
+SPI_ICONVERTICALSPACING 
+ Sets the height of an icon cell. The uiParam parameter specifies the height, in pixels. 
+ 
+SPI_LANGDRIVER 
+ Not implemented. 
+ 
+SPI_SCREENSAVERRUNNING 
+ Windows 95 only: Used internally; applications should not use this flag. 
+ 
+SPI_SETACCESSTIMEOUT 
+ Sets the time-out period associated with the accessibility features. The pvParam parameter must point to an ACCESSTIMEOUT structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(ACCESSTIMEOUT). 
+ 
+SPI_SETANIMATION 
+ Sets the animation effects associated with user actions. The pvParam parameter must point to an ANIMATIONINFO structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(ANIMATIONINFO). 
+ 
+SPI_SETBEEP 
+ Turns the warning beeper on or off. The uiParam parameter specifies TRUE for on, or FALSE for off. 
+ 
+SPI_SETBORDER 
+ Sets the border multiplier factor that determines the width of a window’s sizing border. The uiParam parameter specifies the new value. 
+ 
+SPI_SETDEFAULTINPUTLANG 
+ Sets the default input language for the system shell and applications. The specified language must be displayable using the current system character set. The uiParam parameter is not used. The pvParam parameter must point to a 32-bit variable that contains the keyboard layout handle for the default language. 
+ 
+SPI_SETDESKPATTERN 
+ Sets the current desktop pattern by causing Windows to read the Pattern= setting from the WIN.INI file. 
+ 
+SPI_SETDESKWALLPAPER 
+ Sets the desktop wallpaper. The pvParam parameter must point to a null-terminated string containing the name of a bitmap file. 
+ 
+SPI_SETDOUBLECLICKTIME 
+ Sets the double-click time for the mouse to the value of the uiParam parameter. The double-click time is the maximum number of milliseconds that can occur between the first and second clicks of a double-click. 
+ 
+SPI_SETDOUBLECLKHEIGHT 
+ Sets the height of the double-click rectangle to the value of the uiParam parameter. 
+
+The double-click rectangle is the rectangle within which the second click of a double-click must fall for it to be registered as a double-click. 
+ 
+SPI_SETDOUBLECLKWIDTH 
+ Sets the width of the double-click rectangle to the value of the uiParam parameter. 
+
+The double-click rectangle is the rectangle within which the second click of a double-click must fall for it to be registered as a double-click. 
+ 
+SPI_SETDRAGFULLWINDOWS 
+ Sets dragging of full windows either on or off. The uiParam parameter specifies TRUE for on, or FALSE for off. 
+
+Windows 95: This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION. 
+ 
+SPI_SETDRAGHEIGHT 
+ Sets the height, in pixels, of the rectangle used to detect the start of a drag operation. 
+
+See SM_CXDRAG and SM_CYDRAG in the table under the nIndex parameter of GetSystemMetrics. 
+ 
+SPI_SETDRAGWIDTH 
+ Sets the width, in pixels, of the rectangle used to detect the start of a drag operation. 
+
+See SM_CXDRAG and SM_CYDRAG in the table under the nIndex parameter of GetSystemMetrics. 
+ 
+SPI_SETFASTTASKSWITCH 
+ This flag is obsolete. Previous versions of Windows use this flag to enable or disable ALT+TAB fast task switching. Beginning with Windows 95 and Windows NT version 4.0, fast task switching is always enabled. 
+ 
+SPI_SETFILTERKEYS 
+ Sets the parameters of the FilterKeys accessibility feature. The pvParam parameter must point to a FILTERKEYS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(FILTERKEYS). 
+ 
+SPI_SETFONTSMOOTHING 
+ Enables or disables the font smoothing feature, which uses font anti-aliasing to make font curves appear smoother by painting pixels at different gray levels. 
+
+To enable the feature, set the uiParam parameter to TRUE. To disable the feature, set uiParam to FALSE. 
+
+Windows 95: This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION. 
+ 
+SPI_SETGRIDGRANULARITY 
+ Sets the granularity of the desktop sizing grid to the value of the uiParam parameter. 
+ 
+SPI_SETHANDHELD 
+ Used internally; applications should not use this value. 
+ 
+SPI_SETHIGHCONTRAST 
+ Windows 95 only: Sets the parameters of the HighContrast accessibility feature. The pvParam parameter must point to a HIGHCONTRAST structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(HIGHCONTRAST). 
+ 
+SPI_SETICONMETRICS 
+ Sets the metrics associated with icons. The pvParam parameter must point to an ICONMETRICS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(ICONMETRICS). 
+ 
+SPI_SETICONTITLELOGFONT 
+ Sets the font that is used for icon titles. The uiParam parameter specifies the size of a LOGFONT structure, and the pvParam parameter must point to a LOGFONT structure. 
+ 
+SPI_SETICONTITLEWRAP 
+ Turns icon-title wrapping on or off. The uiParam parameter specifies TRUE for on, or FALSE for off. 
+ 
+SPI_SETKEYBOARDDELAY 
+ Sets the keyboard repeat-delay setting to the value of the uiParam parameter. 
+ 
+SPI_SETKEYBOARDPREF 
+ Windows 95 only: Sets the keyboard preference. The uiParam parameter specifies TRUE if the user relies on the keyboard instead of the mouse, and wants applications to display keyboard interfaces that would otherwise be hidden; uiParam is FALSE otherwise. 
+ 
+SPI_SETKEYBOARDSPEED 
+ Sets the keyboard repeat-speed setting to the value of the uiParam parameter. 
+ 
+SPI_SETLANGTOGGLE 
+ Sets the hot key set for switching between input languages. The uiParam and pvParam parameters are not used. The value sets the shortcut keys in the keyboard property sheets by reading the registry again. The registry must be set before this flag is used. the path in the registry is \HKEY_CURRENT_USER\keyboard layout\toggle. Valid values are “1” = alt+shift, “2” = ctrl+shift, and “3” = none. 
+ 
+SPI_SETLOWPOWERACTIVE 
+ Windows 95 only: Activates or deactivates the low-power phase of screen saving. Set uiParam to 1 to activate, or 0 to deactivate. The pvParam parameter must be NULL. 
+ 
+SPI_SETLOWPOWERTIMEOUT 
+ Windows 95 only: Retrieves the time-out value, in seconds, for the low-power phase of screen saving. The uiParam parameter specifies the new value. The pvParam parameter must be NULL. 
+ 
+SPI_SETMENUDROPALIGNMENT 
+ Sets the alignment value of pop-up menus. The uiParam parameter specifies TRUE for right alignment, or FALSE for left alignment. 
+ 
+SPI_SETMINIMIZEDMETRICS 
+ Sets the metrics associated with minimized windows. The pvParam parameter must point to a MINIMIZEDMETRICS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(MINIMIZEDMETRICS). 
+ 
+SPI_SETMOUSE 
+ Sets the two mouse threshold values and the mouse speed. The pvParam parameter must point to an array of three integers that specifies these values. See mouse_event for further information. 
+ 
+SPI_SETMOUSEBUTTONSWAP 
+ Swaps or restores the meaning of the left and right mouse buttons. The uiParam parameter specifies TRUE to swap the meanings of the buttons, or FALSE to to restore their original meanings. 
+ 
+SPI_SETMOUSEHOVERHEIGHT 
+ Windows NT only: Sets the height, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent to generate a WM_MOUSEHOVER message. The height is set from the uiParam parameter. 
+ 
+SPI_SETMOUSEHOVERTIME 
+ Windows NT only: Sets the time, in milliseconds, that the mouse pointer has to stay in the hover rectangle for TrackMouseEvent to generate a WM_MOUSEHOVER message. This is used only if you pass HOVER_DEFAULT in the dwHoverTime parameter in the call to TrackMouseEvent. The time is set from the uiParam parameter. 
+ 
+SPI_SETMOUSEHOVERWIDTH 
+ Windows NT only: Sets the width, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent to generate a WM_MOUSEHOVER message. The width is set from the uiParam parameter. 
+ 
+SPI_SETMOUSEKEYS 
+ Sets the parameters of the MouseKeys accessibility feature. The pvParam parameter must point to a MOUSEKEYS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(MOUSEKEYS). 
+ 
+SPI_SETMOUSETRAILS 
+ Windows 95 only: Enables or disables the Mouse Trails feature, which improves the visibility of mouse cursor movements by briefly showing a trail of cursors and quickly erasing them. 
+
+To disable the feature, set the uiParam parameter to zero or 1. To enable the feature, set uiParam to a value greater than 1 to indicate the number of cursors drawn in the trail. 
+ 
+SPI_SETNONCLIENTMETRICS 
+ Sets the metrics associated with the nonclient area of nonminimized windows. The pvParam parameter must point to a NONCLIENTMETRICS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(NONCLIENTMETRICS). 
+ 
+SPI_SETPENWINDOWS 
+ Windows 95 only: Specifies that pen windows is being loaded or unloaded. The uiParam parameter is TRUE when loading and FALSE when unloading pen windows. The pvParam parameter is NULL. 
+ 
+SPI_SETPOWEROFFACTIVE 
+ Windows 95 only: Activates or deactivates the power-off phase of screen saving. Set uiParam to 1 to activate, or 0 to deactivate. The pvParam parameter must be NULL. 
+ 
+SPI_SETPOWEROFFTIMEOUT 
+ Windows 95 only: Retrieves the time-out value, in seconds, for the power-off phase of screen saving. The uiParam parameter specifies the new value. The pvParam parameter must be NULL. 
+ 
+SPI_SETSCREENREADER 
+ Windows 95 only: Indicates whether a screen review utility is running. The uiParam parameter specifies TRUE for on, or FALSE for off. 
+ 
+SPI_SETSCREENSAVEACTIVE 
+ Sets the state of the screen saver. The uiParam parameter specifies TRUE to activate screen saving, or FALSE to deactivate it. 
+ 
+SPI_SETSCREENSAVETIMEOUT 
+ Sets the screen saver time-out value to the value of the uiParam parameter. This value is the amount of time, in seconds, that the system must be idle before the screen saver activates. 
+ 
+SPI_SETSERIALKEYS 
+ Windows 95 only: Sets the parameters of the SerialKeys accessibility feature. The pvParam parameter must point to a SERIALKEYS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(SERIALKEYS). 
+ 
+SPI_SETSHOWSOUNDS 
+ Sets the ShowSounds accessibility feature as on or off. The uiParam parameter specifies TRUE for on, or FALSE for off. 
+ 
+SPI_SETSNAPTODEFBUTTON 
+ Windows NT only: Enables or disables the snap-to-default-button feature. If enabled, the mouse cursor automatically moves to the default button, such as “OK” or “Apply”, of a dialog box. Set the uiParam parameter to TRUE to enable the feature, or FALSE to disable it. 
+ 
+SPI_SETSOUNDSENTRY 
+ Sets the parameters of the SoundSentry accessibility feature. The pvParam parameter must point to a SOUNDSENTRY structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(SOUNDSENTRY). 
+ 
+SPI_SETSTICKYKEYS 
+ Sets the parameters of the StickyKeys accessibility feature. The pvParam parameter must point to a STICKYKEYS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(STICKYKEYS). 
+ 
+SPI_SETTOGGLEKEYS 
+ Sets the parameters of the ToggleKeys accessibility feature. The pvParam parameter must point to a TOGGLEKEYS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(TOGGLEKEYS). 
+ 
+SPI_SETWHEELSCROLLLINES 
+ Windows NT only: Sets the number of lines to scroll when the mouse wheel is rotated. The number of lines is set from the uiParam parameter. 
+
+The number of lines is the suggested number of lines to scroll when the mouse wheel is rolled without using modifier keys. If the number is 0, then no scrolling should occur. If the number of lines to scroll is greater than the number of lines viewable, and in particular if it is WHEEL_PAGESCROLL (#defined as UINT_MAX), the scroll operation should be interpreted as clicking once in the page down or page up regions of the scroll bar. 
+ 
+SPI_SETWORKAREA 
+ Sets the size of the work area. The work area is the portion of the screen not obscured by the taskbar. The pvParam parameter must point to the RECT structure that contains the coordinates of the work area. 
+ 
+
+
+uiParam 
+
+Depends on the system parameter being queried or set. For more information about systemwide parameters, see the uiAction parameter. If not otherwise indicated, specify zero. 
+
+pvParam 
+
+Depends on the system parameter being queried or set. For more information about systemwide parameters, see the uiAction parameter. If not otherwise indicated, specify NULL. 
+
+fWinIni 
+
+If a system parameter is being set, specifies whether the user profile is to be updated, and if so, whether the WM_SETTINGCHANGE message is to be broadcast to all top-level windows to notify them of the change. This parameter can be zero or can be one of the following values: Value 
+ Action 
+ 
+SPIF_UPDATEINIFILE 
+ Writes the new system-wide parameter setting to the user profile. 
+ 
+SPIF_SENDCHANGE 
+ Broadcasts the WM_SETTINGCHANGE message after updating the user profile. 
+ 
+SPIF_SENDWININICHANGE 
+ Same as SPIF_SENDCHANGE. 
+ 
+
+
+Return Values
+If the function succeeds, the return value is nonzero. 
+
+If the function fails, the return value is zero. To get extended error information, call GetLastError. 
+
+Remarks
+This function is intended for use with applications, such as the Control Panel, that allow the user to customize the Windows environment. 
+
+A keyboard layout name should be derived from the hexadecimal value of the language identifier corresponding to the layout. For example, U.S. English has a language identifier of 0x0409, so the primary U.S. English layout is named “00000409.” Variants of U.S. English layout, such as the Dvorak layout, are named “00010409,” “00020409” and so on. For a list of the primary language identifiers and sublanguage identifiers that make up a language identifier, see the MAKELANGID macro. 
+
+See Also
+ACCESSTIMEOUT, ANIMATIONINFO, FILTERKEYS, GetLastError, GetSystemMetrics, HIGHCONTRAST, ICONMETRICS, LOGFONT, MAKELANGID, MINIMIZEDMETRICS, mouse_event, MOUSEKEYS, NONCLIENTMETRICS, RECT, SERIALKEYS, SOUNDSENTRY, STICKYKEYS, TOGGLEKEYS, TrackMouseEvent WM_SETTINGCHANGE 
+void CWedView::OpenSource()
+

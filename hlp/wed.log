@@ -1,0 +1,31 @@
+Microsoft (R) Help Compiler
+HCRTF 4.03.0002
+Copyright (c) Microsoft Corp 1990 - 1995. All rights reserved.
+wed.hpj
+    HC1000: Note: topic #65 of C:\develop\wed\work\hlp\.\.\AfxCore.rtf : 
+	A keyword footnote has been specified without a keyword.
+    HC3109: Warning: topic #65 of C:\develop\wed\work\hlp\.\.\AfxCore.rtf : 
+	The title footnote ($) does not contain any text.
+    HC3025: Warning: topic #1 of C:\develop\wed\work\hlp\.\.\AfxCore.rtf : 
+	Jump to undefined Topic ID: "menu_record".
+    HC3025: Warning: topic #12 of C:\develop\wed\work\hlp\.\.\AfxCore.rtf : 
+	Jump to undefined Topic ID: "HID_FILE_SAVE_AS".
+    HC3025: Warning: topic #3 of C:\develop\wed\work\hlp\.\.\AfxCore.rtf : 
+	Jump to undefined Topic ID: "HID_OLE_EDIT_LINKS".
+    HC3025: Warning: topic #3 of C:\develop\wed\work\hlp\.\.\AfxCore.rtf : 
+	Jump to undefined Topic ID: "HID_EDIT_PASTE_LINK".
+    HC3025: Warning: topic #3 of C:\develop\wed\work\hlp\.\.\AfxCore.rtf : 
+	Jump to undefined Topic ID: "HID_OLE_INSERT_NEW".
+    HC4009: Warning: 
+	The Topic ID "main_index" specified in the Project files as the Default Topic does not exist.
+72	Topics
+48	Jumps
+15	Keywords
+21	Bitmaps
+
+
+Created C:\develop\wed\work\hlp\wed.HLP, 36,031 bytes
+Bitmaps: 5,348 bytes
+Hall+Zeck compression decreased help file by 16,386 bytes.
+Compile time: 0 minutes, 0 seconds
+1 note, 7 warnings

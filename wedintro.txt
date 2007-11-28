@@ -1,0 +1,6 @@
+Programmers power editor. Unlimited Undo/Redo, unlimited file size, spell check,
+macro recording/playback, Hit edit mode. Rock solid build. Installs from a
+single floppy for easy port between places. DEC Alpha version is available.
+Never expires.
+
+

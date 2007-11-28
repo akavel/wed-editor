@@ -1,0 +1,112 @@
+
+Started dcp32 with drive 'D:' in 'R:\develop\wed'
+84 of 840 files copied, 0 files failed.
+
+Started dcp32 with drive 'D:LINK' in 'R:\develop\wed'
+1 of 43 files copied, 0 files failed.
+
+Started dcp32 with drive 'C:' in 'R:\develop\wed'
+Error on copy: R:\develop\wed\wed.cpp
+Error on copy: R:\develop\wed\mainfrm.cpp
+Error on copy: R:\develop\wed\childfrm.cpp
+Error on copy: R:\develop\wed\weddoc.cpp
+Error on copy: R:\develop\wed\wedview.h
+Error on copy: R:\develop\wed\wedview.cpp
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\cvs\
+Cannot create directory: C:\develop\wed\res\cvs\
+Cannot create directory: C:\develop\wed\res\cvs\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Error on copy: R:\develop\wed\resource.h
+Error on copy: R:\develop\wed\wed.rc
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+9 of 62 files copied, 8 files failed.
+
+Started dcp32 with drive 'C:' in 'R:\develop\wed'
+Error on copy: R:\develop\wed\wed.cpp
+Error on copy: R:\develop\wed\mainfrm.cpp
+Error on copy: R:\develop\wed\childfrm.cpp
+Error on copy: R:\develop\wed\weddoc.cpp
+Error on copy: R:\develop\wed\wedview.h
+Error on copy: R:\develop\wed\wedview.cpp
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\cvs\
+Cannot create directory: C:\develop\wed\res\cvs\
+Cannot create directory: C:\develop\wed\res\cvs\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Cannot create directory: C:\develop\wed\res\
+Error on copy: R:\develop\wed\resource.h
+Error on copy: R:\develop\wed\wed.rc
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+Cannot create directory: C:\develop\wed\hlp\
+9 of 46 files copied, 8 files failed.
+
+Started dcp32 with drive 'D:' in 'R:\develop\wed'
+35 of 857 files copied, 0 files failed.
+
+Started dcp32 with drive 'D:' in 'R:\develop\wed'
+148 of 937 files copied, 0 files failed.
+
+Started dcp32 with drive 'D:' in 'R:\develop\wed'
+21 of 937 files copied, 0 files failed.

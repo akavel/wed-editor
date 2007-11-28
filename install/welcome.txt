@@ -1,0 +1,32 @@
+		Welcome to the Wed Windows Editor
+
+Wed is a powerful text editor.
+
+	Please look at the exciting features:
+
+		o	Unlimited undo redo
+		o	Unlimited macro size
+		o	Unlimited file size
+		o	Undo beyond last save
+		o	Windows standard keystrokes
+		o	Brief compatible keystrokes
+		o	Ten clipboards, ten macro buffers
+		o	Auto file save and file backup
+		o	Syncronized search
+		o	Color diff function
+		o	Selectable colors
+		o	Selectable fonts
+		o	Templates for 'C' and java
+		o	Interruptable operation
+		o	Full screen operation
+		o	Spell Check with learn feature
+		o	Plain text dictionary
+		o	UNIX/DOS auto file recognition
+		o	TAB/SPACE handling auto recognition
+
+Wed is now freeware.
+
+
+// EOF
+
+

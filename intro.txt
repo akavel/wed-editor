@@ -1,0 +1,32 @@
+WED Windows Editor
+
+Wed Windows Editor is the premier text editor for Windows 95, 98, NT, on the PC, and DEC Alpha ...
+With BRIEF compatible keystrokes, unlimited undo/redo, unlimited file size and a host of powerful features we are confident, you will find Wed an indispensable tool.
+
+Features:
+
+     o  Unlimited Undo/Redo
+     o  Unlimited macro size
+     o  Unlimited file size (2 Billion lines)
+     o  Undo beyond last save
+     o  Brief compatible keystrokes
+     o  Ten clipboards
+     o  Ten macro buffers
+     o  UNIX/DOS autorecognition
+     o  Hit Edit Mode
+     o  Hex View
+     o  AutoSave and file backup
+     o  Synchronized search
+     o  Color diff function
+     o  Selectable colors
+     o  Selectable fonts
+     o  Templates for "C' and Java
+     o  Interrupt able operation
+     o  Full screen view
+     o  Spell Check
+
+Rock solid build, will edit LARGE files. With UNIX autorecognition, one can seemlessly edit files on all platforms from one machine.
+Wed will fit on a floppy for easy installation.
+
+
+

@@ -1,0 +1,51 @@
+To FIX:
+
+	Wed: Lock key status on startup
+	Wed: Lock key status on getfocus
+	Wed: correct caption bar for search function
+	Wed: add notables as a menu feature (fortune editing)
+
+
+To DO:
+
+	MX F1 know-how
+	MX Get LIC counter Know-How
+	Register Wed as needed
+	Teddy bill
+	Builder bill
+    Business card crap
+    Highlite with delimiter(s) (// ---)
+    Label orb collection box
+    Make wed distribution
+    Upload Wed distribution to shareware sites
+    Extend WED help system
+
+
+To learn:
+
+    SQL overview
+    JAVA kaffe
+
+Options:
+
+Wed CD Distribtion:
+
+	Help for MSVC, API
+	Help for JAVA
+	Help for PERL
+	Help for
+	POSIX  lib source
+	STDLIB lib Source
+
+To Shop:
+
+	Paper towel
+
+Notables:
+
+	US commerce teaches you to observe superfitial ----
+	this does not influence reality
+
+
+
+

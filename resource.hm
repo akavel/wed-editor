@@ -1,0 +1,4 @@
+// Microsoft Developer Studio generated Help ID include file.
+// Used by wed.rc
+//
+#define HIDC_BUTTON4                    0x80c203fc    // IDD_DIALOG11

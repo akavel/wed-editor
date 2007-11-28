@@ -1,0 +1,939 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (Win98; I) [Netscape]">
+   <title>WED2</title>
+</head>
+<body>
+
+<h1>
+Welcome to Wed</h1>
+Wed Windows Editor is the <b>premier</b> text editor for Windows 95, 98,
+NT. With <b>BRIEF</b> compatible keystrokes, unlimited undo/redo, unlimited
+file size and a host of powerful features we are confident, you will find
+Wed an indispensable tool.
+<ul>
+<li>
+<a href="#basic">Basic Editing functions</a></li>
+
+<li>
+<a href="#select">Selecting text</a></li>
+
+<li>
+<a href="#paste">Copy/Cut/Paste</a></li>
+
+<li>
+<a href="#search">Searching/Replace</a></li>
+
+<li>
+<a href="#macros">Macro Record/Play</a></li>
+
+<li>
+<a href="#undo">Undo/Redo</a></li>
+
+<li>
+<a href="#coco">CoCo code collection</a></li>
+
+<li>
+<a href="#tech">Tech Notes</a></li>
+
+<li>
+<a href="#features">Features</a></li>
+
+<li>
+<a href="#keys">Keystrokes</a></li>
+
+<li>
+<a href="#safe">Data preservation</a></li>
+
+<li>
+<a href="#Unix">Unix files</a></li>
+
+<li>
+<a href="#limits">Limits</a></li>
+
+<li>
+<a href="#Uninstall">Uninstall</a></li>
+
+<li>
+<a href="#Spell Check">Spell Check</a></li>
+
+<li>
+<a href="#Mopen">Multi open</a></li>
+
+<li>
+<a href="#Hit">Hitmode</a></li>
+
+<li>
+<a href="#Unix">Unix files</a></li>
+
+<li>
+<a href="#Tabs">Tabs</a></li>
+</ul>
+Wed Menu system is designed to allow you to learn Wed's shortcut keys.
+<h2>
+<a NAME="basic"></a><b>Basic Editing functions</b></h2>
+Wed editing keys confirm to Windows standards. Navigation keys, copy, cut
+and paste work as expected. Additionally, Wed responds to BRIEF compatible
+keystrokes.
+<p>Whenever there is a conflict, Wed attempts to allow the action with
+the most productivity.
+<p>For a quick view of key assignments refer to Wed's menu system, or the
+<a href="#keys">keys</a>
+section below.
+<h2>
+<a NAME="select"></a>Selecting text</h2>
+Wed provides several ways to select text. The standard selection keys work
+as expected, and advanced selection methods are available.
+<p>&nbsp;&nbsp;&nbsp; Holding shift and navigating up and/or down will
+start row selection.
+<br>&nbsp;&nbsp;&nbsp; Holding shift and navigating left and/or right&nbsp;
+will start column (block) selection.
+<br>&nbsp;&nbsp;&nbsp; Dragging the mouse up and/or down will start row
+selection.
+<br>&nbsp;&nbsp;&nbsp; Dragging the mouse left and/or right&nbsp; will
+start column (block) selection.
+<p>The principal selection method is Alt-L for row select, Alt-C for column
+(block) select. Navigation keys will extend selection.
+<p>Selection shortcuts:
+<p>&nbsp;&nbsp;&nbsp; Use Alt-V to select the current word
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mouse double click will
+also select the current word
+<br>&nbsp;&nbsp;&nbsp; Use Alt-M to select (mark) the current block, as
+understood by 'C'
+<br>&nbsp;&nbsp;&nbsp; Use Alt-P to select the current paragraph as in
+text file paragraph (empty line)
+<br>&nbsp;&nbsp;&nbsp; Use Ctrl-A to select the whole buffer (file)
+<p>Selection can be cancelled by pressing Esc or Control Break.
+<h2>
+<a NAME="paste"></a>Copy/Cut/Paste</h2>
+&nbsp;&nbsp;&nbsp; Wed has two clipboard systems. The
+<ul>
+<li>
+&nbsp;Standard windows clipboard</li>
+
+<li>
+&nbsp; Set of ten holding buffers</li>
+</ul>
+&nbsp;&nbsp;&nbsp; The standard windows clipboard works as expected.
+<ul>
+<li>
+Ctrl-C for copy</li>
+
+<li>
+Ctrl-X for cut</li>
+
+<li>
+Ctrl-V for paste</li>
+</ul>
+&nbsp;&nbsp;&nbsp; The holding buffer system has ten buffers, and two major
+modes:
+<ul>
+<ul>
+<li>
+Row mode</li>
+
+<li>
+Column mode (or block mode)</li>
+
+<ul>&nbsp;</ul>
+</ul>
+Row mode copies/cuts whole lines.
+<br>Column mode copies/cuts block of text delimited by column (block) highlight.</ul>
+To copy highlighted text, use the Plus&nbsp; (+) key on the number keypad.
+<br>To cut highlighted text, use the Minus&nbsp; (-) key on the number
+keypad.
+<br>To paste holding buffer text, use the Ins&nbsp; key on the number keypad.
+<p>&nbsp;&nbsp;&nbsp; If shift is held while copying/cutting, the holding
+buffer appends the new data to the old. This is useful for accumulating
+text in the holding.
+<p>To switch holding buffers, use Alt-0 ..... Alt-9
+<p>Holding buffers are automatically saved and re-loaded into Wed.
+<h2>
+<a NAME="search"></a><b>Searching text</b></h2>
+&nbsp;&nbsp;&nbsp; To search for a text use Alt-S. This displays a pop-up
+window, where the text to search for can be entered. Previous searches
+can be recalled with the up and down arrow keys.
+<br>The search will display a list of hits in a pop-up window. Navigating
+in the pop-up window will move the cursor in the main window. Pressing
+Enter or Esc will close the pop-up and put you onto the match.
+<p>&nbsp;&nbsp;&nbsp; Entering <a href="#Hit">Hit Mode</a>. Alt-H enters
+hit mode, which displays only the lines with matches.
+<p>&nbsp;&nbsp;&nbsp; Use Alt-S to start search
+<br>&nbsp;&nbsp;&nbsp; Use Alt-T to start search/Replace
+<br>&nbsp;&nbsp;&nbsp; Use F5 to jump to previous match&nbsp; (updated
+live)
+<br>&nbsp;&nbsp;&nbsp; Use F6 to jump to next match&nbsp; (updated live)
+<p>The action of F5 and F6 are updated live, so matches will hit correctly
+even if the buffer changes. This is most useful on macro playback.
+<p><b>While in Search pop-up</b>
+<p>&nbsp;&nbsp;&nbsp; Use Navigator keys to jump onto search hits
+<br>&nbsp;&nbsp;&nbsp; Use Alt-C To change all occurrences
+<br>&nbsp;&nbsp;&nbsp; Use Alt-O To change one occurrences
+<br>&nbsp;&nbsp;&nbsp; Use Alt-G To change al occurrences in every selected
+file (Power User Be Aware)
+<br>&nbsp;&nbsp;&nbsp; Use Alt-E To close all search pop-ups
+<p><b>Search has three modes:</b>
+<ul>
+<li>
+Normal Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Case Insensitive</li>
+
+<li>
+Function Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Find functions as in "C,C++, Java"</li>
+
+<li>
+Regular expression Search&nbsp;&nbsp;&nbsp; POSIX (semi) compatible Regex</li>
+</ul>
+<b>Function Search:</b>
+<p>The function search depends on the following algorytm:
+<br>&nbsp;&nbsp;&nbsp; Non empty column(0)&nbsp; before the line with "{"
+in colomn(0)&nbsp; [the first postition]
+<p><b>Regular expression syntax:</b>
+<ul>
+<li>
+^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Beginning of the string.
+The expression "^A" will match an ‘A’ only at the beginning of the string.</li>
+
+<li>
+^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The caret (^) immediately
+following the left-bracket ([) has a different meaning. It is used to exclude
+the remaining characters within brackets from matching the target string.
+The expression "[^0-9]" indicates that the target character should not
+be a digit.</li>
+
+<li>
+[]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Brackets ([ and ]) enclosing
+a set of characters indicates that any of the enclosed characters may match
+the target character.</li>
+
+<li>
+$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The dollar sign ($) will
+match the end of the string. The expression "abc$" will match the sub-string
+"abc" only if it is at the end of the string.</li>
+
+<li>
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The alternation (or)
+character (|) allows either expression on its side to match the target
+string. The expression "a|b" will match ‘a’ as well as ‘b’.</li>
+
+<li>
+.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The dot (.) will match
+any single character.</li>
+
+<li>
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The asterix (*) indicates
+that the character to the immidiate left of the asterix in the expression
+should match 0 or more times.</li>
+
+<li>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The plus (+) is similar
+to asterix but there should be at least one match of the character to the
+left of the + sign in the</li>
+
+<li>
+expression.</li>
+
+<li>
+?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The question mark (?)
+matches the character to its left 0 or 1 times.</li>
+
+<li>
+()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The parenthesis affects
+the order of pattern evaluation and also serves as a tagged expression
+that can be used when</li>
+
+<li>
+replacing the matched sub-string with another expression.</li>
+</ul>
+Searching can be interrupted with Esc or Ctrl Break at any time.
+<h2>
+<a NAME="macros"></a>Macros</h2>
+Wed has a powerful macro facility. To start recording press F7. Keystrokes
+are recorded in order they are pressed. Hitting F7 again will stop recording.
+F8 will play the recorded macro. Shift-F8 will animate the macro, ss the
+working of the macro can be observed. (debugged)
+<br>A recorded macro can be saved to a file for later use.
+<p>Macros are automatically saved and re-loaded into Wed. (persistent macros)
+<h2>
+<a NAME="undo"></a><b>Undo/redo</b></h2>
+When Wed changes a buffer, it saves undo information. When an undo is applied,
+Wed saves Redo information.
+<p>&nbsp;&nbsp;&nbsp; To undo a change use Alt-U
+<br>&nbsp;&nbsp;&nbsp; To redo a change use Alt-R
+<p>&nbsp; Undo/Redo information is&nbsp; automatically saved and re-loaded
+into Wed. (persistent undo)
+<br>This means Wed saves all the information to reconstruct every modification
+to your file. Undo/Redo can be applied at any poing, Wed will safely walk
+you back and forth on the changes you made.
+<p>&nbsp; For data safety, undo is limited to 10.000 saves. If that is
+exceeded, undo discards the oldest undo information. Wed saves undo information
+to the undo file. This means one can undo changes beyond file save boundaries.
+Undo will clearly prompt you if it detects an undo/redo beyond file save
+boundary.
+<h2>
+<a NAME="coco"></a><b>CoCo code collection</b></h2>
+Programmers accumulate a wealth of code over time. CoCo will help you organize
+that code into a hierarchical tree. The principal means of transferring
+data between buffers and CoCo is the Holding buffer/Clipboard.
+<h2>
+<a NAME="tech"></a><b>Tech Notes</b></h2>
+Wed will remember almost everything about the current session. It will
+reload the files, position the cursor to the last edited point. Wed will
+also load the undo/redo information of these files.
+<p>Wed will remember all ten Holding buffers, and all ten Macro buffers,
+and automatically reload them on start.
+<p><b>Resetting Wed Configuration:</b>
+<p>Deleting the registry key
+<p>&nbsp;&nbsp;&nbsp; \\HKEY_CURRENT_USER\Software\PeterGlen\Wed
+<p>will reset Wed to its original configuration.
+<p><b>Copyright Banner:</b>
+<p>&nbsp; The Banner is intelligent to assist one in productivity. If the
+editor is started in short succession, the copyright banner will not be
+displayed.
+<p><b>Interactive:</b>
+<p>&nbsp; Wed's interactivity features let you cancel any lengthy operation,
+including load/save/find/copy/paste. Cancelling any action is atomic, so
+the canceled action will have the correct undo/redo, and preserve data
+integrity. Cancelled/Interrupted Read/Load will mark the buffer read only,
+so partial files will not overwrite originals.
+<p>These set of features are great when editing remote files.
+<p>Wed will provide visual feedback about the current action on the status
+line.
+<h2>
+<a NAME="features"></a><b>Wed Features:</b></h2>
+
+<ul>
+<li>
+Unlimited macro size</li>
+
+<li>
+Unlimited file size</li>
+
+<li>
+Undo beyond last save</li>
+
+<li>
+Brief compatible keystrokes</li>
+
+<li>
+Ten clipboards, ten macro buffers</li>
+
+<li>
+Auto file save and file backup</li>
+
+<li>
+Synchronized search</li>
+
+<li>
+Color diff function</li>
+
+<li>
+Selectable colors</li>
+
+<li>
+Selectable fonts</li>
+
+<li>
+&nbsp;Templates for "C' and java</li>
+
+<li>
+Interruptable operation</li>
+
+<li>
+Full screen operation</li>
+
+<li>
+Unix format autorecognition</li>
+
+<li>
+Hit Mode</li>
+</ul>
+
+<h2>
+<a NAME="keys"></a>Keystrokes</h2>
+<b>Alt Key Combinations</b>
+<br>&nbsp;
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="75%" >
+<tr>
+<td>Alt-A</td>
+
+<td>Save All</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-B</td>
+
+<td>Show Buffers</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-C</td>
+
+<td>Start Column Highlight</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-D</td>
+
+<td>Delete line</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-E</td>
+
+<td>Edit file (multi open)</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-F</td>
+
+<td>Pull down File menu</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Alt-G</td>
+
+<td>Goto Line</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-H</td>
+
+<td>Enter Hit Mode</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-I</td>
+
+<td>Insert incremented number</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-J</td>
+
+<td>Jump to CoCo</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-K</td>
+
+<td>Kill to end of line</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-L</td>
+
+<td>Mark Line</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-M</td>
+
+<td>Mark Block</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-N</td>
+
+<td>Create New Buffer</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-O</td>
+
+<td>Open file</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-P</td>
+
+<td>Select paragraph</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-Q</td>
+
+<td>Maximize current Buffer</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-R</td>
+
+<td>Redo</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-S</td>
+
+<td>Search</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-T</td>
+
+<td>Change Text (taush)</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-U</td>
+
+<td>Undo</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-V</td>
+
+<td>Select viewed word</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-W</td>
+
+<td>Write buffer</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-X</td>
+
+<td>Exit</td>
+
+<td>Brief Compatible keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-Y</td>
+
+<td>Maximize viewing area</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Alt-Z&nbsp;</td>
+
+<td>Maximize main</td>
+
+<td>Wed keystroke</td>
+</tr>
+</table>
+
+<p><b>Control Key Combinations</b>
+<br>&nbsp;
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="75%" >
+<tr>
+<td>Ctrl-A</td>
+
+<td>Select All</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-B</td>
+
+<td>Insert 'C' template</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-C</td>
+
+<td>Copy to clipboard</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-D</td>
+
+<td>Goto Next Difference</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-E</td>
+
+<td>Save As</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-F</td>
+
+<td>Find</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-G</td>
+
+<td>Close buffer</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-H</td>
+
+<td>Backspace</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-I</td>
+
+<td>Tab</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-J</td>
+
+<td>Insert Java Template</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-K</td>
+
+<td>Switch on/off hex mode</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-L</td>
+
+<td>Lowercase word</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-M</td>
+
+<td>Enter</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-N</td>
+
+<td>Create new buffer</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-O</td>
+
+<td>Open file</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-P</td>
+
+<td>Print buffer</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-Q</td>
+
+<td>Cascade windows</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-R</td>
+
+<td>Goto previous diff</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-S</td>
+
+<td>Save file</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-T</td>
+
+<td>Tile Windows Left/Right</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-U</td>
+
+<td>Uppercase current word</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-V</td>
+
+<td>Paste from clipboard</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-W</td>
+
+<td>Capitalize current word</td>
+
+<td>Wed keystroke</td>
+</tr>
+
+<tr>
+<td>Ctrl-X</td>
+
+<td>Cut to clipboard</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-Y</td>
+
+<td>Redo</td>
+
+<td>Standard windows key</td>
+</tr>
+
+<tr>
+<td>Ctrl-Z</td>
+
+<td>Undo</td>
+
+<td>Standard windows key</td>
+</tr>
+</table>
+
+<h2>
+&nbsp;<a NAME="safe"></a>Data preservation</h2>
+&nbsp;&nbsp;&nbsp; Wed will take good care of your data. The following
+safeguards are implemented:
+<ul>
+<li>
+Initial backup of your file</li>
+
+<li>
+Auto save after 30 seconds</li>
+
+<li>
+Persistent undo information</li>
+</ul>
+Data produced by Wed is saved under a central directory where the application's
+executable lives. In the standard installation it is:
+<p>&nbsp;&nbsp;&nbsp; C:\Program Files\Wed\
+<p>File specific information is saved to a hashed name of the file's full
+path. For example the file:
+<p>&nbsp;&nbsp;&nbsp; 'c:\autoexec.bat' has the hash of&nbsp; '0x12a4e903'&nbsp;&nbsp;&nbsp;
+(your hash may differ)
+<p>To find out the hash value for a particular file, use&nbsp; --- Wed:Menu:View:File
+Properties
+<p>In this section, we used 'NNNNNN' to denote the file name hash, 'ApplicationRoot'&nbsp;
+to denote the path where Wed lives.
+<p><b>Initial backup of your file:</b>
+<p>&nbsp;&nbsp;&nbsp; Whenever you open a file, Wed saves the original
+under
+<br>&nbsp;&nbsp;&nbsp; ApplicationRoot/wed/data/NNNNNN.bak
+<br>&nbsp;&nbsp;&nbsp; If file is larger then 2 Mbytes, no initial backup
+is done.
+<p><b>Auto save after 30 seconds:</b>
+<p>&nbsp;&nbsp;&nbsp; If no key is pressed for 30 seconds, Wed saves the
+changed files in:
+<br>&nbsp;&nbsp;&nbsp; ApplicationRoot/wed/data/NNNNNN.sav
+<br>&nbsp;&nbsp;&nbsp; If file is larger then 2 Mbytes, no auto save is
+done.
+<p><b>Persistent undo information:</b>
+<p>&nbsp;&nbsp;&nbsp; File can also be reconstructed from the undo information.
+The undo is saved as a plain text, so it relatively easy to reconstruct
+the original data.
+<p>&nbsp;&nbsp;&nbsp; Undo files can be found in:
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ApplicationRoot/wed/data/NNNNNN.udo
+<p>&nbsp;&nbsp;&nbsp; Redo files can be found in:
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ApplicationRoot/wed/data/NNNNNN.rdo
+<p>These locations are also useful to clean out Wed created files from
+the system.
+<h2>
+<a NAME="Unix"></a>Unix Files:</h2>
+&nbsp; Wed will auto recognize UNIX/DOS file format, and will treat the
+file accordingly. This means one can seemlessly edit files from almost
+any source without conversion. Naturally, Wed can convert between the two
+formats. To force a file to be saved a UNIX/DOS, goto Menu point View->
+File Properties
+<br>&nbsp; This allows multi platform file editing. One Windows machine
+can control it all. With Samba installed on UNIX, one can edit any imaginable
+file on any platform.
+<h2>
+<a NAME="limits"></a>Wed Limits:</h2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Search result box display limit:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+32000 hits&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(user will be prompted in near limit)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Undo buffer size:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+10000 transactions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (FIFO
+discards)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Max. file size:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2 billion lines&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(limit of long)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum number of files
+simultaneously:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 64&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(Windows Limitation)
+<h2>
+<a NAME="Uninstall"></a>Uninstall:</h2>
+The unistall will not clean any Wed generated data like Undo/Redo data,
+Autosave data, or Backup data.
+<br>If you would like to clean out any of the preceeding see:
+<p>&nbsp;&nbsp;&nbsp; ApplicationRoot/wed/data/*.*
+<h2>
+<a NAME="Spell Check"></a>Spell Check:</h2>
+Wed Spell check is constructred to be simple. (So the final product will
+fit on a floppy). To invoke the spell check
+<p>&nbsp;&nbsp;&nbsp; use SHIFT-F7 or the Advanced menu -> Spell Check
+<p>Controlling spell check is easy. The popup window will give four options
+<ul>
+<li>
+&nbsp;&nbsp;&nbsp; Ignore&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wed will
+not check this word during this session</li>
+
+<li>
+&nbsp;&nbsp;&nbsp; Learn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wed
+will add the word to its custom dictionary</li>
+
+<li>
+&nbsp;&nbsp;&nbsp; Stop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Stop spell check</li>
+
+<li>
+&nbsp;&nbsp;&nbsp; Change&nbsp;&nbsp;&nbsp; Change (correct) the word in
+document</li>
+</ul>
+Wed will start spell check from current cursor position,&nbsp; and operate
+to the end of the document.
+<p><b>Advanced spell check:</b>
+<p>Wed will parse source files for strings and comments, and spell checks
+inside the strings and comments. To invoke advanced spell check
+<p>&nbsp;&nbsp;&nbsp; use Control-F7 or the Advanced menu -> Strings Spell
+Check
+<p>Wed will parse according to 'C, C++' language's string and comment rules.
+Please note that the parsing has a limited ability to handle complex syntax.
+<p><b>Dictionaries:</b>
+<p>Dictionaries are simple text files, one word per line.
+<p>To modify the main dictionary, one can edit:
+<p>&nbsp;&nbsp;&nbsp;&nbsp; ApplicationRoot/wed/spell.txt
+<p>Be sure to delete spell.idx before proceeding. (Wed will rebuild it
+from the new file)
+<p>To modify the custom dictionary, one can edit:
+<p>&nbsp;&nbsp;&nbsp;&nbsp; ApplicationRoot/wed/spell.cus
+<p><b>Foreign languages:</b>
+<p>Simply replace spell.txt with your version of the dictionary and delete
+spell.idx
+<h2>
+<a NAME="Mopen"></a>Multiple open:</h2>
+There are multiple open menu points on the file menu.
+<ul>
+<li>
+Open&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Traditional open</li>
+
+<li>
+Multi open Src&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Multi
+select open, remember directory as source directory</li>
+
+<li>
+Multi open Dest&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Multi select
+open, remember directory as destination directory</li>
+</ul>
+Source and destination directories are remembered, and Multi Open will
+default to them. This saves enormous mouse mileage when grabbing data from
+a different project.
+<h2>
+<a NAME="Hit"></a>Hit Mode:</h2>
+&nbsp;Hit mode is a special display mode that shows only the lines that
+match a particular search. This is an extremly powerful feature, that allows
+the editor to see and modify only the lines that have matching criteria.
+Nice to see all variable references on one screen.
+<p>&nbsp;Copy/Paste operations - while in hit mode - copy only the lines
+that are hit. For example hit mode can be used to display all the function
+names in the code, highliting and copying them will produce a list, that
+contains all the function prototypes.
+<p>Pressing Enter or Esc will exit hit mode.
+<h2>
+<a NAME="Tabs"></a>Tabs:</h2>
+Wed will auto recognize presence of tabs. If no tabs are detected, Wed
+will save the files with tabs replaced by four spaces. If Tabs are detected
+Wed will save tabs as intended. To force a file to be saved with/without
+tabs, goto Menu point View-> File Properties
+<p>Wed Written by Peter Glen, 1999
+</body>
+</html>

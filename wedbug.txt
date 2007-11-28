@@ -1,0 +1,12 @@
+Bug report
+
+OK On spell check disply interction window to th side up.
+OK GPF on coco
+OK After Column cut the line cut pastes as column.
+OK ScrolLock key status refresh on getfocus
+OK Correct caption bar for search function
+OK
+
+Check java template/functions
+Add notables as a menu feature (fortune editing)
+

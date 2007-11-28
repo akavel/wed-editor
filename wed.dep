@@ -1,0 +1,1141 @@
+# Microsoft Developer Studio Generated Dependency File, included by wed.mak
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\about.cpp : \
+	".\about.h"\
+	".\build.h"\
+	".\ChildFrm.h"\
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Splash.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\about.cpp : \
+	".\about.h"\
+	".\build.h"\
+	".\ChildFrm.h"\
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Splash.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\AppTop.cpp : \
+	".\AppTop.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\AppTop.cpp : \
+	".\AppTop.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\BufferList.cpp : \
+	".\BufferList.h"\
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\BufferList.cpp : \
+	".\BufferList.h"\
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\ChildFrm.cpp : \
+	".\AppTop.h"\
+	".\ChildFrm.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\SubClass.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\ChildFrm.cpp : \
+	".\AppTop.h"\
+	".\ChildFrm.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\SubClass.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\coco.cpp : \
+	".\coco.h"\
+	".\gotoline.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\ViewText.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\coco.cpp : \
+	".\coco.h"\
+	".\gotoline.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\ViewText.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\diff.cpp : \
+	".\diff.h"\
+	".\editor.h"\
+	".\FileInfo.h"\
+	".\HoldHead.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\diff.cpp : \
+	".\diff.h"\
+	".\editor.h"\
+	".\FileInfo.h"\
+	".\HoldHead.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\editor.cpp : \
+	".\editor.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\SubClass.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\editor.cpp : \
+	".\editor.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\SubClass.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\FileInfo.cpp : \
+	".\editor.h"\
+	".\FileInfo.h"\
+	".\HoldHead.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\FileInfo.cpp : \
+	".\editor.h"\
+	".\FileInfo.h"\
+	".\HoldHead.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\gotoline.cpp : \
+	".\editor.h"\
+	".\gotoline.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\gotoline.cpp : \
+	".\editor.h"\
+	".\gotoline.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\HoldHead.cpp : \
+	".\HoldHead.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\HoldHead.cpp : \
+	".\HoldHead.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\MainFrm.cpp : \
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Register.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\MainFrm.cpp : \
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Register.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\misc.cpp : \
+	".\about.h"\
+	".\build.h"\
+	".\ChildFrm.h"\
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Splash.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\misc.cpp : \
+	".\about.h"\
+	".\build.h"\
+	".\ChildFrm.h"\
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Splash.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\notepad.cpp : \
+	".\notepad.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\notepad.cpp : \
+	".\notepad.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\oleComm.cpp : \
+	".\oleComm.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\oleComm.cpp : \
+	".\oleComm.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\page1.cpp : \
+	".\page1.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\page1.cpp : \
+	".\page1.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\Page2.cpp : \
+	".\Page2.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\Page2.cpp : \
+	".\Page2.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\regex.cpp : \
+	".\regex.h"\
+	".\stringex.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\regex.cpp : \
+	".\regex.h"\
+	".\stringex.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\Register.cpp : \
+	".\editor.h"\
+	".\gotoline.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Register.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\Register.cpp : \
+	".\editor.h"\
+	".\gotoline.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Register.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\Search.cpp : \
+	".\editor.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\Search.cpp : \
+	".\editor.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\sellist.cpp : \
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\sellist.cpp : \
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\Setup.cpp : \
+	".\notepad.h"\
+	".\page1.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Setup.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\Setup.cpp : \
+	".\notepad.h"\
+	".\page1.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Setup.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\spell.cpp : \
+	".\Search.h"\
+	".\sellist.h"\
+	".\spell.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\spell.cpp : \
+	".\Search.h"\
+	".\sellist.h"\
+	".\spell.h"\
+	".\srcsel.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\Splash.cpp : \
+	".\editor.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Splash.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\Splash.cpp : \
+	".\editor.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Splash.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\src.cpp : \
+	".\diff.h"\
+	".\editor.h"\
+	".\FileInfo.h"\
+	".\HoldHead.h"\
+	".\MainFrm.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\src.cpp : \
+	".\diff.h"\
+	".\editor.h"\
+	".\FileInfo.h"\
+	".\HoldHead.h"\
+	".\MainFrm.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\srcsel.cpp : \
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\stringex.h"\
+	".\StrList.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\srcsel.cpp : \
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\stringex.h"\
+	".\StrList.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\StdAfx.cpp : \
+	"..\..\progra~1\micros~5\vc98\include\basetsd.h"\
+	"..\..\progra~1\micros~5\vc98\include\limits.h"\
+	"..\..\progra~1\micros~5\vc98\include\winbase.h"\
+	"..\..\progra~1\micros~5\vc98\include\winuser.h"\
+	".\StdAfx.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\StdAfx.cpp : \
+	"..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	"..\..\program files\microsoft visual studio\vc98\include\limits.h"\
+	"..\..\program files\microsoft visual studio\vc98\include\winbase.h"\
+	"..\..\program files\microsoft visual studio\vc98\include\winuser.h"\
+	".\StdAfx.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\stringex.cpp : \
+	".\stringex.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\stringex.cpp : \
+	".\stringex.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\StrList.cpp : \
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\StrList.cpp : \
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\SubClass.cpp : \
+	".\diff.h"\
+	".\editor.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\SubClass.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\SubClass.cpp : \
+	".\diff.h"\
+	".\editor.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\SubClass.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\undo.cpp : \
+	".\editor.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\undo.cpp : \
+	".\editor.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\ViewText.cpp : \
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\ViewText.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\ViewText.cpp : \
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\ViewText.h"\
+	".\wed.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\wed.cpp : \
+	".\about.h"\
+	".\build.h"\
+	".\ChildFrm.h"\
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Splash.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\SubClass.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\wed.cpp : \
+	".\about.h"\
+	".\build.h"\
+	".\ChildFrm.h"\
+	".\editor.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Splash.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\SubClass.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+.\wed.rc : \
+	".\res\bitmap1.bmp"\
+	".\res\bitmap10.bmp"\
+	".\res\bitmap3.bmp"\
+	".\res\bitmap4.bmp"\
+	".\res\bitmap6.bmp"\
+	".\res\bitmap7.bmp"\
+	".\res\Toolbar.bmp"\
+	".\res\toolbar1.bmp"\
+	".\res\wed.ico"\
+	".\res\wed.rc2"\
+	".\res\wedDoc.ico"\
+	".\resource.hm"\
+	".\whmarb.bmp"\
+	".\whtmarb1.bmp"\
+	
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\wedDoc.cpp : \
+	".\editor.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\wedDoc.cpp : \
+	".\editor.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\srcsel.h"\
+	".\StrList.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "wed - Win32 Release"
+
+.\wedView.cpp : \
+	".\BufferList.h"\
+	".\coco.h"\
+	".\diff.h"\
+	".\editor.h"\
+	".\FileInfo.h"\
+	".\gotoline.h"\
+	".\HoldHead.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\oleComm.h"\
+	".\page1.h"\
+	".\Page2.h"\
+	".\regex.h"\
+	".\Register.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Setup.h"\
+	".\src.h"\
+	".\srcsel.h"\
+	".\stringex.h"\
+	".\StrList.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Debug"
+
+.\wedView.cpp : \
+	".\BufferList.h"\
+	".\coco.h"\
+	".\diff.h"\
+	".\editor.h"\
+	".\FileInfo.h"\
+	".\gotoline.h"\
+	".\HoldHead.h"\
+	".\MainFrm.h"\
+	".\misc.h"\
+	".\notepad.h"\
+	".\oleComm.h"\
+	".\page1.h"\
+	".\Page2.h"\
+	".\regex.h"\
+	".\Register.h"\
+	".\Search.h"\
+	".\sellist.h"\
+	".\Setup.h"\
+	".\src.h"\
+	".\srcsel.h"\
+	".\stringex.h"\
+	".\StrList.h"\
+	".\undo.h"\
+	".\wed.h"\
+	".\wedDoc.h"\
+	".\wedView.h"\
+	
+
+!ELSEIF  "$(CFG)" == "wed - Win32 Release_Alpha"
+
+!ENDIF 
+
