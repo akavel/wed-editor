@@ -8,7 +8,7 @@
 #include "weddoc.h"
 #include "wedview.h"
 #include "Search.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "editor.h"
 #include "misc.h"
 
@@ -30,7 +30,7 @@ Search::Search(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 	m_taush = FALSE;
 	m_stype = 0;
-}						    
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // void Search::DoDataExchange(CDataExchange* pDX)
@@ -60,18 +60,18 @@ BEGIN_MESSAGE_MAP(Search, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// void Search::OnCancel() 
+// void Search::OnCancel()
 
-void Search::OnCancel() 
+void Search::OnCancel()
 {
 	m_esc = TRUE;
 	CDialog::OnCancel();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void Search::OnOK() 
+// void Search::OnOK()
 
-void Search::OnOK() 
+void Search::OnOK()
 {
 	UpdateData();
 	m_files.RemoveAll();
@@ -105,18 +105,18 @@ void Search::OnOK()
 			m_files.AddTail(str3);
 			}
 		}
-	PrintToNotepad("Searching for %s as type %d\r\n", 
+	P2N("Searching for %s as type %d\r\n",
 						m_combo1, m_stype);
 	CDialog::OnOK();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// BOOL Search::OnInitDialog() 
+// BOOL Search::OnInitDialog()
 
-BOOL Search::OnInitDialog() 
+BOOL Search::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	m_list.SubclassDlgItem(IDC_LIST1, this);
 	m_esc = FALSE;
 	m_files.RemoveAll();
@@ -146,7 +146,7 @@ BOOL Search::OnInitDialog()
 		m_list.SetCheck(0, 1);
 		}
 	// Make a list without current edited buffer
-    CMultiDocTemplate* pDocTemplate = 
+    CMultiDocTemplate* pDocTemplate =
 				((CWedApp*)AfxGetApp())->pDocTemplate;
 	POSITION Pos = 	pDocTemplate->GetFirstDocPosition();
 	for(;;)
@@ -164,13 +164,13 @@ BOOL Search::OnInitDialog()
 				}
 			}
 		}
-   	return TRUE; 
+   	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void Search::OnCancel2() 
+// void Search::OnCancel2()
 
-void Search::OnCancel2() 
+void Search::OnCancel2()
 {
 	int lim = m_list.GetCount();
 	for(int loop3 = 0; loop3 < lim; loop3++)
@@ -180,9 +180,9 @@ void Search::OnCancel2()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void Search::OnShowWindow(BOOL bShow, UINT nStatus) 
+// void Search::OnShowWindow(BOOL bShow, UINT nStatus)
 
-void Search::OnShowWindow(BOOL bShow, UINT nStatus) 
+void Search::OnShowWindow(BOOL bShow, UINT nStatus)
 {
 	CWnd *dd = GetDlgItem(IDC_RADIO4);
 
@@ -203,9 +203,9 @@ void Search::OnShowWindow(BOOL bShow, UINT nStatus)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void Search::OnCheck1() 
+// void Search::OnCheck1()
 
-void Search::OnCheck1() 
+void Search::OnCheck1()
 {
 	UpdateData();
 #if 0
@@ -226,45 +226,45 @@ void Search::OnCheck1()
 /////////////////////////////////////////////////////////////////////////////
 // Search types
 
-void Search::OnRadio2() 
+void Search::OnRadio2()
 {
 	m_stype = S_FUNCTION;
 }
 
-void Search::OnRadio4() 
+void Search::OnRadio4()
 {
 	m_stype = S_UCASE;
 }
 
-void Search::OnRadio1() 
+void Search::OnRadio1()
 {
 	m_stype = S_REGEX;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void	Search::OnCancel3() 
+// void	Search::OnCancel3()
 
-void	Search::OnCancel3() 
+void	Search::OnCancel3()
 
 {
 	CString str3;
 	UpdateData();
 
-	AfxGetApp()->DoWaitCursor(TRUE); 
+	AfxGetApp()->DoWaitCursor(TRUE);
 	int lim = m_list.GetCount();
-	
+
 	for(int loop2 = 0; loop2 < lim; loop2++)
 		m_list.SetCheck(loop2, FALSE);
 
 	for(int loop3 = 0; loop3 < lim; loop3++)
 		{
 		m_list.GetText(loop3, str3);
-		//PrintToNotepad("Automate %s\r\n", str3);
+		//P2N("Automate %s\r\n", str3);
 		if(IsCandidate(str3))
 			m_list.SetCheck(loop3, TRUE);
 		}
 	UpdateData();
-	AfxGetApp()->DoWaitCursor(FALSE); 
+	AfxGetApp()->DoWaitCursor(FALSE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -303,10 +303,10 @@ int		Search::IsCandidate(const char *str)
 		// Add lines matching criteria:
 		int ccol = 0, backwalk = 0;
 		found = vv->SearchType(loop, &ccol, &backwalk);
-		
+
 		if(found)
 			{
-			found = TRUE; 
+			found = TRUE;
 			break;
 			}
 		if(!(loop % 100))
@@ -329,7 +329,7 @@ int		Search::IsCandidate(const char *str)
 }
 
 
-void Search::OnCancel4() 
+void Search::OnCancel4()
 {
  	int lim = m_list.GetCount();
 	for(int loop3 = 0; loop3 < lim; loop3++)

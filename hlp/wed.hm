@@ -216,6 +216,11 @@ HID_ADVANCED_CLEANOLDUNDOFILES          0x18101
 HID_SETTINGS_SETTABSTOP                 0x18102
 HID_FILE_SAVEAS2                        0x18103
 HID_ADVANCED_CLEARCURRENTIGNORELIST     0x18104
+HID_EDIT_SETWRAPPINGWIDTH               0x18105
+HID_SEARCH_FINDINFILES                  0x18106
+HID_INSERT_TEMPLATES_OPENTEMPLATEFILE   0x18107
+HID_FILE_MULTIOPENDEST2                 0x18108
+HID_FILE_SEACHFILES                     0x1810A
 HID_INDICATOR_ROW                       0x1E706
 HID_INDICATOR_CLOCK                     0x1E707
 HID_INDICATOR_CLOCK2                    0x1E708
@@ -239,6 +244,7 @@ HIDR_MENU5                              0x200CA
  
 // Dialogs (IDD_*) 
 HIDD_ABOUTBOX                           0x20064
+HIDD_GET_PATH                           0x20066
 HIDD_OLE_PROPPAGE_LARGE                 0x20069
 HIDD_PROPPAGE_LARGE                     0x2006B
 HIDD_DIALOG1                            0x20084
@@ -256,5 +262,6 @@ HIDD_DIALOG10                           0x200B6
 HIDD_DIALOG11                           0x200C2
 HIDD_DIALOG12                           0x200C3
 HIDD_DIALOG13                           0x200C9
+HIDD_DIALOG14                           0x200CD
  
 // Frame Controls (IDW_*) 

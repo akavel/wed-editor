@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "wed.h"
-#include "notepad.h"
+#include "mxpad.h"
 
 
 #include "Setup.h"
@@ -24,7 +24,7 @@ setup::setup(char * caption)
 	//}}AFX_DATA_INIT
 
 	//*p1 = new page1 "xx";
-	PrintToNotepad("Init setup\r\n");
+	P2N("Init setup\r\n");
 	CPropertySheet::CPropertySheet(caption);
 }
 

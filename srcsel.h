@@ -1,18 +1,18 @@
-#if !defined(AFX_SRCSEL_H__67B2EFC3_E9B8_11D2_B398_525400D994D7__INCLUDED_)
-#define AFX_SRCSEL_H__67B2EFC3_E9B8_11D2_B398_525400D994D7__INCLUDED_
+#if !defined(AFX_SrcSel_H__67B2EFC3_E9B8_11D2_B398_525400D994D7__INCLUDED_)
+#define AFX_SrcSel_H__67B2EFC3_E9B8_11D2_B398_525400D994D7__INCLUDED_
 
 #if _MSC_VER >= 1000
 #pragma once
 #endif // _MSC_VER >= 1000
-// srcsel.h : header file
+// SrcSel.h : header file
 //
 
-#include "sellist.h"
+#include "SelList.h"
 
 /////////////////////////////////////////////////////////////////////////////
-// srcsel dialog
+// SrcSel dialog
 
-class srcsel : public CDialog
+class SrcSel : public CDialog
 {
 protected:
     CToolBar        m_wndToolBar;
@@ -21,7 +21,7 @@ protected:
 // Construction
 public:
 
-    sellist slb;
+    SelList slb;
 
 	int		m_busy;
 	int		m_rep;
@@ -36,13 +36,13 @@ public:
 	void DoChange(int line, int undog);
 
 	// standard constructor
-    srcsel(CWnd* pParent = AfxGetMainWnd());  
+    SrcSel(CWnd* pParent = AfxGetMainWnd());  
 
 	// standard destructor
-    virtual 	~srcsel();
+    virtual 	~SrcSel();
 
 // Dialog Data
-    //{{AFX_DATA(srcsel)
+    //{{AFX_DATA(SrcSel)
     enum { IDD = IDD_DIALOG4 };
     CString m_list;
     CString m_src;
@@ -50,7 +50,7 @@ public:
 
 // Overrides
     // ClassWizard generated virtual function overrides
-    //{{AFX_VIRTUAL(srcsel)
+    //{{AFX_VIRTUAL(SrcSel)
 	protected:
     virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
@@ -60,7 +60,7 @@ public:
 protected:
 
     // Generated message map functions
-    //{{AFX_MSG(srcsel)
+    //{{AFX_MSG(SrcSel)
     afx_msg void OnDblclkList1();
     afx_msg void OnSelchangeList1();
     afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -83,4 +83,4 @@ protected:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_SRCSEL_H__67B2EFC3_E9B8_11D2_B398_525400D994D7__INCLUDED_)
+#endif // !defined(AFX_SrcSel_H__67B2EFC3_E9B8_11D2_B398_525400D994D7__INCLUDED_)

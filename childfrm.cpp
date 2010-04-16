@@ -10,7 +10,7 @@
 #include "AppTop.h"
 #include "ChildFrm.h"
 #include "misc.h"
-#include "notepad.h"
+#include "mxpad.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -66,7 +66,7 @@ CChildFrame::CChildFrame()
 							MAKEINTRESOURCE(IDB_BITMAP9));
 
 	bmb = CreatePatternBrush( hbmp);
-	//PrintToNotepad("Bitmap %d bmb = %d \r\n", hbmp, bmb);
+	//P2N("Bitmap %d bmb = %d \r\n", hbmp, bmb);
 #endif
 
 }
@@ -77,7 +77,7 @@ CChildFrame::~CChildFrame()
     newMemState.Checkpoint();
     if( diffMemState.Difference( oldMemState, newMemState ) )
     	{
-		//PrintToNotepad("WedChlframe Memory leaked!\r\n");
+		//P2N("WedChlframe Memory leaked!\r\n");
         //TRACE( "Memory leaked!\n" );
     	}
 #endif
@@ -87,7 +87,7 @@ CChildFrame::~CChildFrame()
 
 BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	//PrintToNotepad("Creating new ChildFrame\r\n");
+	//P2N("Creating new ChildFrame\r\n");
 	return CMDIChildWnd::PreCreateWindow(cs);
 }
 
@@ -113,7 +113,7 @@ extern SubClass m_sc;
 
 BOOL CChildFrame::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CMDIFrameWnd* pParentWnd, CCreateContext* pContext)
 {
-	//PrintToNotepad("ChildFrame: create (Parent= %d)\r\n", pParentWnd);
+	//P2N("ChildFrame: create (Parent= %d)\r\n", pParentWnd);
 
 #if 0
 	// Subclass
@@ -131,8 +131,8 @@ void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 {
 	CMDIChildWnd::OnMDIActivate(bActivate, pActivateWnd, pDeactivateWnd);
 
-	//PrintToNotepad("ChildFrame: activate %d\r\n", pActivateWnd);
-	
+	//P2N("ChildFrame: activate %d\r\n", pActivateWnd);
+
 	mdiclient = GetParent();
 
 	//Repaint() ;
@@ -140,7 +140,7 @@ void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 		{
 		initial = FALSE;
 #if 0
-		//PrintToNotepad("Subclassing -- %d from %d\r\n",
+		//P2N("Subclassing -- %d from %d\r\n",
 		//				m_sc.GetDlgItem(IDC_EDIT1), mdiclient);
 
 		//m_sc.GetDlgItem(IDC_EDIT1);
@@ -149,7 +149,7 @@ void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 		//m_sc.GetDlgItem(IDC_EDIT1)->
 		//			SubclassWindow(mdiclient->m_hWnd);
 
-		//PrintToNotepad("Subclassing2 %d from %d\r\n",
+		//P2N("Subclassing2 %d from %d\r\n",
 		//				m_sc.GetDlgItem(IDC_EDIT1), mdiclient);
 #endif
 		}
@@ -169,7 +169,7 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CMDIChildWnd::OnSize(nType, cx, cy);
 
-	//PrintToNotepad("Childframe OnSize %d %d\r\n", cx, cy);
+	//P2N("Childframe OnSize %d %d\r\n", cx, cy);
 
 	// if window active, set cursor
 	//if(currentedit)
@@ -200,7 +200,7 @@ void CChildFrame::OnMove(int x, int y)
 {
 	CMDIChildWnd::OnMove(x, y);
 
-	//PrintToNotepad("Childframe OnMove %d %d\r\n", x, y);
+	//P2N("Childframe OnMove %d %d\r\n", x, y);
 
 	// if window active, set cursor
 	if(currentedit)

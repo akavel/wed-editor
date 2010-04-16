@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 #include "wed.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "Coco.h"
 #include "gotoline.h"
 #include "io.h"
@@ -64,6 +64,8 @@ BEGIN_MESSAGE_MAP(Coco, CDialog)
     ON_WM_KEYDOWN()
     ON_COMMAND(ID_OPERATIONS_NEW, OnOperationsNew)
     ON_COMMAND(ID_OPERATIONS_NEWNODE, OnOperationsNewnode)
+    ON_BN_CLICKED(IDC_BUTTON11, OnButton11)
+    ON_BN_CLICKED(IDC_BUTTON12, OnButton12)
     //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -105,7 +107,7 @@ void Coco::getitem(char *name)
        {
        CArchive ar( &cf, CArchive::load);
        ar.ReadString(buff);
-       //PrintToNotepad("Buffer %s\r\n", buff);
+       //P2N("Buffer %s\r\n", buff);
 
         HTREEITEM h1 = NULL;
         while(true)
@@ -115,10 +117,10 @@ void Coco::getitem(char *name)
             int cc = buff.Find('\\');
             if(cc == -1)
                 {
-                //PrintToNotepad("fcut at %s\r\n", buff);
+                //P2N("fcut at %s\r\n", buff);
                 break;
                 }
-            //PrintToNotepad("cut at %s\r\n", buff.Mid(0, cc));
+            //P2N("cut at %s\r\n", buff.Mid(0, cc));
             if(cc)
                 {
                 // See if that sub branch exists already:
@@ -176,7 +178,7 @@ void Coco::OnButton3()
        return;
        }
     GetNodeFname(str);
-    //PrintToNotepad("Nodename %s\r\n", str);
+    //P2N("Nodename %s\r\n", str);
 
     if(unlink(str))
         {
@@ -202,8 +204,10 @@ void Coco::CreateBranch(int doleaf)
 
 {
     CStringList list;
-    Cgotoline   gt;
+    CGotoLine   gt;
     HTREEITEM   h1;
+
+    gt.m_prompt = "Create COCO item";
 
     h1 = m_tree.GetSelectedItem();
 
@@ -265,15 +269,17 @@ void Coco::CreateBranch(int doleaf)
 // void Coco::OnButton5()
 
 void Coco::OnButton5()
+
 {
     int ucount = 0;
     HTREEITEM h1;
 
     if(!(h1 = m_tree.GetSelectedItem() ))
-    {
-       AfxMessageBox("Please select item first");
-       return;
-    }
+        {
+        AfxMessageBox("Please select item first");
+        return;
+        }
+
     CString str; BuildTree(str);
     int hh = HashString(str);
 
@@ -292,25 +298,24 @@ void Coco::OnButton5()
 
        holding[currhold].RemoveAll();
        while(TRUE)
-         {
-         if(!ar.ReadString(str))
-          break;
-         ucount++;
-         if(!(ucount%100))
-          {
-          CString num;
-          num.Format( "Copy Coco line %d",
-                    ucount);
-          message(num);
-          }
+            {
+            if(!ar.ReadString(str))
+                break;
+
+            ucount++;
+            if(!(ucount%100))
+                {
+                CString num;
+                num.Format( "Copy Coco line %d",
+                        ucount);
+                message(num);
+                }
             holding[currhold].AddTail(str);
-         }
+            }
        }
     CString num; num.Format("Copied %d lines", ucount);
     message(num);
-
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Paste holding to tree
@@ -322,10 +327,10 @@ void Coco::OnButton6()
     HTREEITEM h1;
 
     if(!(h1 = m_tree.GetSelectedItem() ))
-    {
-       AfxMessageBox("Please select item first");
-       return;
-    }
+        {
+        AfxMessageBox("Please select item first");
+        return;
+        }
 
     CString str; BuildTree(str);
     int hh = HashString(str);
@@ -337,43 +342,46 @@ void Coco::OnButton6()
     fname.Format("%s%s%x.txt", dataroot, "Coco\\", hh);
 
     if(cf.Open(fname, CFile::modeReadWrite))
-       {
-       POSITION pos;
-       CString lead;
+        {
+        POSITION pos;
+        CString lead;
 
-       cf.Seek(0, CFile::end);
+        cf.Seek(0, CFile::end);
 
-       pos = holding[currhold].GetHeadPosition();
-       while(TRUE)
-         {
-         if (!pos)
-          break;
-         ucount++;
-         if(!(ucount%100))
-          {
-          CString num;
-          num.Format( "Paste to Coco line %d",
-                    ucount);
-          message(num);
-          }
+        pos = holding[currhold].GetHeadPosition();
+        while(TRUE)
+            {
+            if (!pos)
+                break;
+            ucount++;
+
+            if(!(ucount%100))
+                {
+                CString num;
+                num.Format( "Paste to Coco line %d", ucount);
+                message(num);
+                }
+
             lead = holding[currhold].GetNext(pos);
-         cf.Write(lead, lead.GetLength());
-         cf.Write(crlf, 2);
-         }
-       }
+
+            cf.Write(lead, lead.GetLength());
+            cf.Write(crlf, 2);
+            }
+        }
+
     CString num; num.Format("Pasted %d lines", ucount);
     message(num);
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Build tree
 // void Coco::BuildTree(CString &str)
 
 void Coco::BuildTree(CString &str)
+
 {
     CStringList list;
-    Cgotoline   gt;
+    CGotoLine   gt;
     HTREEITEM   h1 = m_tree.GetSelectedItem();
 
     list.AddTail( m_tree.GetItemText(h1));
@@ -391,7 +399,8 @@ void Coco::BuildTree(CString &str)
          break;
        str += list.GetPrev(pos);
        }
-    //PrintToNotepad("Item tree: %s\r\n", str);
+
+    //P2N("Item tree: %s\r\n", str);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -403,10 +412,10 @@ void Coco::OnButton7()
     HTREEITEM h1;
 
     if(!(h1 = m_tree.GetSelectedItem() ))
-    {
-       AfxMessageBox("Please select item first");
-       return;
-    }
+        {
+        AfxMessageBox("Please select item first");
+        return;
+        }
     CString str;   BuildTree(str);
     CString fname; GetNodeFname(fname);
     AfxGetApp()->OpenDocumentFile(fname);
@@ -455,7 +464,7 @@ void Coco::ShowCode()
     ViewText vt;
     CString fname; GetNodeFname(fname);
 
-    //PrintToNotepad("Clicking tree at %s\r\n", fname);
+    //P2N("Clicking tree at %s\r\n", fname);
 
     // Read Coco file
     CFile cf;
@@ -480,6 +489,7 @@ void Coco::ShowCode()
 // void Coco::OnRclickTree1(NMHDR* pNMHDR, LRESULT* pResult)
 
 void Coco::OnRclickTree1(NMHDR* pNMHDR, LRESULT* pResult)
+
 {
     HTREEITEM h1;
     CMenu   mm;
@@ -553,7 +563,7 @@ void Coco::OnOperationsDelete()
 
 void Coco::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-    //PrintToNotepad("Onchar %c\r\n", nChar);
+    //P2N("Onchar %c\r\n", nChar);
     CDialog::OnChar(nChar, nRepCnt, nFlags);
 }
 
@@ -581,5 +591,143 @@ void Coco::OnOperationsNewnode()
     OnButton1();
 }
 
-// EOF
 
+void Coco::OnButton11()
+
+{
+    CString strclip;
+
+    int ucount = 0;
+    HTREEITEM h1;
+
+    if(!(h1 = m_tree.GetSelectedItem()))
+        {
+        AfxMessageBox("Please select item first");
+        return;
+        }
+
+    CString str; BuildTree(str);
+    int hh = HashString(str);
+
+    // Open file
+    CFile cf;
+    CString fname;
+    fname.Format("%s%s%x.txt", dataroot, "Coco\\", hh);
+
+    if(cf.Open(fname, CFile::modeRead))
+       {
+       CString str;
+       CArchive ar( &cf, CArchive::load);
+
+       // Read the directory line
+       ar.ReadString(str);
+
+       while(TRUE)
+            {
+            if(!ar.ReadString(str))
+                break;
+
+            ucount++;
+            if(!(ucount%100))
+                {
+                CString num;
+                num.Format( "Copy Coco line %d", ucount);
+                message(num);
+                }
+            strclip += str + "\r\n";
+            }
+       }
+
+    //P2N("strclip=%s\r\n", strclip);
+
+    HANDLE hMem;
+    hMem = GlobalAlloc( GMEM_MOVEABLE | GMEM_DDESHARE,
+                strclip.GetLength()+1);
+    if(!hMem)
+        {
+        AfxMessageBox("Cannot get mem for clipboard");
+        return;
+        }
+    char *ptr = (char*)GlobalLock(hMem);
+    if(!ptr)
+        {
+        AfxMessageBox("Cannot get ptr for clipboard");
+        GlobalFree(hMem);
+        return;
+        }
+
+    strcpy(ptr, (const char *)strclip);
+    GlobalUnlock(hMem);
+
+    // Traditional clipboard operation
+    if(AfxGetMainWnd()->OpenClipboard())
+        {
+        EmptyClipboard();
+        SetClipboardData(CF_TEXT, hMem);
+        CloseClipboard();
+
+        CString num; num.Format("Copied %d lines from COCO to clipboard", ucount);
+        message(num);
+        }
+    else
+        {
+        AfxMessageBox("Cannot open clipboard");
+        GlobalFree(hMem);
+        }
+}
+
+void Coco::OnButton12()
+
+{
+    int ucount = 0;
+    HTREEITEM h1;
+
+    if(!(h1 = m_tree.GetSelectedItem() ))
+        {
+        AfxMessageBox("Please select item first");
+        return;
+        }
+
+
+    if(!AfxGetMainWnd()->OpenClipboard())
+        {
+        AfxMessageBox("Cannot open clipboard");
+        return;
+        }
+
+    HANDLE hMem = GetClipboardData(CF_TEXT);
+    CloseClipboard();
+
+    // Nothing there
+    if(!hMem)
+        {
+        message ("Empty clipboard");
+        return;
+        }
+
+    char *ptr = (char*)GlobalLock(hMem);
+    if(!ptr)
+        {
+        message ("Empty clipboard");
+        return;
+        }
+
+    int len = strlen(ptr);
+
+    CString str; BuildTree(str);
+    int hh = HashString(str);
+
+    // Open file
+    CFile cf;
+    char crlf[] = "\r\n";
+    CString fname;
+    fname.Format("%s%s%x.txt", dataroot, "Coco\\", hh);
+
+    if(cf.Open(fname, CFile::modeReadWrite))
+        {
+        cf.Seek(0, CFile::end);
+        cf.Write(ptr, len);
+        }
+    CString num; num.Format("Pasted %d bytes", len);
+    message(num);
+}

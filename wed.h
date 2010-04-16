@@ -1,3 +1,22 @@
+
+/* =====[ wed.h ]========================================== 
+                                                                             
+   Description:     The wed project, implementation of the wed.h                
+                                                                             
+                    Defines the behavior for the application.          
+                                                                             
+   Compiled:        MS-VC 6.00                                               
+                                                                             
+   Notes:           <Empty Notes>                                            
+                                                                             
+   Revisions:                                                                
+                                                                             
+      REV     DATE        BY            DESCRIPTION                       
+      ----  --------  -----------  ----------------------------   
+      0.00  1/9/2009  Peter Glen   Initial version.                         
+                                                                             
+   ======================================================================= */
+
 /////////////////////////////////////////////////////////////////////////////
 // wed.h : main header file for the WED application
 //
@@ -8,6 +27,9 @@
 #include "Search.h"
 #include "resource.h"       // main symbols
 #include "srcsel.h"
+#include "splash.h"
+
+#include "FindFiles.h"
 
 #if !defined(AFX_WED_H__87F3F484_DE8E_11D2_BEED_002078105E2C__INCLUDED_)
 #define AFX_WED_H__87F3F484_DE8E_11D2_BEED_002078105E2C__INCLUDED_
@@ -24,9 +46,14 @@
 // Application limits
 
 #define MAX_HOLDINGS 	10
-#define MAX_DOC_LIMIT	64
+#define MAX_DOC_LIMIT	300
 #define MAX_BACKUP		2000000
 #define MAXFILENAMES  	8096
+
+/////////////////////////////////////////////////////////////////////////////
+// Global Data
+
+extern CFindFiles ffil; 
 
 extern CString 	srcdir;
 extern CString 	targdir;
@@ -86,12 +113,19 @@ extern CWnd 		*currentedit;
 extern char 		approot[];
 extern CString		dataroot;
 
+//extern int		splashed;
+
 extern HCURSOR WaitCursor;
 extern HCURSOR NormalCursor;
 
 extern Search srcdlg;
+extern Splash spp;
 
 CView*  GetViewFromDoc(CDocument *doc);
+
+extern void	SplitPath(CString &full,  CString &drive,
+					CString &dir, CString &fname, CString &ext);
+
 
 class CWedApp : public CWinApp
 
@@ -128,9 +162,8 @@ public:
 
     //{{AFX_MSG(CWedApp)
     afx_msg void OnAppAbout();
-        // NOTE - the ClassWizard will add and remove member functions here.
-        //    DO NOT EDIT what you see in these blocks of generated code !
-    //}}AFX_MSG
+	afx_msg void OnFileSeachfiles();
+	//}}AFX_MSG
     DECLARE_MESSAGE_MAP()
 };
 

@@ -22,7 +22,7 @@ public:
 	int			m_taush;
 	int			m_esc;
 
-	sellist		m_list;
+	SelList		m_list;
 	CStringList m_files;
 	Search(CWnd* pParent = NULL);   // standard constructor
 	int		IsCandidate(const char *str);

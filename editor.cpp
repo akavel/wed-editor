@@ -1,3 +1,22 @@
+
+/* =====[ editor.cpp ]========================================== 
+                                                                             
+   Description:     The wed project, implementation of the editor.cpp                
+                                                                             
+                    Defines the behavior for the application.          
+                                                                             
+   Compiled:        MS-VC 6.00                                               
+                                                                             
+   Notes:           <Empty Notes>                                            
+                                                                             
+   Revisions:                                                                
+                                                                             
+      REV     DATE        BY            DESCRIPTION                       
+      ----  --------  -----------  ----------------------------   
+      0.00  1/9/2009  Peter Glen   Initial version.                         
+                                                                             
+   ======================================================================= */
+
 ///////////////////////////////////////////////////////////////////////////
 // Implement editor specific functions
 //
@@ -28,11 +47,12 @@
 #include "strlist.h"
 #include "Weddoc.h"
 #include "WedView.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "editor.h"
 #include "undo.h"
 #include "SubClass.h"
 #include "misc.h"
+#include "FindFiles.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -70,7 +90,7 @@ void    DeleteLine(CWedView *v1, int rowtodel)
     // Make sure we are in document
     if(rowtodel > pDoc->strlist.GetCount()-1)
         {
-        //PrintToNotepad("Attempt to delete after EOF\r\n");
+        //P2N("Attempt to delete after EOF\r\n");
         return;
         }
     pDoc->strlist.RemoveLine(rowtodel);
@@ -289,6 +309,56 @@ void    CopyToClip(CWedView *v1, int cut)
         message("Lines copied to clipboard");
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+void	FindFiles(CWedView *v1)
+
+{
+	//P2N("FindFiles\r\n");
+
+	CWedDoc*    pDoc = v1->GetDocument(); ASSERT_VALID(pDoc);
+	CString str2, str = pDoc->strlist.GetLine(v1->row);
+
+	 // Find word we are sitting on, or get selected word
+    int wbeg = 0, wend = 0;
+    if(v1->soch != -1)
+        {
+        if(v1->soch < v1->eoch)
+            wbeg = v1->soch, wend = v1->eoch+1;
+        else
+            wbeg = v1->eoch, wend = v1->soch+1;
+
+        wbeg = min(wbeg, str2scr(str, str.GetLength()));
+        wend = min(wend, str2scr(str, str.GetLength()));
+        }
+    else
+        SelWord(str, v1->col, &wbeg, &wend);
+
+    // Two int-s have the word
+    if(wbeg != wend)
+        {
+        wbeg = scr2str(str, wbeg);
+        wend = scr2str(str, wend);
+        str2 = str.Mid(wbeg, wend-wbeg);
+        }
+    
+    P2N("Got string '%s'\r\n", str2);
+
+	message ("Opened File Search");
+    		
+	if(!IsWindow(ffil.m_hWnd))
+		{
+		ffil.Create(IDD_DIALOG14);
+		}
+
+	ffil.m_comstr1 = str2;
+
+	ffil.CenterWindow();
+	ffil.ShowWindow(true);
+
+	//ffil.DoModal();
+}
+
 ///////////////////////////////////////////////////////////////////////////
 // void    CopyToHold(CWedView *v1, int cut)
 
@@ -408,7 +478,7 @@ void    CopyData(CWedView *v1, int cut, int target)
             tsoch = scr2str(str, lsoch);
             teoch = scr2str(str, leoch);
             str2 = str.Mid(tsoch, teoch - tsoch);
-            //PrintToNotepad("Col copy: '%s'\r\n", str2);
+            //P2N("Col copy: '%s'\r\n", str2);
 
             if(target == CB_CLIP)
                 strclip += str2 + "\r\n";
@@ -459,7 +529,7 @@ void    CopyData(CWedView *v1, int cut, int target)
                     }
                 }
             str = pDoc->strlist.GetLine(loop);
-            //PrintToNotepad("Copying %s\r\n", str);
+            //P2N("Copying %s\r\n", str);
             if(target == CB_HOLD)
                 holding[currhold].AddTail(str);
             if(target == CB_CLIP)
@@ -569,7 +639,7 @@ void    TabbedPos(CString &str, int col, int *real, int *ontab)
 
     len     = str.GetLength();
     locreal = 0;
-    //PrintToNotepad("Tabbedpos: %d '%s'\r\n", col, str);
+    //P2N("Tabbedpos: %d '%s'\r\n", col, str);
 
     for(loop = 0; loop < col; loop++)
         {
@@ -589,7 +659,7 @@ void    TabbedPos(CString &str, int col, int *real, int *ontab)
         locreal++;
         }
     *real = locreal;
-    //PrintToNotepad("Tabbedpos: %d ontab: %d\r\n", *real, *ontab);
+    //P2N("Tabbedpos: %d ontab: %d\r\n", *real, *ontab);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -630,7 +700,7 @@ void    UnTabbedPos(CString &str, int pos, int *real, int *ontab)
 
     len     = str.GetLength();
     locreal = 0;
-    //PrintToNotepad("Tabbedpos: %d '%s'\r\n", col, str);
+    //P2N("Tabbedpos: %d '%s'\r\n", col, str);
 
     for(loop = 0; loop < pos; loop++)
         {
@@ -650,7 +720,7 @@ void    UnTabbedPos(CString &str, int pos, int *real, int *ontab)
             locreal++;
         }
     *real = locreal;
-    //PrintToNotepad("UnTabbedpos: %d\r\n", *real);
+    //P2N("UnTabbedpos: %d\r\n", *real);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -723,7 +793,7 @@ void    ExpandTabs(CString &str)
     int     count = 0, wastab = 0;
     int     len = str.GetLength();
 
-    //PrintToNotepad("Expand '%s'\r\n", str);
+    //P2N("Expand '%s'\r\n", str);
 
     for(int loop = 0; loop < len; loop++)
         {
@@ -760,7 +830,7 @@ void    SubstStr(CString &str, CString src, CString sub)
     int         len = str.GetLength();
     int         wassub = 0;
 
-    //PrintToNotepad("Subst: '%s'\r\n", str);
+    //P2N("Subst: '%s'\r\n", str);
 
     rstr = str;
     while(TRUE)
@@ -775,12 +845,12 @@ void    SubstStr(CString &str, CString src, CString sub)
         rstr =   rstr.Right(rstr.GetLength()
                             - (pos + src.GetLength()));
 
-        //PrintToNotepad("rstr: '%s'\r\n", rstr);
+        //P2N("rstr: '%s'\r\n", rstr);
         }
     if(wassub)
         str = estr;
 
-    //PrintToNotepad("Substed: '%s'\r\n", str);
+    //P2N("Substed: '%s'\r\n", str);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -793,7 +863,7 @@ int     WalkStr(CString &str, CString sub)
     int loop;
     int found = 0, len = str.GetLength();
 
-    //PrintToNotepad("Walk '%s' for '%s'\r\n", str, sub);
+    //P2N("Walk '%s' for '%s'\r\n", str, sub);
     for(loop = 0; loop < len; loop++)
        {
        char cc = str.GetAt(loop);
@@ -805,7 +875,7 @@ int     WalkStr(CString &str, CString sub)
     if(!found)
         loop = -1;
 
-    //PrintToNotepad("Walk '%d'\r\n", loop);
+    //P2N("Walk '%d'\r\n", loop);
     return(loop);
 }
 
@@ -831,7 +901,7 @@ CWedDoc*  GetDocFromPath(const char *str)
         ASSERT_VALID(pDoc2);
         if( str == pDoc2->GetPathName())
             {
-            //PrintToNotepad("Got pDoc2: %d %s\r\n", pDoc2, str);
+            //P2N("Got pDoc2: %d %s\r\n", pDoc2, str);
             pDoc = pDoc2;
             break;
             }
@@ -1004,7 +1074,7 @@ void    TabSelection(CWedView *v1, int shh)
     static in_tabsel = 0;
 
     CString     str, str2;
-    int			loop2;
+    int         loop2;
 
     CWedDoc* pDoc = v1->GetDocument(); ASSERT_VALID(pDoc);
 
@@ -1037,9 +1107,9 @@ void    TabSelection(CWedView *v1, int shh)
         // Row mode
         for (loop2 = lsoh; loop2 <= leoh; loop2++)
             {
-		    str = pDoc->strlist.GetLine(loop2);
-            
-			CString num;
+            str = pDoc->strlist.GetLine(loop2);
+
+            CString num;
             if(!(loop2 % 100))
                 {
                 num.Format( "Inserting tab at line %d", loop2);
@@ -1053,43 +1123,43 @@ void    TabSelection(CWedView *v1, int shh)
                 }
             SaveUndo(v1, UNDO_MOD | UNDO_BLOCK, loop2, v1->col, str);
 
-			CString str2 = str;
-			if(shh)
-				{
-				int loop3;
+            CString str2 = str;
+            if(shh)
+                {
+                int loop3;
 
-				if(str.GetLength())
-					{
-					if(str[0] == '\t')
-						{
-						str2 = str2.Mid(1);
-						}
-					else if(str[0] == ' ')
-						{
-						for (loop3 = 0; loop3 < 4; loop3++)
-							{
-							if(str2[0] == ' ')
-								str2 = str2.Mid(1);
-							}
-						}
-					}
-				}
-			else
-				{
-				str2 = "\t"; str2 += str;
-				}
+                if(str.GetLength())
+                    {
+                    if(str[0] == '\t')
+                        {
+                        str2 = str2.Mid(1);
+                        }
+                    else if(str[0] == ' ')
+                        {
+                        for (loop3 = 0; loop3 < 4; loop3++)
+                            {
+                            if(str2[0] == ' ')
+                                str2 = str2.Mid(1);
+                            }
+                        }
+                    }
+                }
+            else
+                {
+                str2 = "\t"; str2 += str;
+                }
 
-			//P2N("%s\r\n", str2);
-		
-			// Communicate changes to line
-		    pDoc->strlist.SetLine(loop2, str2);
+            //P2N("%s\r\n", str2);
+
+            // Communicate changes to line
+            pDoc->strlist.SetLine(loop2, str2);
             }
-       	// Tell the doc to redraw
-		pDoc->UpdateAllViews(NULL);  v1->SyncCaret();
-		pDoc->SetModifiedFlag();
+        // Tell the doc to redraw
+        pDoc->UpdateAllViews(NULL);  v1->SyncCaret();
+        pDoc->SetModifiedFlag();
         }
 
-	v1->Busy(FALSE);
+    v1->Busy(FALSE);
     in_tabsel = FALSE;
 }
 
@@ -1123,7 +1193,7 @@ void    Spell(CWedView *v1, const char *dic, const char *idx,
     CWedDoc* pDoc = v1->GetDocument(); ASSERT_VALID(pDoc);
     int oldrow = v1->row, oldcol = v1->col;
 
-    //PrintToNotepad("Spell: %s %s %s\r\n", dic, idx, cus);
+    //P2N("Spell: %s %s %s\r\n", dic, idx, cus);
 
     fp1 = fopen(dic, "rt");
     if(!fp1)
@@ -1152,29 +1222,29 @@ void    Spell(CWedView *v1, const char *dic, const char *idx,
         {
         char    *readd;
         int     pos;
-		char	letter;
+        char    letter;
 
         readd = fgets(buffer, MAX_READ, fp2);
 
-		if(feof(fp2))
-			break;
-			
+        if(feof(fp2))
+            break;
+
         if(!readd)
             break;
 
         sscanf(buffer, "%d %c", &pos, &letter);
-		
-		//PrintToNotepad("index=%d letter=%c\r\n", pos, letter);
-		//lidx.SetAtGrow(cnt, letter);
 
-		widx.SetAtGrow(cnt, pos);
+        //P2N("index=%d letter=%c\r\n", pos, letter);
+        //lidx.SetAtGrow(cnt, letter);
+
+        widx.SetAtGrow(cnt, pos);
         cnt++;
 
-	
+
         }
     fclose(fp2);
 
-	//PrintToNotepad("Built index for array. Size=%d \r\n", widx.GetSize());
+    //P2N("Built index for array. Size=%d \r\n", widx.GetSize());
 
 #if 0
     {
@@ -1184,7 +1254,7 @@ void    Spell(CWedView *v1, const char *dic, const char *idx,
         int offset = widx.GetAt(loop);
         fseek(fp1, offset, SEEK_SET);
         fgets(buffer, MAX_READ, fp1);
-        PrintToNotepad("Value=%d Word=%s\r\n", offset, buffer);
+        P2N("Value=%d Word=%s\r\n", offset, buffer);
         }
     }
 #endif
@@ -1243,7 +1313,7 @@ int     CheckLine(CWedView *v1, int row, int flag)
                 on2 = FALSE,  comm = FALSE;
     int stron = FALSE;
 
-    //PrintToNotepad("\r\nCheck: '%s'\r\n", str);
+    //P2N("\r\nCheck: '%s'\r\n", str);
 
     if(!str.GetLength())
         goto endd;
@@ -1273,8 +1343,8 @@ int     CheckLine(CWedView *v1, int row, int flag)
                             comm = TRUE;
                     }
                 }
-            
-			cc = tolower(cc);
+
+            cc = tolower(cc);
             if(cc >= 'a' && cc <= 'z')
                 break;
 
@@ -1303,7 +1373,7 @@ int     CheckLine(CWedView *v1, int row, int flag)
                 }
             cc = tolower(cc);
             //if((cc >= 'a' && cc <= 'z') || cc == '\'')
-			if(( cc >= 'a' && cc <= 'z') )
+            if(( cc >= 'a' && cc <= 'z') )
                 {}
             else
                 break;
@@ -1343,9 +1413,9 @@ int     CheckLine(CWedView *v1, int row, int flag)
                     rstr = str.Right(str.GetLength() - wend);
                     str = lstr + xstr + rstr;
                     pDoc->strlist.SetLine(row, str);
-					pDoc->SetModifiedFlag();
+                    pDoc->SetModifiedFlag();
                     //pos = wbeg + xstr.GetLength() + 1;
-					// Re-check the current word
+                    // Re-check the current word
                     pos = wbeg;
                     v1->SyncCaret(3); pDoc->UpdateAllViews(NULL);
                     break;
@@ -1364,7 +1434,7 @@ int     CheckLine(CWedView *v1, int row, int flag)
 
                 case SP_IGNORE_ALL:
                     ignore.AddTail(ystr);
-                    //PrintToNotepad("add ignore: '%s' ", ystr);
+                    //P2N("add ignore: '%s' ", ystr);
                     //AfxMessageBox(ystr);
                     break;
                 }
@@ -1394,7 +1464,7 @@ int     CheckWord(CWedView *v1, CString &instr, CString &repl)
     int         dummy = 0, ret = SP_OK;
     char        buffer[128];
 
-	P2N("Check word %s IN %s\r\n", instr, repl);
+    //P2N("Check word %s IN %s\r\n", instr, repl);
 
     // Short strings are not checked
     if(instr.GetLength() < 3)
@@ -1404,11 +1474,11 @@ int     CheckWord(CWedView *v1, CString &instr, CString &repl)
 
     int offset = 0;
 
-	// Figure out starting letter
+    // Figure out starting letter
     if(widx.GetSize() > (instr[0] - 'a'))
         offset =  widx.GetAt(instr[0] - 'a');
 
-    //PrintToNotepad("'%s' %d ", instr, offset);
+    //P2N("'%s' %d ", instr, offset);
 
     // Look up in ignore array
     int lim = ignore.GetCount();
@@ -1417,7 +1487,7 @@ int     CheckWord(CWedView *v1, CString &instr, CString &repl)
         CString ign = ignore.GetLine(loop);
         if(!strcmp(instr, ign) )
             {
-            //PrintToNotepad("Found ignore: '%s' ", ign);
+            //P2N("Found ignore: '%s' ", ign);
             ret = 0;
             break;
             }
@@ -1431,10 +1501,10 @@ int     CheckWord(CWedView *v1, CString &instr, CString &repl)
             break;
 
         buffer[strlen(buffer)-1] = '\0';
-        
-		if(!strcmp(instr, buffer) )
+
+        if(!strcmp(instr, buffer) )
             {
-            //PrintToNotepad("Found: '%s' ", buffer);
+            //P2N("Found: '%s' ", buffer);
             ret = 0;
             break;
             }
@@ -1450,23 +1520,23 @@ int     CheckWord(CWedView *v1, CString &instr, CString &repl)
                 break;
 
             buffer[strlen(buffer)-1] = '\0';
-            //PrintToNotepad("check [%s] against [%s]\r\n'  ", instr, buffer);
+            //P2N("check [%s] against [%s]\r\n'  ", instr, buffer);
 
             if(!stricmp(instr, buffer) )
                 {
-                PrintToNotepad("Found: '%s' ", buffer);
+                //P2N("Found: '%s' ", buffer);
                 ret = 0;
                 break;
                 }
 
-			// Next letter, break
-	
-			// Is ascii?
-			if(tolower(buffer[0]) >= 'a' && tolower(buffer[0]) <= 'z')
-				{
-				if(tolower(buffer[0]) !=  instr[0])
-					break;
-				}
+            // Next letter, break
+
+            // Is ascii?
+            if(tolower(buffer[0]) >= 'a' && tolower(buffer[0]) <= 'z')
+                {
+                if(tolower(buffer[0]) !=  instr[0])
+                    break;
+                }
             }
         }
     // Get feedback from user
@@ -1502,9 +1572,9 @@ const char *GetRegStr()
 {
     char *str = "Freeware";
 
-	regstr = theApp.GetProfileString(strConfig, strReg, str);
+    regstr = theApp.GetProfileString(strConfig, strReg, str);
 
-    //PrintToNotepad("Got reg str: %s\r\n", str);
+    //P2N("Got reg str: %s\r\n", str);
 
     return((const char *)regstr);
 }
@@ -1550,8 +1620,8 @@ unsigned int    str_esc(const char *str, char *out, int lim)
     char    *str2 = (char *)str;
     int     ret_val = 0;
 
-	// Clear result string
-	//*out = '\0';
+    // Clear result string
+    //*out = '\0';
 
     while(1)
         {

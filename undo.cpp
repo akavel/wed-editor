@@ -3,15 +3,15 @@
 //
 // How it works:
 //
-// Undo is line based. Information is saved on what we are about to do 
+// Undo is line based. Information is saved on what we are about to do
 // to the buffer, along with current coordinates, and the old line.
 //
-// The undo routine interprets the instructions, and reapplies the 
-// transaction. Most of the time it is a simple copy of the undo 
+// The undo routine interprets the instructions, and reapplies the
+// transaction. Most of the time it is a simple copy of the undo
 // buffer over the old line.
 // The cursor is positioned to the undone transaction's place.
 //
-// A string of transactions are marked as UNDO_BLOCK and we continue 
+// A string of transactions are marked as UNDO_BLOCK and we continue
 // until an undo event comes without the block undo flag
 //
 // The UNDO_MARK is used as the begin of undo mark
@@ -25,7 +25,7 @@
 #include "strlist.h"
 #include "Weddoc.h"
 #include "WedView.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "Undo.h"
 #include "editor.h"
 #include "misc.h"
@@ -37,15 +37,15 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-static 	void exec_undo(CWedView *v1, int cc, int dd, int ee, int ff, CString &str);
-static	void WorkUndo(CWedView *v1, int redo);
+static  void exec_undo(CWedView *v1, int cc, int dd, int ee, int ff, CString &str);
+static  void WorkUndo(CWedView *v1, int redo);
 
-int 	undolimit = 10000;
-static 	prev    = 0;
-static 	prevrow = 0;
-static 	prevlen = 0;
-static 	in_undo = 0;
-static 	in_redo = 0;
+int     undolimit = 10000;
+static  prev    = 0;
+static  prevrow = 0;
+static  prevlen = 0;
+static  in_undo = 0;
+static  in_redo = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 // SaveUndo
@@ -53,22 +53,22 @@ static 	in_redo = 0;
 void SaveUndo(CWedView *v1, int tpe, int row, int col, CString str)
 
 {
-	ASSERT_VALID(v1);
+    ASSERT_VALID(v1);
     CWedDoc* pDoc = v1->GetDocument(); ASSERT_VALID(pDoc);
 
-    CString	num;
+    CString num;
     int     len = str.GetLength();
 
     // Same line, small transaction, do not save
-    if(	prev == UNDO_CHAR && prevrow == row &&
-      	abs(prevlen - len) < 6 && !in_redo
+    if( prev == UNDO_CHAR && prevrow == row &&
+        abs(prevlen - len) < 6 && !in_redo
       )
-   		return;
+        return;
 
     // Undo field description: undotype, row, col, strlen, string
     num.Format("%d %d %d %d ", tpe, row, col, len);
 
-    //PrintToNotepad("Saved undo: %s -- %s\r\n", num, str);
+    //P2N("Saved undo: %s -- %s\r\n", num, str);
 
     if(pDoc->undo.GetCount() > undolimit)
         {
@@ -77,7 +77,7 @@ void SaveUndo(CWedView *v1, int tpe, int row, int col, CString str)
         pDoc->notfullundo = TRUE;
         }
     pDoc->undo.AddHead(num + str);
-	
+
     prev = tpe;
     prevrow = row;
     prevlen = len;
@@ -89,15 +89,15 @@ void SaveUndo(CWedView *v1, int tpe, int row, int col, CString str)
 void SaveRedo(CWedView *v1, int tpe, int row, int col, CString str)
 
 {
-	ASSERT_VALID(v1);
-    CString	num;
-	CWedDoc* pDoc = v1->GetDocument(); 	ASSERT_VALID(pDoc);
+    ASSERT_VALID(v1);
+    CString num;
+    CWedDoc* pDoc = v1->GetDocument();  ASSERT_VALID(pDoc);
 
-    //PrintToNotepad("SaveRedo() v1:%d tpe:%d row:%d col:%d str:%s\r\n",
-	//						v1, tpe, row, col, str);
+    //P2N("SaveRedo() v1:%d tpe:%d row:%d col:%d str:%s\r\n",
+    //                      v1, tpe, row, col, str);
 
     num.Format("%d %d %d %d ", tpe, row, col, str.GetLength());
-    //PrintToNotepad("Saved redo: %s -- %s\r\n", num, str);
+    //P2N("Saved redo: %s -- %s\r\n", num, str);
     pDoc->redo.AddHead(num + str);
 }
 
@@ -118,39 +118,39 @@ void WorkUndo(CWedView *v1, int redo)
     in_undo = TRUE;
     // Atomic ============================
 
-	v1->Busy(TRUE);
+    v1->Busy(TRUE);
 
     pDoc= v1->GetDocument(); ASSERT_VALID(pDoc);
     pDoc->SetModifiedFlag();
 
     // Select list we use:
     if(redo)
-		{
-		action =  "Redo";
+        {
+        action =  "Redo";
         ll = &pDoc->redo;
-		}
+        }
     else
-		{
-		action =  "Undo";
+        {
+        action =  "Undo";
         ll = &pDoc->undo;
-		}
+        }
     // Set cache:
     prev = 0; prevrow = 0;
   again:
     repeat = FALSE;
     if(ll->IsEmpty())
-    	{
-		CString num; 
-		num.Format("Nothing to %s", action); message(num);
+        {
+        CString num;
+        num.Format("Nothing to %s", action); message(num);
         goto end;
-    	}
-    // Pop information off the undo stack:				 
+        }
+    // Pop information off the undo stack:
     str = ll->RemoveHead();
 
     sscanf(str, "%d %d %d %d ", &cc , &dd, &ee, &ff);
-    
-    //PrintToNotepad("Undoing: %d %d %d '%s'\r\n", 
-    //			cc, dd, ee, str.Right(ff));
+
+    //P2N("Undoing: %d %d %d '%s'\r\n",
+    //          cc, dd, ee, str.Right(ff));
 
     // Push old line to redo
     if(!redo)
@@ -162,7 +162,7 @@ void WorkUndo(CWedView *v1, int redo)
     ccc = cc;
     if(cc & UNDO_BLOCK)
         {
-		// yes
+        // yes
         repeat = TRUE; ccc &= ((~UNDO_BLOCK) & 0xff);
         }
     else
@@ -193,37 +193,37 @@ void WorkUndo(CWedView *v1, int redo)
     // Do it
     exec_undo(v1, ccc, dd, ee, ff, str);
 
-	// Show message and see if user wants to interact
-	if(!(ll->GetCount() % 100))
-		{
+    // Show message and see if user wants to interact
+    if(!(ll->GetCount() % 100))
+        {
         CString num;
 
-		num.Format("%sing item %d", action, ll->GetCount());
+        num.Format("%sing item %d", action, ll->GetCount());
         message(num);
 
-		pDoc->UpdateAllViews(NULL); v1->SyncCaret(1);
-		if(YieldToWinEx())
-			{
-			// Stop by force repeat to FALSE
-			num.Format("Aborted %s", action);
-			AfxMessageBox(num);
-			repeat = FALSE;
-			}
-		}
-	// Was a block undo, go get next item
+        pDoc->UpdateAllViews(NULL); v1->SyncCaret(1);
+        if(YieldToWinEx())
+            {
+            // Stop by force repeat to FALSE
+            num.Format("Aborted %s", action);
+            AfxMessageBox(num);
+            repeat = FALSE;
+            }
+        }
+    // Was a block undo, go get next item
     if(repeat)
         goto again;
 
 end:
     // If met original position, this is clean file
-	if(pDoc->undoorig == ll->GetCount() || 
-		pDoc->undoorig + 1 == ll->GetCount())
-			pDoc->SetModifiedFlag(FALSE);
+    if(pDoc->undoorig == ll->GetCount() ||
+        pDoc->undoorig + 1 == ll->GetCount())
+            pDoc->SetModifiedFlag(FALSE);
 
     v1->SyncCaret(); YieldToWin();
-	pDoc->UpdateAllViews(NULL);
+    pDoc->UpdateAllViews(NULL);
 
-	v1->Busy(FALSE);
+    v1->Busy(FALSE);
     in_undo = FALSE;
 }
 
@@ -233,7 +233,7 @@ end:
 void UnDo(CWedView *v1)
 
 {
- 	WorkUndo(v1, FALSE);
+    WorkUndo(v1, FALSE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -256,17 +256,17 @@ void exec_undo(CWedView *v1, int cc, int dd, int ee, int ff, CString &str)
 
 {
     CWedDoc* pDoc = v1->GetDocument(); ASSERT_VALID(pDoc);
-	//ASSERT_VALID(str);
+    //ASSERT_VALID(str);
 
     switch(cc)
         {
         case UNDO_MARK:
             // This opcode is pushed as a marker
-			message("Reached file save boundary");
-			AfxMessageBox(
-			"Information: Undo/Redo reached file save boundary.", 
-			      MB_ICONINFORMATION );
-			pDoc->notfullundo = TRUE;
+            message("Reached file save boundary");
+            AfxMessageBox(
+            "Information: Undo/Redo reached file save boundary.",
+                  MB_ICONINFORMATION );
+            pDoc->notfullundo = TRUE;
             //pDoc->SetModifiedFlag(FALSE);
             break;
 
@@ -305,12 +305,12 @@ void exec_undo(CWedView *v1, int cc, int dd, int ee, int ff, CString &str)
             break;
 
         case UNDO_NOP:
-			// No operation
+            // No operation
             break;
 
         default:
-           	message("Warning: Invalid undo opcode");
-            //PrintToNotepad("Invalid undo opcode %d\r\n", cc);
+            message("Warning: Invalid undo opcode");
+            //P2N("Invalid undo opcode %d\r\n", cc);
             break;
         }
 }

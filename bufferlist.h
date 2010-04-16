@@ -45,6 +45,7 @@ protected:
 	afx_msg void OnButton2();
 	afx_msg void OnButton3();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnDblclkList1();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

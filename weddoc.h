@@ -1,3 +1,22 @@
+
+/* =====[ weddoc.h ]========================================== 
+                                                                             
+   Description:     The wed project, implementation of the weddoc.h                
+                                                                             
+                    Defines the behavior for the application.          
+                                                                             
+   Compiled:        MS-VC 6.00                                               
+                                                                             
+   Notes:           <Empty Notes>                                            
+                                                                             
+   Revisions:                                                                
+                                                                             
+      REV     DATE        BY            DESCRIPTION                       
+      ----  --------  -----------  ----------------------------   
+      0.00  1/6/2009  Peter Glen   Initial version.                         
+                                                                             
+   ======================================================================= */
+
 // wedDoc.h : interface of the CWedDoc class
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -14,6 +33,7 @@
 #include <sys/types.h> 
 #include <sys/stat.h>
 
+#include "StrList.h"
 
 class CWedDoc : public CDocument
 {
@@ -24,14 +44,16 @@ protected: // create from serialization only
 // Attributes
 public:
 
-	//srcsel ssel(AfxGetMainWnd());
-	srcsel	ssel;
+	//SrcSel ssel(AfxGetMainWnd());
+	SrcSel	ssel;
 	
 	StrList strlist;
 	CStringList undo;
 	CStringList redo;
 	CStringList rec;
 	CString comment;
+	CString funcregex;
+
 	int	readonly;
 	int	spaceify;
 	int	inited;

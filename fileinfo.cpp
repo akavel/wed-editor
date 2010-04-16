@@ -10,7 +10,7 @@
 #include "wedDoc.h"
 #include "wedView.h"
 #include "FileInfo.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "holdhead.h"
 #include "editor.h"
 #include "misc.h"
@@ -77,7 +77,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // FileInfo message handlers
 
-int FileInfo::DoModal() 
+int FileInfo::DoModal()
 {
     CWedDoc* pDoc = v1->GetDocument(); ASSERT_VALID(pDoc);
     CString file;
@@ -92,11 +92,11 @@ int FileInfo::DoModal()
 	tt = pDoc->docstat.st_mtime;
 	file = tt.Format("%c");
 	m_9 =  file;
-   
+
 	tt = pDoc->docstat.st_atime;
 	file = tt.Format("%c");
 	m_10 =  file;
-	
+
 	file.Format("%d", pDoc->origlines);
 	m_3 =  file;
 
@@ -126,7 +126,7 @@ int FileInfo::DoModal()
 	return CDialog::DoModal();
 }
 
-void FileInfo::OnOK() 
+void FileInfo::OnOK()
 
 {
 	CDialog::OnOK();

@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "wed.h"
 #include "AppTop.h"
-#include "notepad.h"
+#include "mxpad.h"
 
 
 #ifdef _DEBUG
@@ -36,19 +36,19 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // AppTop message handlers
 
-BOOL AppTop::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext) 
+BOOL AppTop::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
 {
 	return CWnd::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext);
 }
 
-void AppTop::OnSetFocus(CWnd* pOldWnd) 
+void AppTop::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus(pOldWnd);
 
-	//PrintToNotepad("Got focus on apptop.\r\n");
+	//P2N("Got focus on apptop.\r\n");
 }
 
-LRESULT AppTop::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
+LRESULT AppTop::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	return CWnd::WindowProc(message, wParam, lParam);
 }

@@ -1,0 +1,8 @@
+If the list is const, GetHead returns a copy of the element at the head of the
+list. This allows the function to be used only on the right side of an
+assignment statement and protects the list from modification.
+If the list is const, GetHead returns a copy of the element at the head of the
+list. This allows the function to be used only on  the right side of an
+assignment statement and protects the list from modification.
+
+

@@ -8,17 +8,17 @@
 //
 
 /////////////////////////////////////////////////////////////////////////////
-// Cgotoline dialog
+// CGotoLine dialog
 
-class Cgotoline : public CDialog
+class CGotoLine : public CDialog
 {
 // Construction
 public:
 	CString caption;
-	Cgotoline(CWnd* pParent = NULL);   // standard constructor
+	CGotoLine(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(Cgotoline)
+	//{{AFX_DATA(CGotoLine)
 	enum { IDD = IDD_DIALOG7 };
 	CString	m_str;
 	CString	m_prompt;
@@ -27,7 +27,7 @@ public:
 
 // Overrides
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(Cgotoline)
+	//{{AFX_VIRTUAL(CGotoLine)
 	public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
@@ -37,7 +37,7 @@ public:
 protected:
 
 	// Generated message map functions
-	//{{AFX_MSG(Cgotoline)
+	//{{AFX_MSG(CGotoLine)
 	virtual BOOL OnInitDialog();
 	virtual void OnCancel();
 	//}}AFX_MSG

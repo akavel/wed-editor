@@ -62,6 +62,8 @@ protected:
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnOperationsNew();
 	afx_msg void OnOperationsNewnode();
+	afx_msg void OnButton11();
+	afx_msg void OnButton12();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -1,3 +1,22 @@
+
+/* =====[ wedview.h ]========================================== 
+                                                                             
+   Description:     The wed project, implementation of the wedview.h                
+                                                                             
+                    Defines the behavior for the application.          
+                                                                             
+   Compiled:        MS-VC 6.00                                               
+                                                                             
+   Notes:           <Empty Notes>                                            
+                                                                             
+   Revisions:                                                                
+                                                                             
+      REV     DATE        BY            DESCRIPTION                       
+      ----  --------  -----------  ----------------------------   
+      0.00  1/6/2009  Peter Glen   Initial version.                         
+                                                                             
+   ======================================================================= */
+
 // wedView.h : interface of the CWedView class
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -9,14 +28,24 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
+#define WED_MAGIC 0x2345789
+
 class CWedView : public CView
 {
 protected: //  create from serialization only
     CWedView();
     DECLARE_DYNCREATE(CWedView)
 
+	void CWedView::MoveFunction(int up = false) ;
+
+	CFont m_LogoFont;
+	CString sLogoString;
+
 // Attributes
 public:
+
+	int			magic;
+
     CWedView    *other;
 	CRect		oldrect;
 	CWnd		*parent;
@@ -297,7 +326,6 @@ protected:
 	afx_msg void OnMoveNextlongline();
 	afx_msg void OnMoveMovepreviouslongline();
 	afx_msg void OnSettingsLonglinecolorfg();
-	afx_msg void OnFileMultiopendest();
 	afx_msg void OnSearchBracecount();
 	afx_msg void OnHelpRegistration();
 	afx_msg void OnAdvancedCleanoldbackups();
@@ -308,6 +336,13 @@ protected:
 	afx_msg void OnFileOpen();
 	afx_msg void OnFileSaveas2();
 	afx_msg void OnAdvancedClearcurrentignorelist();
+	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnEditSetwrappingwidth();
+	afx_msg void OnSearchFindinfiles();
+	afx_msg void OnInsertTemplatesOpentemplatefile();
+	afx_msg void OnFileMultiopendest();
+	afx_msg void OnMoveNextfunction();
+	afx_msg void OnMovePreviousfunction();
 	//}}AFX_MSG
     DECLARE_MESSAGE_MAP()
 };

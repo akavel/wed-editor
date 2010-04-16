@@ -5,8 +5,11 @@
 #define IDC_BUTTON5                     3
 #define IDCANCEL2                       3
 #define IDCANCEL3                       4
+#define IDC_BUTTON11                    4
 #define IDCANCEL4                       5
+#define IDC_BUTTON12                    5
 #define IDD_ABOUTBOX                    100
+#define IDD_GET_PATH                    102
 #define IDP_SOCKETS_INIT_FAILED         104
 #define IDD_OLE_PROPPAGE_LARGE          105
 #define IDD_PROPPAGE_LARGE              107
@@ -47,8 +50,11 @@
 #define IDR_MENU5                       202
 #define IDB_BITMAP11                    203
 #define IDB_BITMAP12                    204
+#define IDD_DIALOG14                    205
+#define IDB_FILE_TYPES                  206
 #define IDC_LIST1                       1000
 #define IDC_EDIT1                       1001
+#define IDC_TREE                        1001
 #define IDC_EDIT2                       1002
 #define IDC_EDIT3                       1003
 #define IDC_EDIT4                       1004
@@ -60,6 +66,7 @@
 #define IDC_EDIT9                       1009
 #define IDC_EDIT10                      1010
 #define IDC_EDIT12                      1011
+#define IDC_STATIC_NOTE                 1016
 #define IDC_BUTTON1                     1017
 #define IDC_BUTTON2                     1018
 #define IDC_CHECK1                      1019
@@ -78,9 +85,13 @@
 #define IDC_RADIO1                      1028
 #define IDC_COMBO1                      1029
 #define IDC_SCROLLBAR1                  1030
+#define IDC_COMBO3                      1030
 #define IDC_RADIO2                      1031
+#define IDC_COMBO4                      1032
 #define IDC_RADIO4                      1033
 #define IDC_COMBO2                      1034
+#define IDC_RADIO3                      1034
+#define IDC_LOGWIN                      1038
 #define ID_MENUITEM32771                32771
 #define ID_VIEW_VIEWHEX                 32772
 #define ID_VIEW_FONTS                   32773
@@ -245,7 +256,7 @@
 #define ID_INSERT_DELETELINE            32970
 #define ID_INSERT_DELETETILLENDOFLINE   32971
 #define ID_VIEW_FULLSCREEN              32972
-#define Opensource                      32973
+#define OPENSOURCE                      32973
 #define ID_FILE_MULTIOPEN               32974
 #define ID_INSERT_INSERTOVERTYPE        32975
 #define ID_SETTINGS_TOGGLESCROLLBARS    32976
@@ -297,6 +308,11 @@
 #define ID_SETTINGS_SETTABSTOP          33026
 #define ID_FILE_SAVEAS2                 33027
 #define ID_ADVANCED_CLEARCURRENTIGNORELIST 33028
+#define ID_EDIT_SETWRAPPINGWIDTH        33029
+#define ID_SEARCH_FINDINFILES           33030
+#define ID_INSERT_TEMPLATES_OPENTEMPLATEFILE 33031
+#define ID_FILE_MULTIOPENDEST2          33032
+#define ID_FILE_SEACHFILES              33034
 #define ID_INDICATOR_ROW                59142
 #define ID_INDICATOR_CLOCK              59143
 #define ID_INDICATOR_CLOCK2             59144
@@ -310,9 +326,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        205
-#define _APS_NEXT_COMMAND_VALUE         33029
-#define _APS_NEXT_CONTROL_VALUE         1038
-#define _APS_NEXT_SYMED_VALUE           101
+#define _APS_NEXT_RESOURCE_VALUE        207
+#define _APS_NEXT_COMMAND_VALUE         33035
+#define _APS_NEXT_CONTROL_VALUE         1039
+#define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

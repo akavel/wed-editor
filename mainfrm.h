@@ -66,7 +66,6 @@ protected:
 	afx_msg void OnEnterIdle(UINT nWhy, CWnd* pWho);
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	afx_msg void OnHelpRegistration();
-	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnFileSaveAs();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

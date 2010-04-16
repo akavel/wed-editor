@@ -15,7 +15,7 @@
 #include "splash.h"
 #include "editor.h"
 #include "wedview.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "build.h"
 
 #include "about.h"
@@ -62,7 +62,7 @@ CAboutDlg::~CAboutDlg()
     if( diffMemState2.Difference( oldMemState2, newMemState2 ) )
     	{
 		diffMemState2.DumpAllObjectsSince();
-		//PrintToNotepad("Aboutdlg Memory leaked!\r\n");
+		//P2N("Aboutdlg Memory leaked!\r\n");
         //TRACE( "Memory leaked!\n" );
     	}
 	#endif
@@ -96,7 +96,7 @@ BOOL 	CAboutDlg::OnInitDialog()
 	m_reg	= GetRegStr();
 
 	CDialog::OnInitDialog();
-	return TRUE; 
+	return TRUE;
 }
 
 // EOF

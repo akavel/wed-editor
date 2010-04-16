@@ -1,9 +1,29 @@
+
+/* =====[ regex.cpp ]========================================== 
+                                                                             
+   Description:     The wed project, implementation of the regex.cpp                
+                                                                             
+                    Defines the behavior for the application.          
+                                                                             
+   Compiled:        MS-VC 6.00                                               
+                                                                             
+   Notes:           <Empty Notes>                                            
+                                                                             
+   Revisions:                                                                
+                                                                             
+      REV     DATE        BY            DESCRIPTION                       
+      ----  --------  -----------  ----------------------------   
+      0.00  1/7/2009  Peter Glen   Initial version.                         
+                                                                             
+   ======================================================================= */
+
 ////////////////////////////////////////////////////////////////////////////////
 // RegExp.cpp
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "stringEx.h"
+#include "mxpad.h"
 #include "RegEx.h"
 
 
@@ -163,7 +183,7 @@ TCHAR *CRegExp::reg(int paren, int *flagp)
 		// Make an OPEN node.
 		if (regnpar >= NSUBEXP)
 		{
-			TRACE1("Too many (). NSUBEXP is set to %d\n", NSUBEXP );
+			TRACE1("Too many (). NSUBEXP is set to %d\r\r\n", NSUBEXP );
 			return NULL;
 		}
 		parno = regnpar;
@@ -202,19 +222,19 @@ TCHAR *CRegExp::reg(int paren, int *flagp)
 	// Check for proper termination.
 	if (paren && *regparse++ != _T(')'))
 	{
-		TRACE0("unterminated ()\n");
+		P2N("unterminated ()\r\r\n");
 		return NULL;
 	}
 	else if (!paren && *regparse != _T('\0'))
 	{
 		if (*regparse == _T(')'))
 		{
-			TRACE0("unmatched ()\n");
+			P2N("unmatched ()\r\n");
 			return NULL;
 		}
 		else
 		{
-			TRACE0("internal error: junk on end\n");
+			P2N("internal error: junk on end\r\n");
 			return NULL;
 		}
 		// NOTREACHED
@@ -288,7 +308,7 @@ TCHAR *CRegExp::regpiece(int *flagp)
 
 	if (!(flags&HASWIDTH) && op != _T('?'))
 	{
-		TRACE0("*+ operand could be empty\n");
+		P2N("*+ operand could be empty\r\n");
 		return NULL;
 	}
 
@@ -327,7 +347,7 @@ TCHAR *CRegExp::regpiece(int *flagp)
 	regparse++;
 	if (ISREPN(*regparse))
 	{
-		TRACE0("nested *?+\n");
+		P2N("nested *?+\r\n");
 		return NULL;
 	}
 
@@ -385,7 +405,7 @@ TCHAR *CRegExp::regatom(int *flagp)
 				rangeend = (unsigned) (TCHAR)c;
 				if (range > rangeend)
 				{
-					TRACE0("invalid [] range\n");
+					P2N("invalid [] range\r\n");
 					return NULL;
 				}
 				for (range++; range <= rangeend; range++)
@@ -396,7 +416,7 @@ TCHAR *CRegExp::regatom(int *flagp)
 		regc(_T('\0'));
 		if (c != _T(']'))
 		{
-			TRACE0("unmatched []\n");
+			P2N("unmatched []\r\n");
 			return NULL;
 		}
 		*flagp |= HASWIDTH|SIMPLE;
@@ -412,19 +432,19 @@ TCHAR *CRegExp::regatom(int *flagp)
 	case _T('|'):
 	case _T(')'):
 		// supposed to be caught earlier
-		TRACE0("internal error: \\0|) unexpected\n");
+		P2N("internal error: \\0|) unexpected\r\n");
 		return NULL;
 		break;
 	case _T('?'):
 	case _T('+'):
 	case _T('*'):
-		TRACE0("?+* follows nothing\n");
+		P2N("?+* follows nothing\r\n");
 		return NULL;
 		break;
 	case _T('\\'):
 		if (*regparse == _T('\0'))
 		{
-			TRACE0("trailing \\\n");
+			P2N("trailing \\\r\n");
 			return NULL;
 		}
 		ret = regnode(EXACTLY);
@@ -440,7 +460,7 @@ TCHAR *CRegExp::regatom(int *flagp)
 		len = _tcscspn(regparse, META);
 		if (len == 0)
 		{
-			TRACE0("internal error: strcspn 0\n");
+			P2N("internal error: strcspn 0\r\n");
 			return NULL;
 		}
 		ender = *(regparse+len);
@@ -520,6 +540,7 @@ void CRegExp::regoptail(TCHAR *p, TCHAR *val)
 //			  if regular expression not found
 // Note		- The regular expression should have been
 //			  previously compiled using RegComp
+
 int CRegExp::	 RegFind(const TCHAR *str)
 
 {
@@ -533,14 +554,14 @@ int CRegExp::	 RegFind(const TCHAR *str)
 	// Be paranoid.
 	if(string == NULL)
 	{
-		TRACE0("NULL argument to regexec\n");
+		P2N("NULL argument to regexec\r\n");
 		return(-1);
 	}
 
 	// Check validity of regex
 	if (!bCompiled)
 	{
-		TRACE0("No regular expression provided yet.\n");
+		P2N("No regular expression provided yet.\r\n");
 		return(-1);
 	}
 
@@ -767,7 +788,7 @@ int	CRegExp::regmatch(TCHAR *prog)
 			return(1);	// Success!
 			break;
 		default:
-			TRACE0("regexp corruption\n");
+			P2N("regexp corruption\r\n");
 			return(0);
 			break;
 		}
@@ -776,7 +797,7 @@ int	CRegExp::regmatch(TCHAR *prog)
 	// We get here only if there's trouble -- normally "case END" is
 	// the terminating point.
 
-	TRACE0("corrupted pointers\n");
+	P2N("corrupted pointers\r\n");
 	return(0);
 }
 
@@ -808,7 +829,7 @@ size_t CRegExp::regrepeat(TCHAR *node)
 		return(_tcscspn(reginput, OPERAND(node)));
 		break;
 	default:		// Oh dear.  Called inappropriately.
-		TRACE0("internal error: bad call of regrepeat\n");
+		P2N("internal error: bad call of regrepeat\r\n");
 		return(0);	// Best compromise.
 		break;
 	}

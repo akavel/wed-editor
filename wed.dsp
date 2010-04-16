@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /machine:IX86
+# ADD LINK32 msimg32.lib mpr.lib /nologo /subsystem:windows /machine:IX86
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "wed - Win32 Debug"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 msimg32.lib mpr.lib /nologo /subsystem:windows /map /debug /machine:I386 /pdbtype:sept
 
 !ENDIF 
 
@@ -117,6 +117,10 @@ SOURCE=.\diff.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DlgGetPath.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\editor.cpp
 # End Source File
 # Begin Source File
@@ -126,6 +130,10 @@ SOURCE=.\FileDialogST.cpp
 # Begin Source File
 
 SOURCE=.\FileInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FindFiles.cpp
 # End Source File
 # Begin Source File
 
@@ -141,6 +149,10 @@ SOURCE=.\logomdi.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LogWin.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\MainFrm.cpp
 # End Source File
 # Begin Source File
@@ -149,7 +161,7 @@ SOURCE=.\misc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\notepad.cpp
+SOURCE=.\mxpad.cpp
 # End Source File
 # Begin Source File
 
@@ -182,10 +194,6 @@ SOURCE=.\sellist.cpp
 # Begin Source File
 
 SOURCE=.\Setup.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\spell.cpp
 # End Source File
 # Begin Source File
 
@@ -305,6 +313,10 @@ SOURCE=.\diff.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DlgGetPath.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\editor.h
 # End Source File
 # Begin Source File
@@ -314,6 +326,10 @@ SOURCE=.\FileDialogST.h
 # Begin Source File
 
 SOURCE=.\FileInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FindFiles.h
 # End Source File
 # Begin Source File
 
@@ -333,6 +349,10 @@ SOURCE=.\logomdi.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LogWin.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\MainFrm.h
 # End Source File
 # Begin Source File
@@ -341,7 +361,7 @@ SOURCE=.\misc.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\notepad.h
+SOURCE=.\mxpad.h
 # End Source File
 # Begin Source File
 
@@ -378,10 +398,6 @@ SOURCE=.\sellist.h
 # Begin Source File
 
 SOURCE=.\Setup.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\spell.h
 # End Source File
 # Begin Source File
 
@@ -441,6 +457,10 @@ SOURCE=.\res\bitmap10.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\bitmap13.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\bitmap2.bmp
 # End Source File
 # Begin Source File
@@ -462,6 +482,14 @@ SOURCE=.\res\bitmap7.bmp
 # Begin Source File
 
 SOURCE=.\res\bitmap8.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\brush3.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\brushed.bmp
 # End Source File
 # Begin Source File
 
@@ -630,6 +658,28 @@ SOURCE=.\ReadMe.txt
 # End Group
 # End Target
 # End Project
+# Section wed : {33208869-AD8F-48E3-8312-81EB629E59BB}
+# 	2:12:CLASS: MxPad:MxPad
+# 	2:7:mxpad.h:mxpad.h
+# 	2:9:mxpad.cpp:mxpad.cpp
+# 	2:19:Application Include:wed.h
+# End Section
+# Section wed : {3062841D-89D7-4CD6-A6F8-A00B28A08CD0}
+# 	2:14:CLASS: CLogWin:CLogWin
+# 	2:8:LogWin.h:LogWin.h
+# 	2:10:LogWin.cpp:LogWin.cpp
+# 	2:19:Application Include:wed.h
+# End Section
+# Section wed : {97980449-3AC0-48BE-B906-994D7D691074}
+# 	1:12:IDD_GET_PATH:102
+# 	2:16:Resource Include:resource.h
+# 	2:14:DlgGetPath.cpp:DlgGetPath.cpp
+# 	2:10:ENUM: enum:enum
+# 	2:18:CLASS: CDlgGetPath:CDlgGetPath
+# 	2:12:IDD_GET_PATH:IDD_GET_PATH
+# 	2:12:DlgGetPath.h:DlgGetPath.h
+# 	2:19:Application Include:wed.h
+# End Section
 # Section wed : {508C381A-21A6-4462-A3D7-C6F99D34C238}
 # 	2:16:FileDialogST.cpp:FileDialogST.cpp
 # 	2:26:ENUM: SHVIEW_ListViewModes:SHVIEW_ListViewModes

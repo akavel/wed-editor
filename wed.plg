@@ -6,13 +6,13 @@
 --------------------Configuration: wed - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6B8.bat" with contents
+Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP1B.bat" with contents
 [
 @echo off
 call ".\makehelp.bat"
 ]
-Creating command line "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6B8.bat"
-Creating command line "rc.exe /l 0x409 /fo"Release/wed.res" /d "NDEBUG" /d "_AFXDLL" "C:\develop\wed\work\wed.rc"" 
+Creating command line "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP1B.bat"
+Creating command line "rc.exe /l 0x409 /fo"Release/wed.res" /d "NDEBUG" /d "_AFXDLL" "C:\develop2\wed\work\wed.rc"" 
 Making help file...
 Building Win32 Help files
 
@@ -22,70 +22,75 @@ Building Win32 Help files
         1 file(s) copied.
 
 
-Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6B9.tmp" with contents
+Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP1C.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Release/" /Fp"Release/wed.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\develop\wed\work\about.cpp"
-"C:\develop\wed\work\AppTop.cpp"
-"C:\develop\wed\work\BufferList.cpp"
-"C:\develop\wed\work\ChildFrm.cpp"
-"C:\develop\wed\work\coco.cpp"
-"C:\develop\wed\work\diff.cpp"
-"C:\develop\wed\work\editor.cpp"
-"C:\develop\wed\work\FileDialogST.cpp"
-"C:\develop\wed\work\FileInfo.cpp"
-"C:\develop\wed\work\gotoline.cpp"
-"C:\develop\wed\work\HoldHead.cpp"
-"C:\develop\wed\work\logomdi.cpp"
-"C:\develop\wed\work\MainFrm.cpp"
-"C:\develop\wed\work\misc.cpp"
-"C:\develop\wed\work\notepad.cpp"
-"C:\develop\wed\work\oleComm.cpp"
-"C:\develop\wed\work\page1.cpp"
-"C:\develop\wed\work\Page2.cpp"
-"C:\develop\wed\work\regex.cpp"
-"C:\develop\wed\work\Register.cpp"
-"C:\develop\wed\work\Search.cpp"
-"C:\develop\wed\work\sellist.cpp"
-"C:\develop\wed\work\Setup.cpp"
-"C:\develop\wed\work\spell.cpp"
-"C:\develop\wed\work\Splash.cpp"
-"C:\develop\wed\work\src.cpp"
-"C:\develop\wed\work\srcsel.cpp"
-"C:\develop\wed\work\stringex.cpp"
-"C:\develop\wed\work\StrList.cpp"
-"C:\develop\wed\work\SubClass.cpp"
-"C:\develop\wed\work\undo.cpp"
-"C:\develop\wed\work\ViewText.cpp"
-"C:\develop\wed\work\wed.cpp"
-"C:\develop\wed\work\wedDoc.cpp"
-"C:\develop\wed\work\wedView.cpp"
+"C:\develop2\wed\work\about.cpp"
+"C:\develop2\wed\work\AppTop.cpp"
+"C:\develop2\wed\work\BufferList.cpp"
+"C:\develop2\wed\work\ChildFrm.cpp"
+"C:\develop2\wed\work\coco.cpp"
+"C:\develop2\wed\work\diff.cpp"
+"C:\develop2\wed\work\DlgGetPath.cpp"
+"C:\develop2\wed\work\editor.cpp"
+"C:\develop2\wed\work\FileDialogST.cpp"
+"C:\develop2\wed\work\FileInfo.cpp"
+"C:\develop2\wed\work\FindFiles.cpp"
+"C:\develop2\wed\work\gotoline.cpp"
+"C:\develop2\wed\work\HoldHead.cpp"
+"C:\develop2\wed\work\logomdi.cpp"
+"C:\develop2\wed\work\LogWin.cpp"
+"C:\develop2\wed\work\MainFrm.cpp"
+"C:\develop2\wed\work\misc.cpp"
+"C:\develop2\wed\work\mxpad.cpp"
+"C:\develop2\wed\work\oleComm.cpp"
+"C:\develop2\wed\work\page1.cpp"
+"C:\develop2\wed\work\Page2.cpp"
+"C:\develop2\wed\work\regex.cpp"
+"C:\develop2\wed\work\Register.cpp"
+"C:\develop2\wed\work\Search.cpp"
+"C:\develop2\wed\work\sellist.cpp"
+"C:\develop2\wed\work\Setup.cpp"
+"C:\develop2\wed\work\Splash.cpp"
+"C:\develop2\wed\work\src.cpp"
+"C:\develop2\wed\work\srcsel.cpp"
+"C:\develop2\wed\work\stringex.cpp"
+"C:\develop2\wed\work\StrList.cpp"
+"C:\develop2\wed\work\SubClass.cpp"
+"C:\develop2\wed\work\undo.cpp"
+"C:\develop2\wed\work\ViewText.cpp"
+"C:\develop2\wed\work\wed.cpp"
+"C:\develop2\wed\work\wedDoc.cpp"
+"C:\develop2\wed\work\wedView.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6B9.tmp" 
-Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BA.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP1C.tmp" 
+Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP1D.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Release/" /Fp"Release/wed.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"C:\develop\wed\work\StdAfx.cpp"
+"C:\develop2\wed\work\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BA.tmp" 
-Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BB.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP1D.tmp" 
+Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP1E.tmp" with contents
 [
-/nologo /subsystem:windows /incremental:no /pdb:"Release/wed.pdb" /machine:IX86 /out:"Release/wed.exe" 
+msimg32.lib mpr.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/wed.pdb" /machine:IX86 /out:"Release/wed.exe" 
 .\Release\about.obj
 .\Release\AppTop.obj
 .\Release\BufferList.obj
 .\Release\ChildFrm.obj
 .\Release\coco.obj
 .\Release\diff.obj
+.\Release\DlgGetPath.obj
 .\Release\editor.obj
 .\Release\FileDialogST.obj
 .\Release\FileInfo.obj
+.\Release\FindFiles.obj
 .\Release\gotoline.obj
 .\Release\HoldHead.obj
 .\Release\logomdi.obj
+.\Release\LogWin.obj
 .\Release\MainFrm.obj
 .\Release\misc.obj
-.\Release\notepad.obj
+.\Release\mxpad.obj
 .\Release\oleComm.obj
 .\Release\page1.obj
 .\Release\Page2.obj
@@ -94,7 +99,6 @@ Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BB.tmp" with con
 .\Release\Search.obj
 .\Release\sellist.obj
 .\Release\Setup.obj
-.\Release\spell.obj
 .\Release\Splash.obj
 .\Release\src.obj
 .\Release\srcsel.obj
@@ -109,7 +113,7 @@ Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BB.tmp" with con
 .\Release\wedView.obj
 .\Release\wed.res
 ]
-Creating command line "link.exe @C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BB.tmp"
+Creating command line "link.exe @C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP1E.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -121,26 +125,28 @@ BufferList.cpp
 ChildFrm.cpp
 coco.cpp
 diff.cpp
+DlgGetPath.cpp
 editor.cpp
 FileDialogST.cpp
 FileInfo.cpp
+FindFiles.cpp
 gotoline.cpp
 HoldHead.cpp
 logomdi.cpp
+LogWin.cpp
 MainFrm.cpp
 misc.cpp
-notepad.cpp
+mxpad.cpp
 oleComm.cpp
 page1.cpp
+Generating Code...
+Compiling...
 Page2.cpp
 regex.cpp
 Register.cpp
-Generating Code...
-Compiling...
 Search.cpp
 sellist.cpp
 Setup.cpp
-spell.cpp
 Splash.cpp
 src.cpp
 srcsel.cpp
@@ -154,7 +160,7 @@ wedDoc.cpp
 wedView.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BD.tmp" with contents
+Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP20.tmp" with contents
 [
 /nologo /o"Release/wed.bsc" 
 .\Release\StdAfx.sbr
@@ -164,15 +170,18 @@ Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BD.tmp" with con
 .\Release\ChildFrm.sbr
 .\Release\coco.sbr
 .\Release\diff.sbr
+.\Release\DlgGetPath.sbr
 .\Release\editor.sbr
 .\Release\FileDialogST.sbr
 .\Release\FileInfo.sbr
+.\Release\FindFiles.sbr
 .\Release\gotoline.sbr
 .\Release\HoldHead.sbr
 .\Release\logomdi.sbr
+.\Release\LogWin.sbr
 .\Release\MainFrm.sbr
 .\Release\misc.sbr
-.\Release\notepad.sbr
+.\Release\mxpad.sbr
 .\Release\oleComm.sbr
 .\Release\page1.sbr
 .\Release\Page2.sbr
@@ -181,7 +190,6 @@ Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BD.tmp" with con
 .\Release\Search.sbr
 .\Release\sellist.sbr
 .\Release\Setup.sbr
-.\Release\spell.sbr
 .\Release\Splash.sbr
 .\Release\src.sbr
 .\Release\srcsel.sbr
@@ -193,7 +201,7 @@ Creating temporary file "C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BD.tmp" with con
 .\Release\wed.sbr
 .\Release\wedDoc.sbr
 .\Release\wedView.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP6BD.tmp"
+Creating command line "bscmake.exe @C:\DOCUME~1\PETERG~1\LOCALS~1\Temp\RSP20.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 

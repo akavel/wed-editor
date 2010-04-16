@@ -38,6 +38,7 @@ void	PathToFname(CString &docname);
 void	PathToDir(CString &docname);
 void	ShortenPath(CString &str, int len);
 int		HashString(const char *name);
+int		HashZString(const char *name);
 void    YieldToWin();
 int     YieldToWinEx();
 int	 	FindNumOfChar(CString &str, CString &mus, int start);

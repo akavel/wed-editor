@@ -1,3 +1,22 @@
+
+/* =====[ wed.cpp ]========================================== 
+                                                                             
+   Description:     The wed project, implementation of the wed.cpp                
+                                                                             
+                    Defines the behavior for the application.          
+                                                                             
+   Compiled:        MS-VC 6.00                                               
+                                                                             
+   Notes:           <Empty Notes>                                            
+                                                                             
+   Revisions:                                                                
+                                                                             
+      REV     DATE        BY            DESCRIPTION                       
+      ----  --------  -----------  ----------------------------   
+      0.00  1/9/2009  Peter Glen   Initial version.                         
+                                                                             
+   ======================================================================= */
+
 /////////////////////////////////////////////////////////////////////////////
 // wed.cpp : Main application file
 //
@@ -18,10 +37,10 @@
 #include "ChildFrm.h"
 #include "wedDoc.h"
 #include "wedView.h"
-#include "splash.h"
+
 #include "editor.h"
 #include "wedview.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "build.h"
 #include "about.h"
 #include "misc.h"
@@ -29,6 +48,7 @@
 #include "direct.h"
 #include "afxtempl.h"
 #include "subclass.h"
+
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -39,6 +59,9 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+
+CFindFiles ffil; 
+
 
 Splash spp;
 CBitmap caret;
@@ -108,7 +131,7 @@ CString		dataroot;
 
 CStringList combofill;
 
-int		splashed = FALSE;
+//int		splashed = FALSE;
 int 	comline  = FALSE;
 int 	lastkeypress = 0;
 int		wait_exit = 0;
@@ -124,8 +147,7 @@ CWedApp		theApp;
 BEGIN_MESSAGE_MAP(CWedApp, CWinApp)
 	//{{AFX_MSG_MAP(CWedApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
+	ON_COMMAND(ID_FILE_SEACHFILES, OnFileSeachfiles)
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
@@ -164,7 +186,9 @@ CWedApp::~CWedApp()
     newMemState.Checkpoint();
     if( diffMemState.Difference( oldMemState, newMemState ) )
     	{
-		//PrintToNotepad("Memory leaked!\r\n");
+        //diffMemState.DumpAllObjectsSince();
+
+		//P2N("Memory leaked!\r\n");
         //TRACE( "Memory leaked!\n" );
     	}
 	#endif
@@ -199,8 +223,9 @@ BOOL 	CWedApp::InitInstance()
 	CTime ct = CTime::GetCurrentTime();
 	CString datestr = ct.Format("%A, %B %d, %Y - %I:%M %p");
 
-	PrintToNotepad("\r\nStarted WED application at %s\r\n", datestr);
-	//PrintToNotepad("AppRoot=%s\r\n", approot);
+	C2N();
+	P2N("\r\nStarted WED application at %s\r\n", datestr);
+	//P2N("AppRoot=%s\r\n", approot);
 
 	//CString desktop;
 	//GetSpecialFolder(CSIDL_DESKTOPDIRECTORY, desktop);
@@ -224,14 +249,14 @@ BOOL 	CWedApp::InitInstance()
 
 	GetSpecialFolder(CSIDL_PERSONAL, dataroot);
 	dataroot += "WedData\\";
-	
-	P2N("Wed user home directory: %s\r\n", dataroot);
+
+	P2N("Wed user data directory: %s\r\n", dataroot);
 
 	if(access(dataroot, 0))
 		{
 		if(mkdir(dataroot))
 			{
-			//PrintToNotepad("Cannot create data root dir\r\n");
+			//P2N("Cannot create data root dir\r\n");
 			}
 		}
 
@@ -245,7 +270,7 @@ BOOL 	CWedApp::InitInstance()
 		{
 		if(mkdir(str))
 			{
-			//PrintToNotepad("Cannot create data dir\r\n");
+			//P2N("Cannot create data dir\r\n");
 			}
 		}
 	str = dataroot; str += "macros";
@@ -254,7 +279,7 @@ BOOL 	CWedApp::InitInstance()
 		{
 		if(mkdir(str))
 			{
-			//PrintToNotepad("Cannot create macro dir\r\n");
+			//P2N("Cannot create macro dir\r\n");
 			}
 		}
 	str = dataroot; str += "holdings";
@@ -263,7 +288,7 @@ BOOL 	CWedApp::InitInstance()
 		{
 		if(mkdir(str))
 			{
-			//PrintToNotepad("Cannot create holders dir\r\n");
+			//P2N("Cannot create holders dir\r\n");
 			}
 		}
 	str = dataroot; str += "coco";
@@ -272,7 +297,7 @@ BOOL 	CWedApp::InitInstance()
 		{
 		if(mkdir(str))
 			{
-			//PrintToNotepad("Cannot create coco dir\r\n");
+			//P2N("Cannot create coco dir\r\n");
 			}
 		}
 	str = dataroot; str += "backup";
@@ -281,7 +306,7 @@ BOOL 	CWedApp::InitInstance()
 		{
 		if(mkdir(str))
 			{
-			//PrintToNotepad("Cannot create state dir\r\n");
+			//P2N("Cannot create state dir\r\n");
 			}
 		}
 	str = dataroot; str += "template";
@@ -290,17 +315,17 @@ BOOL 	CWedApp::InitInstance()
 		{
 		if(mkdir(str))
 			{
-			//PrintToNotepad("Cannot create template dir\r\n");
+			//P2N("Cannot create template dir\r\n");
 			}
 		}
 
-	//PrintToNotepad("Started Application: %s %s\r\n",
+	//P2N("Started Application: %s %s\r\n",
 	//		m_pszAppName, approot);
 
 	getcwd(str.GetBuffer(MAX_PATH), MAX_PATH);
 	str.ReleaseBuffer();
 
-	//PrintToNotepad("Initial dir: %s\r\n", str);
+	//P2N("Initial dir: %s\r\n", str);
 
 	if (!AfxSocketInit())
 		{
@@ -419,7 +444,7 @@ BOOL 	CWedApp::InitInstance()
 	// Figure out last usage time ...
 	int last = GetProfileInt(strConfig, "strLastUsage", 0);
 	use = GetProfileInt(strConfig, "strUsage", 	0);
-	//PrintToNotepad("Usage count %d \r\n", use);
+	//P2N("Usage count %d \r\n", use);
 
 	// First time ever, display initial file
 	if(!use)
@@ -435,29 +460,18 @@ BOOL 	CWedApp::InitInstance()
 	CTime tt = CTime::GetCurrentTime();
 	CTimeSpan t(tt.GetTime() - (time_t)last);
 
-	//PrintToNotepad("Time diff of last fire %d -- %d \r\n",
+	//P2N("Time diff of last fire %d -- %d \r\n",
 	//	t.GetTotalSeconds(), (int)tt.GetTime());
+
+	YieldToWin() ;
 
 	// Show sign banner only if more then 60 seconds passed
 	//if(t.GetTotalSeconds() > 60)
 		{
 		spp.Create(IDD_DIALOG5, NULL);
-
-		RECT rect; 	AfxGetMainWnd()->GetClientRect(&rect);
-		AfxGetMainWnd()->ClientToScreen(&rect);
-		RECT rect2; spp.GetClientRect(&rect2);
-
-		int posx = rect.left + (rect.right - rect.left)/2 -
-					(rect2.right - rect2.left)/2;
-		int posy = rect.top + (rect.bottom  - rect.top)/2 -
-			(rect2.bottom - rect2.top)/2;
-		spp.SetWindowPos( NULL, posx, posy, 0, 0,
-					SWP_NOOWNERZORDER | SWP_NOSIZE );
-
- 		//spp.SetFocus();
- 		spp.ShowWindow(SW_SHOW);
-		splashed = TRUE;
+ 		spp.Show();
 		}
+
 	YieldToWin() ;
 
 	//if(GetKeyState(VK_SHIFT))
@@ -486,7 +500,7 @@ BOOL 	CWedApp::InitInstance()
 		}
 	else
 		{
-		//PrintToNotepad("Cannot open hash map file: %s\r\n", fname);
+		//P2N("Cannot open hash map file: %s\r\n", fname);
 		}
 	POSITION rpos;
 	rpos = HashMap.GetStartPosition();
@@ -495,7 +509,7 @@ BOOL 	CWedApp::InitInstance()
 		int key;
 		CString val;
 		HashMap.GetNextAssoc(rpos, key, val);
-		//PrintToNotepad("In Hashlist: %x %s\r\n", key, val);
+		//P2N("In Hashlist: %x %s\r\n", key, val);
 		}
 
 	if(!comline)
@@ -507,7 +521,7 @@ BOOL 	CWedApp::InitInstance()
 			CWedDoc *doc = NULL;
 			buf2.Format("%d", count1);
 			file = GetProfileString(strSection, strStringItem + buf2);
-			//PrintToNotepad("Reloading file: '%s' at %s\r\n", file, buf2);
+			//P2N("Reloading file: '%s' at %s\r\n", file, buf2);
 
 			// Empty file, no action
 			if(file == "")
@@ -518,7 +532,7 @@ BOOL 	CWedApp::InitInstance()
 			if(YieldToWinEx())
 				break;
 
-			//PrintToNotepad("After Reloading file: %s at %s\r\n", file, buf2);
+			//P2N("After Reloading file: %s at %s\r\n", file, buf2);
 
 			if(doc)
 				{
@@ -555,22 +569,26 @@ BOOL 	CWedApp::InitInstance()
 				doc->UpdateAllViews(NULL);
 				}
 			}
+
 	// Try figure out last current directory
 	int idx;
 	if( (idx = file.ReverseFind('\\')) != -1)
 		{
-		file = file.Left(idx);
+		file = file.Left(idx + 1);
 		}
-	//PrintToNotepad("Chdir: %s\r\n", file);
+	P2N("CWedApp::InitInstance Chdir: '%s'\r\n", file);
 	_chdir(file);
+	targdir = srcdir = file;
     }
-	message ("Loading macros");
+
+	message ("Loading macros ...");
 	LoadMacros();
 
-	message ("Loading holdings");
+	message ("Loading holdings ...");
 	LoadHoldings();
 
 	message("");
+
 	return TRUE;
 }
 
@@ -593,7 +611,7 @@ BOOL 	CWedApp::LoadMacros()
 			}
 		else
 			{
-			//PrintToNotepad("Cannot open macro file: %s\r\n", fname);
+			//P2N("Cannot open macro file: %s\r\n", fname);
 			}
 	}
 	return 0;
@@ -624,7 +642,7 @@ BOOL 	CWedApp::SaveMacros()
 			}
 		else
 			{
-			//PrintToNotepad("Cannot create macro file: %s\r\n", fname);
+			//P2N("Cannot create macro file: %s\r\n", fname);
 			}
 	}
 	return 0;
@@ -654,7 +672,7 @@ BOOL 	CWedApp::SaveHoldings()
 			}
 		else
 			{
-			//PrintToNotepad("Cannot create macro file: %s\r\n", fname);
+			//P2N("Cannot create macro file: %s\r\n", fname);
 			}
 		}
 	return 0;
@@ -680,7 +698,7 @@ BOOL 	CWedApp::LoadHoldings()
 			}
 		else
 			{
-			//PrintToNotepad("Cannot open holding file: %s\r\n", fname);
+			//P2N("Cannot open holding file: %s\r\n", fname);
 			}
 		}
 	return 0;
@@ -711,7 +729,7 @@ void 	CWedApp::OnAppAbout()
     if( diffMemState3.Difference( oldMemState3, newMemState3 ) )
     {
 		oldMemState3.DumpAllObjectsSince();
-		//PrintToNotepad("CDialog Memory leaked!\r\n");
+		//P2N("CDialog Memory leaked!\r\n");
         //TRACE( "CDialog Memory leaked!\n" );
     }
 #endif
@@ -745,7 +763,7 @@ int 	CWedApp::ExitInstance()
 		MessageBox(NULL, "Cannot remove font", "Wed", 0);
 #endif
 
-	//PrintToNotepad("Terminated Application: %s %s\r\n",
+	//P2N("Terminated Application: %s %s\r\n",
 	//				m_pszAppName, approot);
 
 	//if(wait_exit)
@@ -755,6 +773,8 @@ int 	CWedApp::ExitInstance()
 	//		YieldToWin(); Sleep(20);
 	//		}
 	//	}
+
+	P2N("Exited Wed\r\n");
 
  	return CWinApp::ExitInstance();
 }
@@ -811,7 +831,7 @@ BOOL 	CWedApp::SaveAllModified()
  		if(doc->strlist.GetCount() == 1 &&
 			fline.GetLength() == 0)
 			{
-			//PrintToNotepad("New doc: %d\r\n",  doc);
+			//P2N("New doc: %d\r\n",  doc);
 			}
 		else
 			{
@@ -888,14 +908,6 @@ BOOL 	CWedApp::SaveAllModified()
 
 int 	CWedApp::Run()
 {
-	if(splashed)
-		{
-		for(int loop=0; loop < 100;loop++)
-			{
-			Sleep(20); 	YieldToWin();
-			}
-		spp.DestroyWindow();
-		}
 	return CWinApp::Run();
 }
 
@@ -1063,5 +1075,44 @@ CDocument* CWedApp::OpenDocumentFile(LPCTSTR lpszFileName)
 	return ret;
 }
 
-// EOF
+void CWedApp::OnFileSeachfiles() 
 
+{
+	message ("Opened File Search");
+    		
+	if(!IsWindow(ffil.m_hWnd))
+		{
+		ffil.Create(IDD_DIALOG14);
+		}
+
+	ffil.CenterWindow();
+	ffil.ShowWindow(true);		
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Wrapper for split path
+
+void	SplitPath(CString &full,  CString &drive,
+					CString &dir, CString &fname, CString &ext)
+
+{
+	//char sbuffer[_MAX_PATH + 1];
+	char sdrive[_MAX_DRIVE];
+	char sdir[_MAX_DIR];
+	char sfname[_MAX_FNAME];
+	char sext[_MAX_EXT];
+	
+	//strncpy(sbuffer, full, MAX_PATH);
+
+	//Parse it
+	_splitpath(full, sdrive, sdir, sfname, sext);
+
+	//P2N("path components sdrive=%s sdir=%s  sfname=%s sext=%s\r\n",
+	//						sdrive, sdir, sfname, sext);
+
+	drive = sdrive;
+    dir   = sdir;
+    fname = sfname;
+    ext   = sext;
+}

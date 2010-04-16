@@ -1,3 +1,22 @@
+
+/* =====[ weddoc.cpp ]========================================== 
+                                                                             
+   Description:     The wed project, implementation of the weddoc.cpp                
+                                                                             
+                    Defines the behavior for the application.          
+                                                                             
+   Compiled:        MS-VC 6.00                                               
+                                                                             
+   Notes:           <Empty Notes>                                            
+                                                                             
+   Revisions:                                                                
+                                                                             
+      REV     DATE        BY            DESCRIPTION                       
+      ----  --------  -----------  ----------------------------   
+      0.00  1/6/2009  Peter Glen   Initial version.                         
+                                                                             
+   ======================================================================= */
+
 /////////////////////////////////////////////////////////////////////////////
 // wedDoc.cpp : implementation of the CWedDoc class
 //
@@ -13,7 +32,7 @@
 #include "StrList.h"
 #include "wedDoc.h"
 #include "wedView.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "editor.h"
 #include "io.h"
 #include "misc.h"
@@ -32,22 +51,23 @@ static char THIS_FILE[] = __FILE__;
 #define		MAX_AUTO_LINES	10000
 
 /////////////////////////////////////////////////////////////////////////////
-// Get single line comment delimiter
+// Get single line comment delimiter and function regex
 
 const char	*comms[] =
 
 	{
-	".PHP",		"//",
-	".SH",		"#",
-	".PL",		"#",
-	".CGI",		"#",
-	".ASM",		";",
-	".BAT",		"rem",
-	".C",		"//",
-	".CPP",		"//",
-	".JAVA",	"//",
-	".SRC",		";",
-	NULL,	  	NULL
+	".PHP",		"//",	"^function",
+	".SH",		"#",	"^function",
+	".PL",		"#",	"^sub",
+	".CGI",		"#",	"^sub",
+	".PY",		"#",	"^def",
+	".ASM",		";",	"^function",
+	".BAT",		"rem",	"^function",
+	".C",		"//",	"^([a-z]|[A-Z]).*\\(.*\\)",
+	".CPP",		"//",	"^([a-z]|[A-Z]).*\\(.*\\)",
+	".JAVA",	"//",	"^([a-z]|[A-Z]).*\\(.*\\)",
+	".SRC",		";",	"^([a-z]|[A-Z]).*\\(.*\\)",
+	NULL,	  	NULL,  NULL
 	} ;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -104,7 +124,7 @@ CWedDoc::~CWedDoc()
     //newMemState.Checkpoint();
     if( diffMemState.Difference( oldMemState, newMemState ) )
     	{
-		//PrintToNotepad("WedDoc Memory leaked!\r\n");
+		//P2N("WedDoc Memory leaked!\r\n");
         //TRACE( "Memory leaked!\n" );
     	}
 #endif
@@ -116,11 +136,14 @@ CWedDoc::~CWedDoc()
 BOOL CWedDoc::OnNewDocument()
 
 {
+	P2N("CWedDoc::OnNewDocument()\r\n");
+
 	if(GetNumOfDocs() > MAX_DOC_LIMIT)
 		{
 		AfxMessageBox("Too many open documents");
 		return FALSE;
 		}
+
 	// Go get one
     if (!CDocument::OnNewDocument())
         return FALSE;
@@ -162,14 +185,14 @@ BOOL CWedDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Load as usual
 	retval = CDocument::OnOpenDocument(lpszPathName);
 
-  	//PrintToNotepad("Opened document %s\r\n", lpszPathName);
+  	//P2N("Opened document %s\r\n", lpszPathName);
 
 	// Get the undo/redo
 	LoadUndo(lpszPathName); LoadRedo(lpszPathName);
 
 	// Used by IsDocModified()
 	undoorig = undo.GetCount();
-	//PrintToNotepad("Undo orig = %d\r\n", undoorig);
+	//P2N("Undo orig = %d\r\n", undoorig);
 
 	SaveBackup(lpszPathName);
 
@@ -294,7 +317,7 @@ void CWedDoc::Serialize(CArchive& ar, const char *docname)
             	}
             	CATCH(CMemoryException, ee)
             		{
-                	//PrintToNotepad("Memory exception\r\n");
+                	//P2N("Memory exception\r\n");
 					break;
             		}
             	END_CATCH
@@ -307,7 +330,7 @@ void CWedDoc::Serialize(CArchive& ar, const char *docname)
         // Patch things up
         if( strlist.IsEmpty())
         	{
-            //PrintToNotepad("Empty file\r\n");
+            //P2N("Empty file\r\n");
             strlist.AddTail("");
         	}
     }
@@ -352,7 +375,7 @@ void CWedDoc::SaveUndo()
 	CString droot; int hhh = HashString(GetPathName());
 	droot.Format("%sdata\\%x.udo", dataroot, hhh);
 
-	//PrintToNotepad("Save Undo To: %s\r\n", droot);
+	//P2N("Save Undo To: %s\r\n", droot);
 
  	CFile cf;
 	if( cf.Open(droot, CFile::modeCreate | CFile::modeWrite ))
@@ -362,7 +385,7 @@ void CWedDoc::SaveUndo()
 		}
 	else
 		{
-		//PrintToNotepad(	"Cannot create undo file: %s\r\n", droot);
+		//P2N(	"Cannot create undo file: %s\r\n", droot);
 		}
 }
 
@@ -374,7 +397,7 @@ void CWedDoc::SaveRedo()
 	CString droot; int hhh = HashString(GetPathName());
 	droot.Format("%sdata\\%x.rdo", dataroot, hhh);
 
-	//PrintToNotepad("Save Redo To: %s\r\n", droot);
+	//P2N("Save Redo To: %s\r\n", droot);
 
  	CFile cf;
 	if( cf.Open(droot, CFile::modeCreate | CFile::modeWrite ))
@@ -384,7 +407,7 @@ void CWedDoc::SaveRedo()
 		}
 	else
 		{
-		//PrintToNotepad("Cannot create redo file: %s\r\n", droot);
+		//P2N("Cannot create redo file: %s\r\n", droot);
 		}
 }
 
@@ -397,7 +420,7 @@ void CWedDoc::LoadUndo(LPCTSTR lpszPathName)
 	CString  droot; int hhh = HashString(lpszPathName);
 	droot.Format("%sdata\\%x.udo", dataroot, hhh);
 
-	//PrintToNotepad("Load Undo from: %s\r\n", droot);
+	//P2N("Load Undo from: %s\r\n", droot);
 
 	CFile cf;
 	if( cf.Open(droot, CFile::modeRead ))
@@ -407,7 +430,7 @@ void CWedDoc::LoadUndo(LPCTSTR lpszPathName)
 		}
 	else
 		{
-		//PrintToNotepad("Cannot open undo file: %s\r\n", droot);
+		//P2N("Cannot open undo file: %s\r\n", droot);
 		}
 }
 
@@ -420,7 +443,7 @@ void CWedDoc::LoadRedo(LPCTSTR lpszPathName)
 	CString  droot;  int hhh = HashString(lpszPathName);
 	droot.Format("%sdata\\%x.rdo", dataroot, hhh);
 
-	//PrintToNotepad("Load Redo from: %s\r\n", droot);
+	//P2N("Load Redo from: %s\r\n", droot);
 
 	CFile cf;
 	if( cf.Open(droot, CFile::modeRead ))
@@ -430,7 +453,7 @@ void CWedDoc::LoadRedo(LPCTSTR lpszPathName)
 		}
 	else
 		{
-		//PrintToNotepad("Cannot open redo file: %s\r\n", droot);
+		//P2N("Cannot open redo file: %s\r\n", droot);
 		}
 }
 
@@ -445,7 +468,8 @@ BOOL CWedDoc::OnSaveDocument(LPCTSTR lpszPathName)
 		AfxMessageBox("Read only buffer, cannot save");
 		return 1;
 		}
-	//PrintToNotepad("SaveDocument '%s'\r\n", lpszPathName);
+
+	//P2N("SaveDocument '%s'\r\n", lpszPathName);
 	int ret_val =  CDocument::OnSaveDocument(lpszPathName);
 
 	// Update current stat info
@@ -471,6 +495,7 @@ void CWedDoc::AutoSave()
 		message ("Empty file name on AutoSave");
 		return;
 		}
+
     CString 	filename = GetPathName();
 	PathToFname(filename);
 
@@ -485,7 +510,7 @@ void CWedDoc::AutoSave()
 
 	num.Format("Autosaving %s", filename);  message(num);
 
-	//PrintToNotepad("AutoSave %s %s\r\n", filename, droot);
+	//P2N("AutoSave %s %s\r\n", filename, droot);
 	Sleep(300);
 
  	CFile cf;
@@ -499,7 +524,7 @@ void CWedDoc::AutoSave()
 		{
 		num.Format("Could not autosave %s ", filename);
 		message(num);
-		//PrintToNotepad("Cannot create autosave file: %s\r\n", droot);
+		//P2N("Cannot create autosave file: %s\r\n", droot);
 		}
 }
 
@@ -511,7 +536,7 @@ void CWedDoc::SaveBackup(const char *docname)
 {
 	CString	 num, filename = docname;
     PathToFname(filename);
-	
+
 	if(access(docname, 0) < 0)
 		{
 		num.Format("File %s does not exist, did make auto backup ", filename);
@@ -545,7 +570,7 @@ void CWedDoc::SaveBackup(const char *docname)
 			}
 		}
 
-	CString fbackup;  
+	CString fbackup;
 	//int hhh = HashString(docname);
 
 	fbackup.Format("%sbackup%s", dataroot, tfn);
@@ -554,33 +579,33 @@ void CWedDoc::SaveBackup(const char *docname)
 	CString fbdir(fbackup);
 	PathToDir(fbdir);
 	fbdir += "history\\"; fbdir += filename;
-	
-	//PrintToNotepad("Sent backup copy to: %s\r\n", fbackup);
 
-	// See if backup file exists already 
+	//P2N("Sent backup copy to: %s\r\n", fbackup);
+
+	// See if backup file exists already
     struct _stat docstat_o, docstat_b;
 
 	_stat(docname, &docstat_o);
-	
+
 	CTime ct(docstat_o.st_mtime);
 	CString datestr = ct.Format(".%a_%b_%d_%Y--%H_%M");
 	fbdir += datestr;
-	
-	//PrintToNotepad("Sent backup history to: %s\r\n", fbdir);
-	
-	// If backup is less than .... 
+
+	//P2N("Sent backup history to: %s\r\n", fbdir);
+
+	// If backup is less than ....
 	if(_stat(fbackup, &docstat_b) >=0)
 		{
-		//PrintToNotepad("Document %s m_time=%d BackupFile m_time=%d \r\n",
+		//P2N("Document %s m_time=%d BackupFile m_time=%d \r\n",
         //              docname, docstat_o.st_mtime,  docstat_b.st_mtime );
 
 		//if((docstat_o.st_mtime -  docstat_b.st_mtime) > 10)
 			{
-			//PrintToNotepad("***Backing up: %s\r\n", fbackup);		
+			//P2N("***Backing up: %s\r\n", fbackup);
 			create_full_dir(fbdir);
 			rename(fbackup, fbdir);
 			}
-		}	
+		}
 
  	CFile cf;
 	if(cf.Open(fbackup, CFile::modeCreate | CFile::modeWrite ))
@@ -594,7 +619,7 @@ void CWedDoc::SaveBackup(const char *docname)
 		{
 		num.Format("Could not create backup copy of %s ", filename);
 		message(num);
-		//PrintToNotepad("Cannot create backup copy of: %s\r\n", droot);
+		//P2N("Cannot create backup copy of: %s\r\n", droot);
 		}
 }
 
@@ -624,9 +649,11 @@ int	 CWedDoc::GetComment(const char *fname)
 
 {
 	int loop = 0;
-	CString str = fname;
+	CString name(fname), drive, dir, filename, ext;
+	
+	SplitPath(name,  drive, dir, filename, ext);
+	ext.MakeUpper();
 
-	str.MakeUpper();
 	comment = "//";
 
 	while(TRUE)
@@ -634,16 +661,18 @@ int	 CWedDoc::GetComment(const char *fname)
 		if(!comms[loop])
 			break;
 
-		if(str.Find(comms[loop]) != -1)
+		if(ext == comms[loop])
 			{
-			comment = comms[loop+1];
-			//PrintToNotepad("Got: '%s' '%s'\r\n", comms[loop], comms[loop+1]);
+			comment		= comms[loop+1];
+			funcregex	= comms[loop+2]; 
+			P2N("Got: '%s' '%s' '%s'\r\n", comms[loop], comms[loop+1], comms[loop+2]);
 			break;
 			}
-		//PrintToNotepad("Searching extension %s %s\r\n", str, comms[loop]);
-		loop += 2;
+		//P2N("Searching extension %s %s\r\n", str, comms[loop]);
+		loop += 3;
 	}
 	return(0);
 }
+
 
 // EOF

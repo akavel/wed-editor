@@ -9,7 +9,7 @@
 #include "wedView.h"
 #include "editor.h"
 #include "misc.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "gotoline.h"
 
 #include "Register.h"
@@ -24,7 +24,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static	Cgotoline   gt;
+static	CGotoLine   gt;
 static 	int tries = 0;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -202,7 +202,7 @@ void Register::Genpass()
 		}
 	else
 		{
-		//PrintToNotepad("Cannot open pass file: %s\r\n", fname);
+		//P2N("Cannot open pass file: %s\r\n", fname);
 		}
 }
 

@@ -14,7 +14,11 @@ class Splash : public CDialog
 {
 // Construction
 public:
+	void Show();
+	void Hide();
 	Splash(CWnd* pParent = NULL);   // standard constructor
+
+	int splashed;
 
 // Dialog Data
 	//{{AFX_DATA(Splash)
@@ -29,7 +33,6 @@ public:
 	public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -38,9 +41,7 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(Splash)
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 	virtual BOOL OnInitDialog();
-	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

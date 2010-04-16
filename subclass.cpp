@@ -7,7 +7,7 @@
 #include "strlist.h"
 #include "Weddoc.h"
 #include "WedView.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "editor.h"
 #include "undo.h"
 #include "diff.h"
@@ -32,7 +32,7 @@ SubClass::SubClass(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 
 	m_ret = SP_OK;
-}					 
+}
 
 
 void SubClass::DoDataExchange(CDataExchange* pDX)
@@ -99,7 +99,7 @@ BOOL SubClass::OnInitDialog()
 	if(!gl_sc_x)
 		{
 		if(currentedit)
-			{	
+			{
 			RECT rct, us;
 			GetWindowRect(&us);
 			currentedit->GetWindowRect(&rct);
@@ -146,10 +146,10 @@ void SubClass::OnSelchangeCombo1()
 	m_result = str;
 }
 
-void SubClass::OnKillFocus(CWnd* pNewWnd) 
+void SubClass::OnKillFocus(CWnd* pNewWnd)
 {
 	CDialog::OnKillFocus(pNewWnd);
-	
+
 	RECT rct;
 	GetWindowRect(&rct);
 	gl_sc_x = rct.left;

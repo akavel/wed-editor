@@ -1,4 +1,22 @@
 
+/* =====[ editor.h ]========================================== 
+                                                                             
+   Description:     The wed project, implementation of the editor.h                
+                                                                             
+                    Defines the behavior for the application.          
+                                                                             
+   Compiled:        MS-VC 6.00                                               
+                                                                             
+   Notes:           <Empty Notes>                                            
+                                                                             
+   Revisions:                                                                
+                                                                             
+      REV     DATE        BY            DESCRIPTION                       
+      ----  --------  -----------  ----------------------------   
+      0.00  1/9/2009  Peter Glen   Initial version.                         
+                                                                             
+   ======================================================================= */
+
 
 #if _MSC_VER >= 1000
 #pragma once
@@ -58,6 +76,7 @@ void Spell(CWedView *v1,  const char *dic,   const char *idx,
 int     CheckLine(CWedView *v1, int row, int flag);
 int     CheckWord(CWedView *v1, CString &instr, CString &repl);
 
+void	FindFiles(CWedView *v1);
 
 const char *GetRegStr();
 int		PutRegStr(const char *str, const char *pass);

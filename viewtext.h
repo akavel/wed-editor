@@ -35,7 +35,9 @@ protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(ViewText)
-		// NOTE: the ClassWizard will add member functions here
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	virtual BOOL OnInitDialog();
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

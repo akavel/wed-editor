@@ -35,9 +35,43 @@ void ViewText::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(ViewText, CDialog)
 	//{{AFX_MSG_MAP(ViewText)
-		// NOTE: the ClassWizard will add message map macros here
+	ON_WM_SIZE()
+	ON_WM_SHOWWINDOW()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // ViewText message handlers
+
+void ViewText::OnSize(UINT nType, int cx, int cy) 
+
+{
+	CDialog::OnSize(nType, cx, cy);
+	
+	CEdit  *ed = (CEdit*)GetDlgItem(IDC_EDIT1);
+	if(!ed)
+		return;
+
+	if(!IsWindow(ed->m_hWnd))
+		return;
+
+	RECT rc; GetClientRect(&rc);
+	ed->SetWindowPos(NULL, 0, 0, rc.right, rc.bottom, SWP_NOZORDER | SWP_NOMOVE);
+	
+}
+
+BOOL ViewText::OnInitDialog() 
+{
+	CDialog::OnInitDialog();
+	
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void ViewText::OnShowWindow(BOOL bShow, UINT nStatus) 
+{
+	CDialog::OnShowWindow(bShow, nStatus);
+
+	CEdit  *ed = (CEdit*)GetDlgItem(IDC_EDIT1);	
+	ed->SetSel(-1, -1);
+}

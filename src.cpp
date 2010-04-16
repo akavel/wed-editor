@@ -18,7 +18,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 
-#include "notepad.h"
+#include "mxpad.h"
 #include "holdhead.h"
 #include "editor.h"
 #include "undo.h"
@@ -41,7 +41,7 @@ int     wild_str_cmp(const char *name, const char *muster)
         //if(*muster == '\\' && *(muster-1) != '\\')      /* skip backslash */
         //    muster++;
 
-        // Wild card 
+        // Wild card
         if(*muster == '*')
             {
             if(*name == '\0')
@@ -54,16 +54,16 @@ int     wild_str_cmp(const char *name, const char *muster)
                 name++;
             continue;
             }
-        // One char wild card 
+        // One char wild card
         if(*muster == '?')
             {
-            name++;  muster++; 
+            name++;  muster++;
             continue;
             }
         // Mismatch -- exit now
         if(*name != *muster)
             break;
-            
+
         name++;  muster++;
         }
 
@@ -93,19 +93,19 @@ const char    *strstr_wild(const char *buffer, const char *muster)
 {
     const char    *found_ptr = buffer;
     int     back = 0;
-    
+
     //if(*muster == '\\' && *(muster-1) != '\\')           /* skip backslash */
     //        back = 1;
-	 
-	while(TRUE)
+
+    while(TRUE)
         {
         if(wild_str_cmp(found_ptr, muster + 1 + back) == 0)
             return(found_ptr);
 
-    	found_ptr = strchr(found_ptr, *muster);
-    	
-    	if(!found_ptr)
-    		break;
+        found_ptr = strchr(found_ptr, *muster);
+
+        if(!found_ptr)
+            break;
 
         found_ptr++;                        /* go away from this character */
         }
@@ -113,8 +113,8 @@ const char    *strstr_wild(const char *buffer, const char *muster)
 }
 
 // Search for matching string in another.
-// If found, returns a pointer to the match, 
-// 	else return NULL. 
+// If found, returns a pointer to the match,
+//  else return NULL.
 
 
 const char  *str_search(const char *buffer, const char *muster, int wild)

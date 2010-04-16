@@ -1,10 +1,10 @@
-// sellist.cpp : implementation file
+// SelList.cpp : implementation file
 //
 
 #include "stdafx.h"
 #include "wed.h"
-#include "sellist.h"
-#include "notepad.h"
+#include "SelList.h"
+#include "mxpad.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -13,44 +13,44 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// sellist
+// SelList
 
-sellist::sellist()
+SelList::SelList()
 {
 
-	 
+
 }
 
-sellist::~sellist()
+SelList::~SelList()
 {
 }
 
 
-BEGIN_MESSAGE_MAP(sellist, CCheckListBox)
-	//{{AFX_MSG_MAP(sellist)
+BEGIN_MESSAGE_MAP(SelList, CCheckListBox)
+	//{{AFX_MSG_MAP(SelList)
 	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// sellist message handlers
+// SelList message handlers
 
-BOOL sellist::OnInitDialog() 
+BOOL SelList::OnInitDialog()
 {
 	OnInitDialog();
 		return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-int sellist::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int SelList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CCheckListBox::OnCreate(lpCreateStruct) == -1)
 		return -1;
-  
+
 	// TODO: Add extra initialization here
-	
+
 
 	// TODO: Add your specialized creation code here
-	
+
 	return 0;
 }

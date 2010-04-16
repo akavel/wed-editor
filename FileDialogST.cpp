@@ -6,7 +6,7 @@
 #include "stdafx.h"
 #include "FileDialogST.h"
 
-#include "Notepad.h"
+#include "mxpad.h"
 
 
 #ifdef _DEBUG
@@ -43,12 +43,12 @@ UINT CALLBACK OFNHookProc(
 
 		hh2  = rect.bottom - rect.top;
 		ww2  = rect.right - rect.left;
-		
+
 		POINT pt;
 		pt.x = rect.left + ww2/2 -  ww/2;
 		pt.y = rect.top + hh2/2  - hh/2;
 
-		::SetWindowPos(::GetParent(hdlg), NULL, pt.x, pt.y, 0, 0,         
+		::SetWindowPos(::GetParent(hdlg), NULL, pt.x, pt.y, 0, 0,
 							SWP_NOSIZE |  SWP_NOZORDER );
 		}
 
@@ -75,7 +75,7 @@ UINT CALLBACK OFNHookProc(
 			HWND hwnd2 = FindWindowEx(hwndLv, NULL, NULL, NULL) ;
 
 			SendMessage(hwndLv, WM_COMMAND, SHVIEW_THUMBNAIL, 0) ;
-		
+
 			// char str2[128];
 			//::GetWindowText(hwndLv, str2, 128);
 			//P2N("Found window:'%s'\r\n", str2);
@@ -211,7 +211,7 @@ BOOL CFileDialogST::OnInitDialog( )
 {
 	//AfxMessageBox("INIT DIALOG");
 
-	P2N("Called init filedialog");
+	//P2N("Called init filedialog");
 
 	//CFileDialog::OnInitDialog();
 	return true;
@@ -319,8 +319,8 @@ POSITION CFileDialogST::GetStartPosition() const
 //
 // Parameters:
 //		[IN]	pos
-//				A reference to a POSITION value returned by a previous GetNextPathName 
-//				or GetStartPosition function call. 
+//				A reference to a POSITION value returned by a previous GetNextPathName
+//				or GetStartPosition function call.
 //				NULL if the end of the list has been reached.
 //
 // Return value:
@@ -427,8 +427,8 @@ int __stdcall CFileDialogST::BrowseCtrlCallback(HWND hwnd, UINT uMsg, LPARAM lPa
 //
 // Parameters:
 //		[IN]	lpszTitle
-//				Address of a null-terminated string that is displayed above the 
-//				tree view control in the dialog box. This string can be used to 
+//				Address of a null-terminated string that is displayed above the
+//				tree view control in the dialog box. This string can be used to
 //				specify instructions to the user. Can be NULL.
 //		[IN]	lpszStartPath
 //				Address of a null-terminated string containing the initial folder
@@ -470,7 +470,7 @@ int CFileDialogST::SelectFolder(LPCTSTR lpszTitle, LPCTSTR lpszStartPath, UINT u
 		if ((pidl = ::SHBrowseForFolder(&bi)) != NULL)
 		{
 			if (::SHGetPathFromIDList(pidl, m_szSelectedFolder))
-			{ 
+			{
 				// At this point pszBuffer contains the selected path
 				nRetValue = IDOK;
 			} // if

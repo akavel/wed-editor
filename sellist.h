@@ -1,20 +1,20 @@
-#if !defined(AFX_SELLIST_H__A07972E4_F794_11D2_B398_525400D994D7__INCLUDED_)
-#define AFX_SELLIST_H__A07972E4_F794_11D2_B398_525400D994D7__INCLUDED_
+#if !defined(AFX_SelList_H__A07972E4_F794_11D2_B398_525400D994D7__INCLUDED_)
+#define AFX_SelList_H__A07972E4_F794_11D2_B398_525400D994D7__INCLUDED_
 
 #if _MSC_VER >= 1000
 #pragma once
 #endif // _MSC_VER >= 1000
-// sellist.h : header file
+// SelList.h : header file
 //
 			
 /////////////////////////////////////////////////////////////////////////////
-// sellist window
+// SelList window
 
-class sellist : public CCheckListBox
+class SelList : public CCheckListBox
 {
 // Construction
 public:
-	sellist();
+	SelList();
 
 // Attributes
 public:
@@ -24,16 +24,16 @@ public:
 
 // Overrides
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(sellist)
+	//{{AFX_VIRTUAL(SelList)
 	//}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~sellist();
+	virtual ~SelList();
 
 	// Generated message map functions
 protected:
-	//{{AFX_MSG(sellist)
+	//{{AFX_MSG(SelList)
 	virtual BOOL OnInitDialog();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	//}}AFX_MSG
@@ -46,4 +46,4 @@ protected:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_SELLIST_H__A07972E4_F794_11D2_B398_525400D994D7__INCLUDED_)
+#endif // !defined(AFX_SelList_H__A07972E4_F794_11D2_B398_525400D994D7__INCLUDED_)

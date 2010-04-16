@@ -5,11 +5,11 @@
 #include "wed.h"
 #include "gotoline.h"
 
-#include "srcsel.h"					  
+#include "srcsel.h"
 #include "strlist.h"
 #include "Weddoc.h"
 #include "WedView.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "editor.h"
 
 #ifdef _DEBUG
@@ -19,13 +19,13 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// Cgotoline dialog
+// CGotoLine dialog
 
 
-Cgotoline::Cgotoline(CWnd* pParent /*=NULL*/)
-	: CDialog(Cgotoline::IDD, pParent)
+CGotoLine::CGotoLine(CWnd* pParent /*=NULL*/)
+	: CDialog(CGotoLine::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(Cgotoline)
+	//{{AFX_DATA_INIT(CGotoLine)
 	m_str = _T("");
 	m_prompt = _T("");
 	//}}AFX_DATA_INIT
@@ -34,36 +34,36 @@ Cgotoline::Cgotoline(CWnd* pParent /*=NULL*/)
 }
 
 
-void Cgotoline::DoDataExchange(CDataExchange* pDX)
+void CGotoLine::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(Cgotoline)
+	//{{AFX_DATA_MAP(CGotoLine)
 	DDX_Text(pDX, IDC_EDIT1, m_str);
 	DDX_Text(pDX, IDC_EDIT2, m_prompt);
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(Cgotoline, CDialog)
-	//{{AFX_MSG_MAP(Cgotoline)
+BEGIN_MESSAGE_MAP(CGotoLine, CDialog)
+	//{{AFX_MSG_MAP(CGotoLine)
 	ON_WM_CHAR()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// Cgotoline message handlers
+// CGotoLine message handlers
 
 
-BOOL Cgotoline::OnInitDialog() 
+BOOL CGotoLine::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	SetWindowText(caption);
 	return TRUE;
 }
 
-void Cgotoline::OnCancel() 
+void CGotoLine::OnCancel()
 {
 	// TODO: Add extra cleanup here
-	m_esc = TRUE;	
+	m_esc = TRUE;
 	CDialog::OnCancel();
 }

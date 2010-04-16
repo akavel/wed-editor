@@ -4,14 +4,14 @@
 
 #include "stdafx.h"
 #include "wed.h"
-#include "srcsel.h"
+#include "SrcSel.h"
 #include "strlist.h"
 #include "Weddoc.h"
 #include "WedView.h"
 #include "editor.h"
 #include "undo.h"
 #include "misc.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "stringex.h"
 
 #ifdef _DEBUG
@@ -22,15 +22,15 @@ static char THIS_FILE[] = __FILE__;
 
 TBBUTTON tbButtonNew[8];
 
-void DoSrcSelChange(srcsel *s1, CWedView *conn);
+void DoSrcSelChange(SrcSel *s1, CWedView *conn);
 
 /////////////////////////////////////////////////////////////////////////////
-// srcsel dialog
+// SrcSel dialog
 
-srcsel::srcsel(CWnd* pParent /*=NULL*/)
-    : CDialog(srcsel::IDD, pParent)
+SrcSel::SrcSel(CWnd* pParent /*=NULL*/)
+    : CDialog(SrcSel::IDD, pParent)
 {
-    //{{AFX_DATA_INIT(srcsel)
+    //{{AFX_DATA_INIT(SrcSel)
     m_list = _T("");
     m_src = _T("");
     //}}AFX_DATA_INIT
@@ -41,7 +41,7 @@ srcsel::srcsel(CWnd* pParent /*=NULL*/)
     m_err = FALSE;
 }
 
-srcsel::~srcsel()
+SrcSel::~SrcSel()
 
 {
 	m_ToolBarCtrl.DestroyWindow();
@@ -49,19 +49,19 @@ srcsel::~srcsel()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// void srcsel::DoDataExchange(CDataExchange* pDX)
+// void SrcSel::DoDataExchange(CDataExchange* pDX)
 
-void srcsel::DoDataExchange(CDataExchange* pDX)
+void SrcSel::DoDataExchange(CDataExchange* pDX)
 {
     CDialog::DoDataExchange(pDX);
-    //{{AFX_DATA_MAP(srcsel)
+    //{{AFX_DATA_MAP(SrcSel)
     DDX_LBString(pDX, IDC_LIST1, m_list);
     DDX_Text(pDX, IDC_EDIT1, m_src);
     //}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(srcsel, CDialog)
-    //{{AFX_MSG_MAP(srcsel)
+BEGIN_MESSAGE_MAP(SrcSel, CDialog)
+    //{{AFX_MSG_MAP(SrcSel)
     ON_LBN_DBLCLK(IDC_LIST1, OnDblclkList1)
     ON_LBN_SELCHANGE(IDC_LIST1, OnSelchangeList1)
     ON_WM_SIZE()
@@ -87,9 +87,9 @@ extern CMainFrame* pMainFrame;
 static oldx = 0, oldy = 0;
 
 /////////////////////////////////////////////////////////////////////////////
-// void srcsel::OnDblclkList1()
+// void SrcSel::OnDblclkList1()
 
-void srcsel::OnDblclkList1()
+void SrcSel::OnDblclkList1()
 
 {
 	m_shown = 0;
@@ -100,18 +100,18 @@ void srcsel::OnDblclkList1()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void srcsel::OnSelchangeList1()
+// void SrcSel::OnSelchangeList1()
 
-void srcsel::OnSelchangeList1()
+void SrcSel::OnSelchangeList1()
 
 {
     GotoSel();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void srcsel::GotoSel()
+// void SrcSel::GotoSel()
 
-void srcsel::GotoSel()
+void SrcSel::GotoSel()
 
 {
 	CString str;
@@ -157,7 +157,7 @@ void srcsel::GotoSel()
 /////////////////////////////////////////////////////////////////////////////
 // Make list follow dialog size
 
-void srcsel::OnSize(UINT nType, int cx, int cy)
+void SrcSel::OnSize(UINT nType, int cx, int cy)
 {
     CWnd  *list =  GetDlgItem(IDC_LIST1);
     RECT crect;
@@ -176,9 +176,9 @@ void srcsel::OnSize(UINT nType, int cx, int cy)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// BOOL srcsel::OnInitDialog()
+// BOOL SrcSel::OnInitDialog()
 
-BOOL srcsel::OnInitDialog()
+BOOL SrcSel::OnInitDialog()
 {
 	CWnd *dt = AfxGetMainWnd();
 	RECT dtr;
@@ -189,7 +189,7 @@ BOOL srcsel::OnInitDialog()
 		dt->GetClientRect(&dtr);
 		dtw = dtr.right - dtr.left;
 		dth = dtr.bottom - dtr.top;
-		//PrintToNotepad("MainWindow %dx%d\r\n", dtw, dth);
+		//P2N("MainWindow %dx%d\r\n", dtw, dth);
 		}
 
 	// Subclassed from checklistbox
@@ -228,7 +228,7 @@ BOOL srcsel::OnInitDialog()
     m_ToolBarCtrl.AddButtons(8, tbButtonNew);
     m_ToolBarCtrl.AddBitmap(8, IDR_TOOLBAR1);
 
-    //PrintToNotepad("Init Dialog\r\n");
+    //P2N("Init Dialog\r\n");
     m_ToolBarCtrl.GetWindowRect(&rect);
     CWnd  *list =   GetDlgItem(IDC_LIST1);
     ASSERT(list);
@@ -260,7 +260,7 @@ BOOL srcsel::OnInitDialog()
 /////////////////////////////////////////////////////////////////////////////
 // Select all checkmarks:
 
-void srcsel::OnButton1()
+void SrcSel::OnButton1()
 {
     int lim = slb.GetCount();
     for(int loop = 0; loop < lim; loop++)
@@ -272,7 +272,7 @@ void srcsel::OnButton1()
 /////////////////////////////////////////////////////////////////////////////
 // Deselect all checkmarks:
 
-void srcsel::OnButton2()
+void SrcSel::OnButton2()
 {
     int lim = slb.GetCount();
     for(int loop = 0; loop < lim; loop++)
@@ -284,14 +284,14 @@ void srcsel::OnButton2()
 /////////////////////////////////////////////////////////////////////////////
 // Exec change on all selected
 
-void srcsel::OnButton3()
+void SrcSel::OnButton3()
 
 {
 	if(!m_rep)
 		{
 		AfxMessageBox("Not in replace mode"); return;
 		}
-	CWedView *textwin = (CWedView *)connect; 
+	CWedView *textwin = (CWedView *)connect;
 	ASSERT_VALID(textwin);
     CWedDoc*    pDoc = textwin->GetDocument();
 	ASSERT_VALID(pDoc);
@@ -327,7 +327,7 @@ void srcsel::OnButton3()
 /////////////////////////////////////////////////////////////////////////////
 // Exec one line change
 
-void srcsel::OnButton4()
+void SrcSel::OnButton4()
 
 {
 	if(!m_rep)
@@ -350,9 +350,9 @@ void srcsel::OnButton4()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// BOOL srcsel::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
+// BOOL SrcSel::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 
-BOOL srcsel::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
+BOOL SrcSel::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
     TOOLTIPTEXT * tt;
     tt = (TOOLTIPTEXT *)lParam;
@@ -398,14 +398,14 @@ BOOL srcsel::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 /////////////////////////////////////////////////////////////////////////////
 // Change one line in file
 
-void srcsel::DoChange(int lbl, int undogroup)
+void SrcSel::DoChange(int lbl, int undogroup)
 
 {
 
 	CWedView *v1 = (CWedView*)connect; 	ASSERT_VALID(v1);
     CWedDoc*  pDoc = v1->GetDocument(); ASSERT_VALID(pDoc);
 
-	//PrintToNotepad("Exec doChange in document %d\r\n", pDoc);
+	//P2N("Exec doChange in document %d\r\n", pDoc);
 
 	int	line = pDoc->ssel.linea.GetAt(lbl);
 	CStringEx str2 = pDoc->strlist.GetLine(line);
@@ -429,9 +429,9 @@ void srcsel::DoChange(int lbl, int undogroup)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void srcsel::OnOK()
+// void SrcSel::OnOK()
 
-void srcsel::OnOK()
+void SrcSel::OnOK()
 
 {
 	int lim = srcdlg.m_files.GetCount();
@@ -470,7 +470,7 @@ void srcsel::OnOK()
 /////////////////////////////////////////////////////////////////////////////
 // Undo
 
-void srcsel::OnButton10()
+void SrcSel::OnButton10()
 
 {
 	if(!m_rep)
@@ -487,7 +487,7 @@ void srcsel::OnButton10()
 // Iterate every open document, change
 //
 
-void srcsel::OnButton9()
+void SrcSel::OnButton9()
 {
 	if(!m_rep)
 		{
@@ -501,7 +501,7 @@ void srcsel::OnButton9()
 		if(pos)
 			{
 			str3 = srcdlg.m_files.GetAt(pos);
-			//PrintToNotepad("Global search: %s\r\n", str3);
+			//P2N("Global search: %s\r\n", str3);
 
 			CWedDoc*  doc = GetDocFromPath(str3);
 			ASSERT_VALID(doc);
@@ -509,7 +509,7 @@ void srcsel::OnButton9()
 			if(!doc)
 				continue;
 
-			doc->ssel.SetFocus(); 
+			doc->ssel.SetFocus();
 			doc->ssel.GotoSel();
 			YieldToWin(); Sleep(200);
 			doc->ssel.OnButton3();
@@ -526,9 +526,9 @@ void srcsel::OnButton9()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// void srcsel::OnShowWindow(BOOL bShow, UINT nStatus)
+// void SrcSel::OnShowWindow(BOOL bShow, UINT nStatus)
 
-void srcsel::OnShowWindow(BOOL bShow, UINT nStatus)
+void SrcSel::OnShowWindow(BOOL bShow, UINT nStatus)
 {
     m_shown = TRUE;
 
@@ -553,23 +553,23 @@ void srcsel::OnShowWindow(BOOL bShow, UINT nStatus)
     list->SetFocus();
 }
 
-void srcsel::OnClose()
+void SrcSel::OnClose()
 
 {
 	m_shown = 0;
 	CDialog::OnClose();
 }
 
-int srcsel::OnCharToItem(UINT nChar, CListBox* pListBox, UINT nIndex)
+int SrcSel::OnCharToItem(UINT nChar, CListBox* pListBox, UINT nIndex)
 {
-	//PrintToNotepad("SrcSel char2item: %c %x\r\n", nChar);
+	//P2N("SrcSel char2item: %c %x\r\n", nChar);
 	return CDialog::OnCharToItem(nChar, pListBox, nIndex);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Copy to holding
 
-void srcsel::OnButton5()
+void SrcSel::OnButton5()
 {
 	CString str;
     int lim = slb.GetCount();
@@ -605,11 +605,11 @@ end2: ;
 
 #if 0
 
-// 
+//
 // Exec change in arbitrary window
 //
 
-void DoSrcSelChange(srcsel *s1, CWedView *conn)
+void DoSrcSelChange(SrcSel *s1, CWedView *conn)
 
 {
 	CWedView *textwin = (CWedView *)conn;

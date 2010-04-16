@@ -9,7 +9,7 @@
 #include "strlist.h"
 #include "weddoc.h"
 #include "wedview.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "editor.h"
 #include "mainfrm.h"
 #include "misc.h"
@@ -53,6 +53,7 @@ BEGIN_MESSAGE_MAP(BufferList, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON2, OnButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, OnButton3)
 	ON_BN_CLICKED(IDOK,  OnOK)
+	ON_LBN_DBLCLK(IDC_LIST1, OnDblclkList1)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -63,7 +64,7 @@ void BufferList::OnShowWindow(BOOL bShow, UINT nStatus)
 
 {
     CDialog::OnShowWindow(bShow, nStatus);
-	Fill();
+	
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -105,7 +106,7 @@ void	BufferList::Fill()
 		pos2 = doc->GetFirstViewPosition();
 		cv = (CWedView*)doc->GetNextView(pos2);
 
-		PrintToNotepad("Alt-B view: %d --- %d \r\n", cv, m_cv);
+		//P2N("BufferList:: Alt-B view: %d --- %d \r\n", cv, m_cv);
 
 		if(m_cv == (long)cv)
 			m_list.SetCurSel(pos3);
@@ -134,7 +135,7 @@ void BufferList::OnOK()
 		goto endd;
 		}
 	m_list.GetText(sel, str);
-	//PrintToNotepad("Selected: %s\r\n", str);
+	//P2N("Selected: %s\r\n", str);
 	pdoc =  GetDocFromPath(str.Right(str.GetLength()-3) );
 
 	if(!pdoc)			// Null doc
@@ -218,6 +219,7 @@ void BufferList::OnButton3()
 		message("No document selected");
 		goto endd;
 		}
+
 	m_list.GetText(sel, str);
 	str =  str.Right(str.GetLength()-3);
 	pdoc =  GetDocFromPath(str);
@@ -245,7 +247,12 @@ void BufferList::OnButton3()
 		}
 	pdoc->OnCloseDocument();
 	Fill();
-	m_list.SetCurSel(sel-1);
+
+	if(sel <= 0)
+		m_list.SetCurSel(sel);
+	else
+		m_list.SetCurSel(sel-1);
+
 endd:;
 }
 
@@ -256,6 +263,14 @@ BOOL BufferList::OnInitDialog()
 
 {
 	CDialog::OnInitDialog();
+	
+	Fill();
+
 	return TRUE;
 }
 
+void BufferList::OnDblclkList1()
+
+{
+	OnOK();
+}

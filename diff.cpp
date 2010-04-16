@@ -9,7 +9,7 @@
 #include "wedDoc.h"
 #include "wedView.h"
 #include "FileInfo.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "holdhead.h"
 #include "editor.h"
 #include "diff.h"
@@ -39,7 +39,7 @@ int	dodiff(CWedView *v1, CWedView *v2)
 	if(in_diff)
 		return (0);
 
-    //PrintToNotepad("dodiff: %d  %d\r\n",  (int)doc1, (int)doc2);
+    //P2N("dodiff: %d  %d\r\n",  (int)doc1, (int)doc2);
     ASSERT_VALID(v1); ASSERT_VALID(v2);
 
     CWedDoc *doc1 = v1->GetDocument();  ASSERT_VALID(doc1);
@@ -69,12 +69,6 @@ int	dodiff(CWedView *v1, CWedView *v2)
     v2->diffa.RemoveAll();  v2->diffa.SetSize(len2+1);
     diffh2.RemoveAll();	diffh2.SetSize(len2+1);
 
-	// In case of a small file, reconnect early
-	if(len1 < 25)
-		maxscore = 1;
-	else
-		maxscore = 3;
-
 	// Generate Hash Tables
     while(TRUE)
       	{
@@ -84,33 +78,43 @@ int	dodiff(CWedView *v1, CWedView *v2)
         if(idx2 >= len2-1)
             break;
 
-        if(!(idx1 % 100))
+        if(idx1 % 100 == 0)
         	{
             CString num; num.Format("Diffing at line %d", idx1);
             message(num);
         	}
+
         if(YieldToWinEx())
         	{
     		message("Diff stopped");
      		break;
         	}
+
         str1 = doc1->strlist.GetLine(idx1);
-        diffh1.SetAtGrow(idx1, HashString(str1));
-        //PrintToNotepad("Hash1: %d  str %s\r\n", HashString(str1), str1);
+        diffh1.SetAtGrow(idx1, HashZString(str1));
+        //P2N("Hash1: %3d - %x  str %s\r\n", idx1, HashZString(str1), str1);
 
         str2 = doc2->strlist.GetLine(idx2);
-        diffh2.SetAtGrow(idx2, HashString(str2));
-        //PrintToNotepad("Hash2: %d  str %s\r\n",  HashString(str2), str2);
+        diffh2.SetAtGrow(idx2, HashZString(str2));
+        //P2N("Hash2: %3d - %x  str %s\r\n",  idx2, HashZString(str2), str2);
 
         idx1++; idx2++;
      	}
 
+		// In case of a small file, reconnect early
+	if(len1 < 25)
+		maxscore = 1;
+	else
+		maxscore = 3;
+
+	//////////////////////////////////////////////////////////////////////////////
      // Start again
      idx1 = 0; idx2 = 0;
      while(TRUE)
         {
         if(idx1 >= len1-1)
             break;
+
         if(idx2 >= len2-1)
             break;
 
@@ -126,7 +130,8 @@ int	dodiff(CWedView *v1, CWedView *v2)
             // Safety speed net
             if(deviate++ > maxdeviate)
                 break;
-            //PrintToNotepad("Walk1 %d\r\n", idx11);
+
+            //P2N("Walk1 %d\r\n", idx11);
 
             if(idx11 >= len1-1)
                 break;
@@ -142,7 +147,7 @@ int	dodiff(CWedView *v1, CWedView *v2)
                 if(deviate2++ > maxdeviate)
                     break;
 
-                //PrintToNotepad("****Walk2 %d\r\n", idx22);
+                //P2N("****Walk2 %d\r\n", idx22);
 
                 if(idx11 >= len1-1)
                     break;
@@ -158,25 +163,26 @@ int	dodiff(CWedView *v1, CWedView *v2)
                     // step back
                     idx11 -= score;  score = 0;
                     }
+
                 if(score > maxscore)
                     {
                     // show place of connect
 
                     //str1 = doc1->strlist.GetLine(idx11 - (maxscore+1));
                     //str2 = doc2->strlist.GetLine(idx22 - maxscore);
-                    //PrintToNotepad("reconnect: %s -- %s\r\n",  str1, str2);
+                    //P2N("reconnect: %s -- %s\r\n",  str1, str2);
 
                     // Found connections, color them
                     for(int xx = idx1; xx < idx11 - (maxscore+1); xx++)
                     	{
-                    	//str1 = doc1->strlist.GetLine(xx);
-                    	//str2 = doc2->strlist.GetLine(idx2 + (xx-idx1));
-                    	//if(strdiff(str1, str2) > 3)
-                      	//	v1->diffa.SetAtGrow(xx, DIFF_ADD);
-                      	//else
-                      	//	v1->diffa.SetAtGrow(xx, DIFF_CHG);
+                    	str1 = doc1->strlist.GetLine(xx);
+                    	str2 = doc2->strlist.GetLine(idx2 + (xx-idx1));
+                    	if(strdiff(str1, str2) > 2)
+                      		v1->diffa.SetAtGrow(xx, DIFF_ADD);
+                      	else
+                      		v1->diffa.SetAtGrow(xx, DIFF_CHG);
 
-                      	v1->diffa.SetAtGrow(xx, DIFF_ADD);
+                      	//v1->diffa.SetAtGrow(xx, DIFF_ADD);
                       	}
 
                     for(int xxx = idx2; xxx < idx22 - maxscore; xxx++)
@@ -221,6 +227,7 @@ next:
 // Return estimated number of patches needed between strings
 
 int strdiff(const CString &str1, const CString &str2)
+
 {
     char chh1, chh2;
     char chh11, chh22;
@@ -232,8 +239,8 @@ int strdiff(const CString &str1, const CString &str2)
     int len2 = str2.GetLength();
     int diff = 0;
 
-    //PrintToNotepad("strdiff - 1 : %s\r\n", str1);
-    //PrintToNotepad("strdiff - 2 : %s\r\n", str2);
+    //P2N("strdiff - 1 : %s\r\n", str1);
+    //P2N("strdiff - 2 : %s\r\n", str2);
 
 	if(!len1)
 		return(len2);
@@ -309,7 +316,7 @@ int strdiff(const CString &str1, const CString &str2)
             idx44++;
             }
 
-        //PrintToNotepad("diff2 =  %d diff3 = %d diff4 = %d\r\n",
+        //P2N("diff2 =  %d diff3 = %d diff4 = %d\r\n",
         //               	     diff2, diff3, diff4);
 
         // Assume closest match
@@ -345,6 +352,6 @@ int strdiff(const CString &str1, const CString &str2)
         idx1++;
         idx2++;
     }
-    //PrintToNotepad("strdiff - ret : %d\r\n", diff);
+    //P2N("strdiff - ret : %d\r\n", diff);
     return(diff);
 }

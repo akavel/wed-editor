@@ -15,7 +15,7 @@
 #include "splash.h"
 #include "editor.h"
 #include "wedview.h"
-#include "notepad.h"
+#include "mxpad.h"
 #include "build.h"
 #include "about.h"
 #include "misc.h"
@@ -36,6 +36,7 @@ extern CWedApp		theApp;
 
 CString		srcdir;
 CString		targdir;
+
 int 		timer_in = 0;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -103,6 +104,8 @@ void	OpenSource(CString &dir)
 {
 	CWedDoc *pDoc;
 
+	//P2N("OpenSource %p '%s' \r\n", dir, dir);
+
 	CFileDialogST cdf(TRUE);
 	CString droot, dresult, dfile, fname;
 	char *buff = (char*)malloc(MAXFILENAMES + 1);
@@ -114,10 +117,11 @@ void	OpenSource(CString &dir)
 		}
 	*buff = '\0';
 
-	if(dir == "")
-		cdf.m_ofn.lpstrInitialDir = droot;
-	else
-		cdf.m_ofn.lpstrInitialDir = dir;
+	//if(dir == "")
+	//	cdf.m_ofn.lpstrInitialDir = droot;
+	//else
+	
+	cdf.m_ofn.lpstrInitialDir = dir;
 
 	cdf.m_ofn.lpstrFilter = Ffilter;
 	cdf.m_ofn.lpstrFile = (char *)buff;
@@ -145,15 +149,6 @@ void	OpenSource(CString &dir)
 		PathToDir(dir);
 		}
 	free(buff);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// void	OpenSource(CString &dir)
-// Opensource
-
-void	SaveSourceAs(CString &dir)
-
-{
 }
 
 
@@ -192,7 +187,10 @@ void 	message(const char * str)
 
 {
 	((CMainFrame*)theApp.m_pMainWnd)->m_wndStatusBar.SetPaneText(0, str);
-	timer_in = 8;
+	if(strlen(str) > 24)
+		timer_in = 12;
+	else
+		timer_in = 6;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -234,7 +232,6 @@ void 	mac(const char * str)
 	((CMainFrame*)theApp.m_pMainWnd)->m_wndStatusBar.SetPaneText(6, str);
 }
 
-
 /////////////////////////////////////////////////////////////////////////////
 // void 	mode(const char * str)
 
@@ -243,8 +240,6 @@ void 	mode(const char * str)
 {
 	((CMainFrame*)theApp.m_pMainWnd)->m_wndStatusBar.SetPaneText(7, str);
 }
-
-
 
 /////////////////////////////////////////////////////////////////////////////
 // void	PathToFname(CString &docname)
@@ -311,12 +306,52 @@ int		HashString(const char *name)
 {
 	unsigned int ret_val = 0;
 
-    while(*name != '\0')
-        {
-        ret_val ^= (int)*name;
-        ret_val  = ROTATE_LONG_RIGHT(ret_val, 3);          /* rotate right */
-        *name++;
+    while(true)
+		{
+		char chh = *name++;
+
+		if(chh == '\0')
+			break;
+
+        ret_val += (int)chh;
+		ret_val  = ROTATE_LONG_RIGHT(ret_val, 12);          /* rotate right */
+
         }
+    return((int)ret_val);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// int		HashString(const char *name)
+//
+// Wpace insensitive version
+
+int		HashZString(const char *name)
+
+{
+	unsigned int ret_val = 0;
+	char prev = 0, curr = 0;
+	const char *name2 = name;
+
+    while(true)
+        {
+		curr = *name2++;
+
+		if(curr == 0)
+			break;
+
+		if(prev == curr && curr == ' ')
+			{
+			}
+		else
+			{
+			ret_val += (int)curr;
+			ret_val  = ROTATE_LONG_RIGHT(ret_val, 12);          /* rotate right */
+			}
+		prev = curr;
+	    }
+
+	//P2N("HashZ %x %s\r\n", ret_val, name);
+
     return((int)ret_val);
 }
 
@@ -330,8 +365,10 @@ void    YieldToWin()
     while(TRUE)
         {
         MSG msg;
+
         if(!PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
            break;
+
         TranslateMessage(&msg); DispatchMessage(&msg);
         }
 }
@@ -449,7 +486,7 @@ int     create_full_dir(const char *fullname)
 
         _makepath(one_path, fin.drive, one_dir, "", "");
 
-        //PrintToNotepad("Component: '%s'\r\n", one_path);
+        //P2N("Component: '%s'\r\n", one_path);
 
         if(!is_valid_path(one_path))
             {
